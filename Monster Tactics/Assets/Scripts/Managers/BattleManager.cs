@@ -1,20 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
 {
+    public enum BattleStates
+    {
+        START_BATTLE, // Battle Start
+
+        // Main battle loop here
+        PLAYER_PLAN, // Player Planning phase (where player takes control)
+        PLAYER_ACTION,// Playing the player's action
+        BOSS_PLAN,// TODO do I even need this?
+        BOSS_ACTION, // Boss Action
+        RESOLUTION, // For determining who is dead as well as round information
+
+        END_BATTLE // Battle End
+    }
+
     public class BattleManager : MonoBehaviour
     {
-        public enum BattleStates
-        {
-            START,
-            PLAYER_PLAN,
-            PLAYER_ACTION,
-            BOSS_PLAN,// TODO do I even need this?
-            BOSS_ACTION,
-        }
+        // Unity Exposed Fields
+        [SerializeField] [Range(1, 20)] private int totalPlayerActionPoints;
+        
 
-        private BattleStates currentBattleState;
+
+        // Member Properties
+
+        //private List<Tuple<>>
+
+        private BattleStates currentBattleState; public BattleStates CurrentBattleState => currentBattleState;
+
         private int currentPlayerIndex;
 
         private static BattleManager _instance;
@@ -45,7 +61,7 @@ namespace Assets.Scripts.Managers
         // Start is called before the first frame update
         private void Start()
         {
-            this.currentBattleState = BattleStates.START;
+            this.currentBattleState = BattleStates.START_BATTLE;
             this.currentPlayerIndex = 0;// 0 index player
         }
 
@@ -55,11 +71,11 @@ namespace Assets.Scripts.Managers
         
         }
 
-        public void AdvancePhase()
+        private void AdvanceState()
         {
             switch (currentBattleState)
             {
-                case BattleStates.START:
+                case BattleStates.START_BATTLE:
                     this.currentBattleState = BattleStates.PLAYER_PLAN;
                     break;
                 case BattleStates.PLAYER_PLAN:
@@ -84,11 +100,27 @@ namespace Assets.Scripts.Managers
                     // Player acts on what it does
                     Debug.Log("Cannot advance from Monster Action Manually?");
                     break;
+                case BattleStates.RESOLUTION:
+                    this.currentBattleState = BattleStates.PLAYER_PLAN;
+                    break;
+                case BattleStates.END_BATTLE:
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
+        private void OnPlayerActionFinished()
+        {
+            this.currentBattleState = BattleStates.BOSS_PLAN;
+        }
+
+        private void OnBossActionFinished()
+        {
+            this.currentBattleState = BattleStates.RESOLUTION;
+        }
+
+        
         public void EndBattle()
         {
 
