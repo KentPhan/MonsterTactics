@@ -4,6 +4,19 @@ namespace Assets.Scripts.Managers
 {
     public class GameManager : MonoBehaviour
     {
+        public enum GameStates
+        {
+            START,
+            PLAY,
+            GAME_OVER
+        }
+
+        private GameStates currentGameState;
+
+
+        [SerializeField] [Range(0, 8)] private int numberOfPlayers = 2;
+        public int NumberOfPlayers => numberOfPlayers;
+
         private static GameManager _instance;
         public static GameManager Instance
         {
