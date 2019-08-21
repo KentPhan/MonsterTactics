@@ -46,7 +46,7 @@ namespace Assets.Scripts.Managers
         // Start is called before the first frame update
         void Start()
         {
-        Vector3
+        
         }
 
         // Update is called once per frame
