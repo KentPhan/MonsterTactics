@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.Classes;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -23,11 +24,8 @@ namespace Assets.Scripts.Managers
         // Unity Exposed Fields
         [SerializeField] [Range(1, 20)] private int totalPlayerActionPoints;
         
-
-
         // Member Properties
-
-        //private List<Tuple<>>
+        private List<Tuple<Player, PlayerPlanningProperties>> players;
 
         private BattleStates currentBattleState; public BattleStates CurrentBattleState => currentBattleState;
 
@@ -68,7 +66,37 @@ namespace Assets.Scripts.Managers
         // Update is called once per frame
         private void Update()
         {
-        
+
+            switch (currentBattleState)
+            {
+                case BattleStates.START_BATTLE:
+                    break;
+                case BattleStates.PLAYER_PLAN:
+                    
+                    break;
+                case BattleStates.PLAYER_ACTION:
+                    break;
+                case BattleStates.BOSS_PLAN:
+                    break;
+                case BattleStates.BOSS_ACTION:
+                    break;
+                case BattleStates.RESOLUTION:
+                    break;
+                case BattleStates.END_BATTLE:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void SetPlayerPlans(int i_playerIndex, PlayerPlanningProperties i_planProperties)
+        {
+            if (currentBattleState == BattleStates.PLAYER_PLAN)
+            {
+                PlayerPlanningProperties playerProperties = players[i_playerIndex].Item2;
+                playerProperties.PlannedPosition = i_planProperties.PlannedPosition;
+                playerProperties.UsableActionPoints = i_planProperties.UsableActionPoints;
+            }
         }
 
         private void AdvanceState()
@@ -81,24 +109,24 @@ namespace Assets.Scripts.Managers
                 case BattleStates.PLAYER_PLAN:
                     
                     // Advance state if all players finish
-                    currentPlayerIndex++;
+                    this.currentPlayerIndex++;
                     if (currentPlayerIndex >= GameManager.Instance.NumberOfPlayers)
                     {
+                        this.currentPlayerIndex = 0;
                         this.currentBattleState = BattleStates.PLAYER_ACTION;
                         // TODO Call functions to Play Player Actions. Subscribe to monster and player actions for when actions actually end
                     }
                     break;
                 case BattleStates.PLAYER_ACTION:
-                    // Can't Advance manually
-                    Debug.Log("Cannot advance from Player Action Manually?");
+                    // Player Action Plays
+                    this.currentBattleState = BattleStates.BOSS_PLAN;
                     break;
                 case BattleStates.BOSS_PLAN:
                     // Monster calculates what it's gonna do
                     this.currentBattleState = BattleStates.BOSS_ACTION;
                     break;
                 case BattleStates.BOSS_ACTION:
-                    // Player acts on what it does
-                    Debug.Log("Cannot advance from Monster Action Manually?");
+                    this.currentBattleState = BattleStates.RESOLUTION;
                     break;
                 case BattleStates.RESOLUTION:
                     this.currentBattleState = BattleStates.PLAYER_PLAN;
@@ -112,12 +140,12 @@ namespace Assets.Scripts.Managers
 
         private void OnPlayerActionFinished()
         {
-            this.currentBattleState = BattleStates.BOSS_PLAN;
+            AdvanceState();
         }
 
         private void OnBossActionFinished()
         {
-            this.currentBattleState = BattleStates.RESOLUTION;
+            AdvanceState();
         }
 
         
