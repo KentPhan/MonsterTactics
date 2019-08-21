@@ -2,13 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class SlotObjectPool : MonoBehaviour
 {
-    [HideInInspector]
-    public int MaxStack = 0;
-    [HideInInspector]
-    public Sprite Icon;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +14,5 @@ public class Item : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public virtual void Equip()
-    { 
     }
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class InventorySystem : MonoBehaviour
 {
     // Just because this is only a proto-type, I just obly make 10 inventory slots.
-    private int maxSlot = 10;
+    [HideInInspector]
+    public int MaxSlot = 10;
     private Item[] slots;    
 
     private static InventorySystem _instance;
@@ -26,10 +27,10 @@ public class InventorySystem : MonoBehaviour
     private void Start()
     {
         // Just because this is only a proto-type, I just obly make 10 inventory slots.
-        slots = new Item[maxSlot];
+        slots = new Item[MaxSlot];
 
         // Initialize with empty slots
-        for(int i = 0; i < maxSlot; i++)
+        for(int i = 0; i < MaxSlot; i++)
         {
             slots[i] = new NoItem();
         }

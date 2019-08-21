@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Item : MonoBehaviour
+public class InventoryUISlot : MonoBehaviour
 {
-    [HideInInspector]
-    public int MaxStack = 0;
-    [HideInInspector]
-    public Sprite Icon;
+    private Button slot;
+    public Text ItemName;
+    public Image ItemImage;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        slot = GetComponent<Button>();
     }
 
     // Update is called once per frame
@@ -21,7 +21,5 @@ public class Item : MonoBehaviour
         
     }
 
-    public virtual void Equip()
-    { 
-    }
+    //public 
 }
