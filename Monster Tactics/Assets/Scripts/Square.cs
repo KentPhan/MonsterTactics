@@ -31,12 +31,13 @@ public class Square : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        gridSystem.mousePosition = transform.position;
+        gridSystem.enteringGridPosition = transform.position;
         Hover(0);
     }
 
     private void OnMouseDown()
     {
+        gridSystem.clickedGridPosition = transform.position;
         Select(range);
     }
 
