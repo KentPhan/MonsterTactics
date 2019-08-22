@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+public enum PlayerActions
+{
+    ATTACK
+}
+
 public class Player : MonoBehaviour
 {
     private NavMeshAgent agent;
