@@ -19,11 +19,21 @@ public class Square : MonoBehaviour
 
     private void Start()
     {
-        //Maps the neighboring squares
-        foreach (Square square in GridSystem.Instance.squares)
-            if (Vector3.Distance(transform.localPosition, square.transform.localPosition) <= 1.1f)
-                if (square != this)
-                    neighbors.Add(square);
+        Square sq = GridSystem.Instance.theMap[transform.localPosition + Vector3.forward];
+        if (sq)
+            neighbors.Add(sq);
+
+        sq = GridSystem.Instance.theMap[transform.localPosition + Vector3.back];
+        if (sq)
+            neighbors.Add(sq);
+
+        sq = GridSystem.Instance.theMap[transform.localPosition + Vector3.left];
+        if (sq)
+            neighbors.Add(sq);
+
+        sq = GridSystem.Instance.theMap[transform.localPosition + Vector3.right];
+        if (sq)
+            neighbors.Add(sq);
     }
 
     private void OnMouseEnter()
@@ -61,18 +71,13 @@ public class Square : MonoBehaviour
     public void Range(int range)
     {
         meshRenderer.material.color = traversible;
-        if(range > 0)
-            foreach (Square square in neighbors)
-                if (square.meshRenderer.material.color == none)
-                    square.Range(range - 1);
+
+        foreach (Square square in neighbors)
+            square.Range(range - 1);
     }
 
     public void Clear()
     {
-        meshRenderer.material.color = none;
-        foreach (Square square in neighbors)
-            if (square.meshRenderer.material.color == traversible)
-                square.Clear();
     }
 
 }

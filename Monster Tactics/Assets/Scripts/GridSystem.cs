@@ -11,7 +11,8 @@ public class GridSystem : MonoBehaviour
     // Added last clicked and last hovered position
     [System.NonSerialized] public Square enteringGridPosition;
     [System.NonSerialized] public Square clickedGridPosition;
-    [System.NonSerialized] public List<Square> squares = new List<Square>();
+    //[System.NonSerialized] public List<Square> squares = new List<Square>();
+    public Dictionary<Vector3, Square> theMap = new Dictionary<Vector3, Square>();
 
     void Awake()
     {
@@ -26,7 +27,10 @@ public class GridSystem : MonoBehaviour
         clickedGridPosition = startGridPosition;
         //Creates a master list of all squares in this grid system
         foreach (Square square in GetComponentsInChildren<Square>())
-            squares.Add(square);
+        {
+            theMap.Add(square.transform.localPosition, square);
+            //squares.Add(square);
+        }
     }
 
 }
