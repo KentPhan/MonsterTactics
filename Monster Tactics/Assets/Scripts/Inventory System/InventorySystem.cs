@@ -5,9 +5,13 @@ using UnityEngine;
 public class InventorySystem : MonoBehaviour
 {
     // Just because this is only a proto-type, I just obly make 10 inventory slots.
-    [HideInInspector]
-    public int MaxSlot = 10;
-    private Item[] slots;    
+    private int maxSlot = 10;
+    private GameObject[] slots;
+    //private Item[] itemTypes;
+
+    // Getter, Setter
+    public int MaxSlot { get { return maxSlot; } }
+    public GameObject[] Slots { get { return slots; } }
 
     private static InventorySystem _instance;
     public static InventorySystem Instance { get { return _instance; } }
@@ -22,18 +26,21 @@ public class InventorySystem : MonoBehaviour
         {
             _instance = this;
         }
+
+        // Just because this is only a proto-type, I just obly make 10 inventory slots.
+        slots = new GameObject[MaxSlot];
+
+        // Initialize with empty slots
+        for (int i = 0; i < maxSlot; i++)
+        {
+            slots[i] = new GameObject();
+            slots[i].AddComponent<NoItem>();
+            slots[i].transform.SetParent(gameObject.transform);
+        }
     }
 
     private void Start()
     {
-        // Just because this is only a proto-type, I just obly make 10 inventory slots.
-        slots = new Item[MaxSlot];
-
-        // Initialize with empty slots
-        for(int i = 0; i < MaxSlot; i++)
-        {
-            slots[i] = new NoItem();
-        }
     }
 
     // Update is called once per frame
