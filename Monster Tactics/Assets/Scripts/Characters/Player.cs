@@ -11,6 +11,8 @@ public enum PlayerActions
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] int range = 3;
+
     private NavMeshAgent agent;
     
     // Start is called before the first frame update
@@ -21,7 +23,14 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        agent.SetDestination(GridSystem.Instance.clickedGridPosition);
+        if (GridSystem.Instance.clickedGridPosition)
+            agent.SetDestination(GridSystem.Instance.clickedGridPosition.transform.position);
+    }
+
+    private void OnMouseDown()
+    {
+        if (GridSystem.Instance.clickedGridPosition)
+            GridSystem.Instance.clickedGridPosition.Range(range);
     }
 
     public void Move(Vector3 destionation)

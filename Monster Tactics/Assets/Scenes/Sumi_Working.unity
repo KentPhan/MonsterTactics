@@ -3108,6 +3108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2802af5543e9cdf439b14daeb7dceab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startGridPosition: {fileID: 2140173783}
 --- !u!4 &1596807066 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3851905119725147500, guid: ed89763265529e94eb93ff66799d6e24,
@@ -3314,7 +3315,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7d0d998194ac3e145814ff43d6276c08, type: 2}
+  - {fileID: 2100000, guid: da92e83b3223e5c41a0e5620327b956a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3772,6 +3773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99708aa8099808c45917af3d0470dffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 3
 --- !u!136 &1884706665
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4219,6 +4221,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed89763265529e94eb93ff66799d6e24, type: 3}
+--- !u!114 &2140173783 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6896951157653777100, guid: ed89763265529e94eb93ff66799d6e24,
+    type: 3}
+  m_PrefabInstance: {fileID: 3851905119444521411}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a62ceba52a43f04981381a68db7e51b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3851905119444521411
 PrefabInstance:
   m_ObjectHideFlags: 0
