@@ -23,18 +23,18 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (GridSystem.Instance.clickedGridPosition)
-            agent.SetDestination(GridSystem.Instance.clickedGridPosition.transform.position);
+        if (GridSystem.Instance.clickedSquare)
+            agent.SetDestination(GridSystem.Instance.clickedSquare.transform.position);
     }
 
     private void OnMouseDown()
     {
-        if (GridSystem.Instance.clickedGridPosition)
-            GridSystem.Instance.clickedGridPosition.Range(range);
+        if (GridSystem.Instance.clickedSquare)
+            GridSystem.Instance.clickedSquare.Range(range);
     }
 
-    public void Move(Vector3 destionation)
+    public void Move(Vector3 destination)
     {
-        agent.SetDestination(destionation);
+        agent.SetDestination(destination);
     }
 }

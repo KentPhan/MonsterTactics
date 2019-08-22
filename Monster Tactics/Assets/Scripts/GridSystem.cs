@@ -6,11 +6,11 @@ public class GridSystem : MonoBehaviour
 {
     private static GridSystem _instance;
     public static GridSystem Instance { get { return _instance; } }
-    [SerializeField] public Square startGridPosition;
+    [SerializeField] public Square startSquare;
 
     // Added last clicked and last hovered position
-    [System.NonSerialized] public Square enteringGridPosition;
-    [System.NonSerialized] public Square clickedGridPosition;
+    [System.NonSerialized] public Square hoveringSquare;
+    [System.NonSerialized] public Square clickedSquare;
     //[System.NonSerialized] public List<Square> squares = new List<Square>();
     public Dictionary<Vector3, Square> theMap = new Dictionary<Vector3, Square>();
 
@@ -24,7 +24,7 @@ public class GridSystem : MonoBehaviour
         {
             _instance = this;
         }
-        clickedGridPosition = startGridPosition;
+        clickedSquare = startSquare;
         //Creates a master list of all squares in this grid system
         foreach (Square square in GetComponentsInChildren<Square>())
         {

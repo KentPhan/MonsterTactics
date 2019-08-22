@@ -10,6 +10,7 @@ public class Square : MonoBehaviour
 
     [SerializeField] protected MeshRenderer meshRenderer;
     protected LineRenderer lineRenderer;
+    protected int steps = -1;
 
     private void Awake()
     {
@@ -19,33 +20,26 @@ public class Square : MonoBehaviour
 
     private void Start()
     {
-        Square sq = GridSystem.Instance.theMap[transform.localPosition + Vector3.forward];
-        if (sq)
-            neighbors.Add(sq);
-
-        sq = GridSystem.Instance.theMap[transform.localPosition + Vector3.back];
-        if (sq)
-            neighbors.Add(sq);
-
-        sq = GridSystem.Instance.theMap[transform.localPosition + Vector3.left];
-        if (sq)
-            neighbors.Add(sq);
-
-        sq = GridSystem.Instance.theMap[transform.localPosition + Vector3.right];
-        if (sq)
-            neighbors.Add(sq);
+        if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + Vector3.forward))
+            neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + Vector3.forward]);
+        if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + Vector3.back))
+            neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + Vector3.back]);
+        if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + Vector3.left))
+            neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + Vector3.left]);
+        if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + Vector3.right))
+            neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + Vector3.right]);
     }
 
     private void OnMouseEnter()
     {
         if (meshRenderer.material.color == none)
         {
-            GridSystem.Instance.enteringGridPosition = this;
+            GridSystem.Instance.hoveringSquare = this;
             meshRenderer.material.color = peek;
         }
         else if(meshRenderer.material.color == traversible)
         {
-            GridSystem.Instance.enteringGridPosition = this;
+            GridSystem.Instance.hoveringSquare = this;
             meshRenderer.material.color = select;
         }
     }
@@ -54,9 +48,9 @@ public class Square : MonoBehaviour
     {
         if (meshRenderer.material.color == select)
         {
+            GridSystem.Instance.clickedSquare.Clear();
             meshRenderer.material.color = none;
-            GridSystem.Instance.clickedGridPosition.Clear();
-            GridSystem.Instance.clickedGridPosition = this;
+            GridSystem.Instance.clickedSquare = this;
         }
     }
 
@@ -70,14 +64,24 @@ public class Square : MonoBehaviour
     
     public void Range(int range)
     {
+        steps = range;
         meshRenderer.material.color = traversible;
-
-        foreach (Square square in neighbors)
-            square.Range(range - 1);
-    }
+        if (range > 0)
+        {
+            range--;
+            foreach (Square square in neighbors)
+                if (range > square.steps)
+                    square.Range(range);
+        }
+        }
 
     public void Clear()
     {
+        steps = -1;
+        meshRenderer.material.color = none;
+        foreach (Square square in neighbors)
+            if(square.meshRenderer.material.color == traversible || square.meshRenderer.material.color == select)
+                square.Clear();
     }
 
 }
