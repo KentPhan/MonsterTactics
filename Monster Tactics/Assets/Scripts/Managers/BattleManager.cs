@@ -12,7 +12,7 @@ namespace Assets.Scripts.Managers
         // Main battle loop here
         PLAYER_PLAN, // Player Planning phase (where player takes control)
         PLAYER_ACTION,// Playing the player's action
-        BOSS_PLAN,// TODO do I even need this?
+        BOSS_PLAN,// TODO do I even need this? 
         BOSS_ACTION, // Boss Action
         RESOLUTION, // For determining who is dead as well as round information
 
@@ -21,16 +21,11 @@ namespace Assets.Scripts.Managers
 
     public class BattleManager : MonoBehaviour
     {
-        // Unity Exposed Fields
-        [SerializeField] [Range(1, 20)] private int totalPlayerActionPoints;
-        
         // Member Properties
         private List<Tuple<Player, PlayerPlanningProperties>> players;
 
         private BattleStates currentBattleState; public BattleStates CurrentBattleState => currentBattleState;
-
-        private int currentPlayerIndex;
-
+        
         private static BattleManager _instance;
         public static BattleManager Instance
         {
@@ -60,7 +55,6 @@ namespace Assets.Scripts.Managers
         private void Start()
         {
             this.currentBattleState = BattleStates.START_BATTLE;
-            this.currentPlayerIndex = 0;// 0 index player
         }
 
         // Update is called once per frame
@@ -72,7 +66,6 @@ namespace Assets.Scripts.Managers
                 case BattleStates.START_BATTLE:
                     break;
                 case BattleStates.PLAYER_PLAN:
-                    
                     break;
                 case BattleStates.PLAYER_ACTION:
                     break;
@@ -94,8 +87,9 @@ namespace Assets.Scripts.Managers
             if (currentBattleState == BattleStates.PLAYER_PLAN)
             {
                 PlayerPlanningProperties playerProperties = players[i_playerIndex].Item2;
+                playerProperties.Planned = true;
                 playerProperties.PlannedPosition = i_planProperties.PlannedPosition;
-                playerProperties.UsableActionPoints = i_planProperties.UsableActionPoints;
+                playerProperties.PlannedAction = i_planProperties.PlannedAction;
             }
         }
 
@@ -108,11 +102,18 @@ namespace Assets.Scripts.Managers
                     break;
                 case BattleStates.PLAYER_PLAN:
                     
-                    // Advance state if all players finish
-                    this.currentPlayerIndex++;
-                    if (currentPlayerIndex >= GameManager.Instance.NumberOfPlayers)
+                    // Advance state if all players finish planning their turns
+                    bool playerNotPlanned = false;
+                    foreach (var player in players)
                     {
-                        this.currentPlayerIndex = 0;
+                        if (!player.Item2.Planned)
+                        {
+                            playerNotPlanned = true;
+                            break;
+                        }
+                    }
+                    if (!playerNotPlanned)
+                    {
                         this.currentBattleState = BattleStates.PLAYER_ACTION;
                         // TODO Call functions to Play Player Actions. Subscribe to monster and player actions for when actions actually end
                     }

@@ -9,7 +9,8 @@ namespace Assets.Scripts.Classes
 {
     public struct PlayerPlanningProperties
     {
+        public bool Planned;
         public Vector3 PlannedPosition;
-        public int UsableActionPoints;
+        public PlayerActions PlannedAction;
     }
 }

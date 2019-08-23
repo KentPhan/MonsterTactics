@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+public enum PlayerActions
+{
+    ATTACK
+}
+
 public class Player : MonoBehaviour
 {
+    [SerializeField] int range = 3;
+
     private NavMeshAgent agent;
     
     // Start is called before the first frame update
@@ -15,11 +23,18 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        agent.SetDestination(GridSystem.Instance.clickedGridPosition);
+        if (GridSystem.Instance.clickedSquare)
+            agent.SetDestination(GridSystem.Instance.clickedSquare.transform.position);
     }
 
-    public void Move(Vector3 destionation)
+    private void OnMouseDown()
     {
-        agent.SetDestination(destionation);
+        if (GridSystem.Instance.clickedSquare)
+            GridSystem.Instance.clickedSquare.Range(range);
+    }
+
+    public void Move(Vector3 destination)
+    {
+        agent.SetDestination(destination);
     }
 }
