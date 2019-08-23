@@ -12,7 +12,6 @@ namespace Assets.Scripts.Managers
         // Main battle loop here
         PLAYER_PLAN, // Player Planning phase (where player takes control)
         PLAYER_ACTION,// Playing the player's action
-        BOSS_PLAN,// TODO do I even need this? 
         BOSS_ACTION, // Boss Action
         RESOLUTION, // For determining who is dead as well as round information
 
@@ -21,8 +20,11 @@ namespace Assets.Scripts.Managers
 
     public class BattleManager : MonoBehaviour
     {
+        // Unity Exposed Fields
+        [SerializeField] [Range(1, 20)] private int actionPointsPerPlayer;
+
         // Member Properties
-        private List<Tuple<Player, PlayerPlanningProperties>> players;
+        private List<Tuple<Player, PlayerPlan>> players;
 
         private BattleStates currentBattleState; public BattleStates CurrentBattleState => currentBattleState;
         
@@ -69,8 +71,6 @@ namespace Assets.Scripts.Managers
                     break;
                 case BattleStates.PLAYER_ACTION:
                     break;
-                case BattleStates.BOSS_PLAN:
-                    break;
                 case BattleStates.BOSS_ACTION:
                     break;
                 case BattleStates.RESOLUTION:
@@ -82,14 +82,12 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        public void SetPlayerPlans(int i_playerIndex, PlayerPlanningProperties i_planProperties)
+        public void SetPlayerPlans(Player player, PlayerPlan plan)
         {
             if (currentBattleState == BattleStates.PLAYER_PLAN)
             {
-                PlayerPlanningProperties playerProperties = players[i_playerIndex].Item2;
-                playerProperties.Planned = true;
-                playerProperties.PlannedPosition = i_planProperties.PlannedPosition;
-                playerProperties.PlannedAction = i_planProperties.PlannedAction;
+                PlayerPlan playerPlan = players.Find((set) => set.Item1 == player).Item2;
+                playerPlan.Planned = true;
             }
         }
 
@@ -115,15 +113,15 @@ namespace Assets.Scripts.Managers
                     if (!playerNotPlanned)
                     {
                         this.currentBattleState = BattleStates.PLAYER_ACTION;
+                        foreach (var player in players)
+                        {
+                            // TODO need to play players in pre determined order
+                        }
                         // TODO Call functions to Play Player Actions. Subscribe to monster and player actions for when actions actually end
                     }
                     break;
                 case BattleStates.PLAYER_ACTION:
                     // Player Action Plays
-                    this.currentBattleState = BattleStates.BOSS_PLAN;
-                    break;
-                case BattleStates.BOSS_PLAN:
-                    // Monster calculates what it's gonna do
                     this.currentBattleState = BattleStates.BOSS_ACTION;
                     break;
                 case BattleStates.BOSS_ACTION:

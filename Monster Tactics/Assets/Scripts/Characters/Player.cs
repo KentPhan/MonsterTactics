@@ -1,13 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Classes;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-public enum PlayerActions
-{
-    ATTACK
-}
 
 public class Player : MonoBehaviour
 {
