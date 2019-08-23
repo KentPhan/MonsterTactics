@@ -19,7 +19,6 @@ public class ItemSlotList : MonoBehaviour
     {
         for (int i = 0; i < InventorySystem.Instance.MaxSlot; i++)
         {
-            //Item item = InventorySystem.Instance.Slots[i];
             GameObject slot = InventorySystem.Instance.Slots[i];
             Item item = slot.GetComponent<Item>();
 
@@ -27,7 +26,8 @@ public class ItemSlotList : MonoBehaviour
             itemSlotButton.transform.SetParent(gameObject.transform);
 
             ItemSlot itemSlot = itemSlotButton.GetComponent<ItemSlot>();
-            itemSlot.Setup(item);
+            itemSlot.item = item;
+            itemSlot.Setup();
         }
     }
 }

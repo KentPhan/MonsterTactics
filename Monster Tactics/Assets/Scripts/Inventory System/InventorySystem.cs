@@ -7,7 +7,6 @@ public class InventorySystem : MonoBehaviour
     // Just because this is only a proto-type, I just obly make 10 inventory slots.
     private int maxSlot = 10;
     private GameObject[] slots;
-    //private Item[] itemTypes;
 
     // Getter, Setter
     public int MaxSlot { get { return maxSlot; } }
