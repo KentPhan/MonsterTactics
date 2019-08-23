@@ -15,4 +15,9 @@ public class NoItem : Item
     {
         
     }
+
+    public override void Equip()
+    {
+        Debug.Log("No Item is used");
+    }
 }
