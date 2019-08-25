@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using Assets.Scripts.CharacterComponents;
 using Assets.Scripts.Classes;
 using UnityEngine;
 
@@ -21,13 +22,14 @@ namespace Assets.Scripts.Managers
     public class BattleManager : MonoBehaviour
     {
         // Unity Exposed Fields
-        [SerializeField] [Range(1, 20)] private int actionPointsPerPlayer;
+
 
         // Member Properties
-        private List<Tuple<Player, PlayerPlan>> players;
+        private List<Player> players;
+        private int currentPlayerIndex;
 
         private BattleStates currentBattleState; public BattleStates CurrentBattleState => currentBattleState;
-        
+
         private static BattleManager _instance;
         public static BattleManager Instance
         {
@@ -57,6 +59,7 @@ namespace Assets.Scripts.Managers
         private void Start()
         {
             this.currentBattleState = BattleStates.START_BATTLE;
+            this.currentPlayerIndex = 0;
         }
 
         // Update is called once per frame
@@ -82,29 +85,20 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        public void SetPlayerPlans(Player player, PlayerPlan plan)
-        {
-            if (currentBattleState == BattleStates.PLAYER_PLAN)
-            {
-                PlayerPlan playerPlan = players.Find((set) => set.Item1 == player).Item2;
-                playerPlan.Planned = true;
-            }
-        }
-
         private void AdvanceState()
         {
             switch (currentBattleState)
             {
-                case BattleStates.START_BATTLE:
+                case BattleStates.START_BATTLE: // Input Advance
                     this.currentBattleState = BattleStates.PLAYER_PLAN;
                     break;
-                case BattleStates.PLAYER_PLAN:
-                    
+                case BattleStates.PLAYER_PLAN: // Input Advance
+
                     // Advance state if all players finish planning their turns
                     bool playerNotPlanned = false;
                     foreach (var player in players)
                     {
-                        if (!player.Item2.Planned)
+                        if (!player.GetComponent<PlanBuilderComponent>().Plan.FinishedPlanning)
                         {
                             playerNotPlanned = true;
                             break;
@@ -113,22 +107,36 @@ namespace Assets.Scripts.Managers
                     if (!playerNotPlanned)
                     {
                         this.currentBattleState = BattleStates.PLAYER_ACTION;
-                        foreach (var player in players)
-                        {
-                            // TODO need to play players in pre determined order
-                        }
-                        // TODO Call functions to Play Player Actions. Subscribe to monster and player actions for when actions actually end
+                        AdvanceState();
                     }
                     break;
-                case BattleStates.PLAYER_ACTION:
-                    // Player Action Plays
-                    this.currentBattleState = BattleStates.BOSS_ACTION;
+                case BattleStates.PLAYER_ACTION:// Auto Advance
+                    // Play next plan
+                    if (currentPlayerIndex < players.Count)
+                    {
+                        PlayerPlan currentPlan = this.players[currentPlayerIndex].GetComponent<PlanBuilderComponent>().Plan;
+                        currentPlan.SubscribeToPlanEnd(OnPlayerPlanFinished);
+                        currentPlan.PlayPlan();
+                    }
+                    // else all plans played, move to next state
+                    else
+                    {
+                        this.currentBattleState = BattleStates.BOSS_ACTION;
+
+                        // TODO build Boss Callback
+                        AdvanceState();
+                    }
+
                     break;
                 case BattleStates.BOSS_ACTION:
                     this.currentBattleState = BattleStates.RESOLUTION;
+
+                    // TODO Temp
+                    AdvanceState();
                     break;
                 case BattleStates.RESOLUTION:
                     this.currentBattleState = BattleStates.PLAYER_PLAN;
+
                     break;
                 case BattleStates.END_BATTLE:
                     break;
@@ -137,8 +145,10 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        private void OnPlayerActionFinished()
+        private void OnPlayerPlanFinished(object sender, EventArgs args)
         {
+            ((PlayerPlan)sender).UnsubscribeToPlanEnd(OnPlayerPlanFinished);
+            this.currentPlayerIndex++;
             AdvanceState();
         }
 
@@ -147,7 +157,17 @@ namespace Assets.Scripts.Managers
             AdvanceState();
         }
 
-        
+        public void StartBattle()
+        {
+
+        }
+
+        public void AdvanceFromPlayerPlanning()
+        {
+
+        }
+
+
         public void EndBattle()
         {
 

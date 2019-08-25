@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +10,42 @@ namespace Assets.Scripts.Classes
 {
     public class PlayerPlan
     {
-        public bool Planned { get; set; }
+        public bool FinishedPlanning { get; private set; }
         private Queue<AbstractPlayerAction> actionQueue;
         private event EventHandler planEnded;
 
         private Player targetPlayer;
-        public PlayerPlan(Player target)
+        private int actionPointLimit;
+        public int ActionPointCost
         {
-            this.targetPlayer = target;
+            get
+            {
+                int totalCost = 0;
+                foreach (AbstractPlayerAction action in actionQueue)
+                {
+                    totalCost += action.ActionPointCost;
+                }
+                return totalCost;
+            }
         }
 
-        public void AddActionToPlanQueue(AbstractPlayerAction newAction)
+        public PlayerPlan(Player target, int actionPointLimit)
         {
-            actionQueue.Enqueue(newAction);
+            this.targetPlayer = target;
+            this.actionPointLimit = actionPointLimit;
+        }
+
+        public bool AddActionToPlanQueue(AbstractPlayerAction newAction)
+        {
+            if ((newAction.ActionPointCost + this.ActionPointCost) > this.actionPointLimit)
+            {
+                return false;
+            }
+            else
+            {
+                actionQueue.Enqueue(newAction);
+                return true;
+            }
         }
 
         public void RemoveAllActionsFromQueue()
@@ -33,16 +56,23 @@ namespace Assets.Scripts.Classes
         public void PlayPlan()
         {
             // Play first action
-            AbstractPlayerAction action = actionQueue.Dequeue();
-
-            if (action == null)
+            if (this.FinishedPlanning)
             {
-                planEnded?.Invoke(this, null);
-                return;
-            }
+                AbstractPlayerAction action = actionQueue.Dequeue();
 
-            action.SubscribeToActionEnd(CurrentActionFinished);
-            action.PlayAction(this.targetPlayer);
+                if (action == null)
+                {
+                    planEnded?.Invoke(this, null);
+                    return;
+                }
+
+                action.SubscribeToActionEnd(CurrentActionFinished);
+                action.PlayAction(this.targetPlayer);
+            }
+            else
+            {
+                Debug.LogError("Plan has not been finished to play");
+            }
         }
 
         private void CurrentActionFinished(object sender, EventArgs args)
@@ -68,6 +98,11 @@ namespace Assets.Scripts.Classes
         public void UnsubscribeToPlanEnd(EventHandler callback)
         {
             planEnded -= callback;
+        }
+
+        public void FinishPlan()
+        {
+            this.FinishedPlanning = true;
         }
     }
 }

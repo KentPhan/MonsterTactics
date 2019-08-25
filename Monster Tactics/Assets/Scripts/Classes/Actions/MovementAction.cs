@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +14,7 @@ namespace Assets.Scripts.Classes.Actions
         protected override event EventHandler actionEnded;
 
         private Vector3 destination;
-        public MovementAction(Vector3 destination)
+        public MovementAction(Vector3 destination, int actionPointCost) : base(actionPointCost)
         {
             this.destination = destination;
         }
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Classes.Actions
 
         private void OnMovementFinished(object sender, EventArgs args)
         {
-            ((MovementComponent) sender).OnFinishedAction -= OnMovementFinished;
+            ((MovementComponent)sender).OnFinishedAction -= OnMovementFinished;
             actionEnded?.Invoke(this, new EventArgs());
         }
     }
