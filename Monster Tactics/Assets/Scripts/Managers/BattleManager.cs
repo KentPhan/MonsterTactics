@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.CharacterComponents;
+using Assets.Scripts.Characters;
 using Assets.Scripts.Classes;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Managers
 
         // Member Properties
         [SerializeField] private List<Player> players;
+        [SerializeField] private Boss boss;
         private int currentPlayerIndex;
 
         private BattleStates currentBattleState; public BattleStates CurrentBattleState => currentBattleState;

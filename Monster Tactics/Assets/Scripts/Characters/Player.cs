@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 {
     // Exposed properties
     [SerializeField] [Range(1, 20)] private int actionPointLimit = 6; public int ActionPointLimit => actionPointLimit;
-
+    [SerializeField] private Camera playerCamera; public Camera PlayerCamera => playerCamera;
 
     // Members
     private NavMeshAgent agent;

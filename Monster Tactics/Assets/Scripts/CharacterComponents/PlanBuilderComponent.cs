@@ -44,7 +44,7 @@ namespace Assets.Scripts.CharacterComponents
             if (Input.GetMouseButtonDown(0))
             {
                 // Raycast detect square click
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = this.assignedPlayer.PlayerCamera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hitInfo;
                 if (Physics.Raycast(ray, out hitInfo, 500, this.rayCastMask, QueryTriggerInteraction.UseGlobal))
                 {
@@ -81,6 +81,8 @@ namespace Assets.Scripts.CharacterComponents
                                 this.buildState = BuildingActionStates.NONE;
                             }
                             // if clicked square falls within player range Queue Action
+                            // TODO hook up UI external subscribing as well as detecting what exists on the square here to determine allocated
+                            // action
                             else if (this.assignedPlayer.CurrentSquare.IsInRange(clickedSquare, actionPointsLeft))
                             {
                                 if (this.currentBuiltPlan.AddActionToPlanQueue(
