@@ -142,6 +142,8 @@ namespace Assets.Scripts.CharacterComponents
         public void SubmitPlan()
         {
             this.currentBuiltPlan.FinishPlan();
+            this.assignedPlayer.CurrentSquare.Clear();
+            this.buildState = BuildingActionStates.NONE;
             CanvasManager.Instance.UIActionPanel.HideActions();
             BattleManager.Instance.AdvanceFromPlayerPlanning();
         }
