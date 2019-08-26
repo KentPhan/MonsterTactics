@@ -6,6 +6,8 @@ namespace Assets.Scripts.Managers
     public class CanvasManager : MonoBehaviour
     {
         [SerializeField] private UIInfoPanel uiInfoPanel; public UIInfoPanel UIInfoPanel => uiInfoPanel;
+        [SerializeField] private UIActionPanel uiActionPanel; public UIActionPanel UIActionPanel => uiActionPanel;
+
         private static CanvasManager _instance;
         public static CanvasManager Instance
         {

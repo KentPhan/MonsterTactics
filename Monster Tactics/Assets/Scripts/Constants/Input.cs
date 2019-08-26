@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Constants
 {
-    public class Layers
+    public class Inputs
     {
-        public static readonly string GRID = "Grid";
+        public static readonly string SUBMIT = "Submit";
     }
 }

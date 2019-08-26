@@ -32,6 +32,10 @@ namespace Assets.Scripts.CharacterComponents
             this.currentBuiltPlan = new PlayerPlan(this.assignedPlayer, this.assignedPlayer.ActionPointLimit);
             this.rayCastMask = LayerMask.GetMask(Layers.GRID);
             this.buildState = BuildingActionStates.NONE;
+
+
+            // TODO will have to adapt this to via which player is active
+            CanvasManager.Instance.UIActionPanel.SubscribeToEndPlanningButton(SubmitPlan);
         }
 
         // Update is called once per frame
@@ -83,7 +87,10 @@ namespace Assets.Scripts.CharacterComponents
                                     CreateMovementAction(clickedSquare, 1)))
                                 {
                                     Debug.Log("Action added to queue");
-
+                                    // Clear and update range
+                                    clickedSquare.Clear();
+                                    clickedSquare.Range(this.assignedPlayer.ActionPointLimit -
+                                                        this.currentBuiltPlan.ActionPointCost);
                                 }
                                 else
                                 {
@@ -100,11 +107,20 @@ namespace Assets.Scripts.CharacterComponents
 
 
                     // Update UI at the end of every action
-                    CanvasManager.Instance.UIInfoPanel.UpdateActionSpentValue(this.currentBuiltPlan.ActionPointCost);
+                    int currentCost = this.currentBuiltPlan.ActionPointCost;
+                    CanvasManager.Instance.UIInfoPanel.UpdateActionSpentValue(currentCost);
+                    if (currentCost > 0)
+                    {
+                        CanvasManager.Instance.UIActionPanel.ShowActions();
+                    }
+                    else
+                    {
+                        CanvasManager.Instance.UIActionPanel.HideActions();
+                    }
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetButtonDown(Inputs.SUBMIT))
             {
                 SubmitPlan();
             }
@@ -123,9 +139,8 @@ namespace Assets.Scripts.CharacterComponents
         public void SubmitPlan()
         {
             this.currentBuiltPlan.FinishPlan();
+            CanvasManager.Instance.UIActionPanel.HideActions();
             BattleManager.Instance.AdvanceFromPlayerPlanning();
         }
-
-
     }
 }
