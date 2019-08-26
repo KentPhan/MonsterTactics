@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Characters;
 using Assets.Scripts.Classes.Actions;
 using UnityEngine;
 using UnityEngine.AI;

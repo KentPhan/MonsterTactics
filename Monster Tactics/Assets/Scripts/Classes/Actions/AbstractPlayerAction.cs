@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Characters;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Actions
