@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+using Assets.Scripts.UI;
+using UnityEngine;
 
 namespace Assets.Scripts.Managers
 {
     public class CanvasManager : MonoBehaviour
     {
+        [SerializeField] private UIInfoPanel uiInfoPanel; public UIInfoPanel UIInfoPanel => uiInfoPanel;
         private static CanvasManager _instance;
         public static CanvasManager Instance
         {
@@ -31,13 +33,13 @@ namespace Assets.Scripts.Managers
         // Start is called before the first frame update
         void Start()
         {
-        
+
         }
 
         // Update is called once per frame
         void Update()
         {
-        
+
         }
     }
 }

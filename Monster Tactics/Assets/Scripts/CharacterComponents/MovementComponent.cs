@@ -33,11 +33,6 @@ namespace Assets.Scripts.CharacterComponents
                     GetComponent<Player>().FindAndUpdateSquare();
                     OnFinishedAction?.Invoke(this, null);
                 }
-
-                //if ((agent.transform.position - this.destination).magnitude <= 1.05f)
-                //{
-
-                //}
             }
         }
         public void Move(Square destinationSquare)

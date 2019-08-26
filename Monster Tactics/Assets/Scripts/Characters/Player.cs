@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Classes;
 using Assets.Scripts.Constants;
+using Assets.Scripts.Managers;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         FindAndUpdateSquare();
+        CanvasManager.Instance.UIInfoPanel.UpdateActionPointTotalValue(actionPointLimit);
     }
 
     private void Update()

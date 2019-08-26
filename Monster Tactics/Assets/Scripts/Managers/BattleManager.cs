@@ -123,7 +123,7 @@ namespace Assets.Scripts.Managers
                     else
                     {
                         this.currentBattleState = BattleStates.BOSS_ACTION;
-
+                        this.currentPlayerIndex = 0;
                         // TODO build Boss Callback
                         AdvanceState();
                     }

@@ -99,11 +99,8 @@ namespace Assets.Scripts.CharacterComponents
                     }
 
 
-                    //if (GridSystem.Instance.clickedSquare)
-                    //{
-
-
-                    //}
+                    // Update UI at the end of every action
+                    CanvasManager.Instance.UIInfoPanel.UpdateActionSpentValue(this.currentBuiltPlan.ActionPointCost);
                 }
             }
 
