@@ -1,11 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Square : MonoBehaviour
 {
     protected Color none = Color.clear, peek = Color.cyan, traversible = Color.yellow, select = Color.green;
-    
+
     List<Square> neighbors = new List<Square>();
 
     [SerializeField] protected MeshRenderer meshRenderer;
@@ -37,7 +37,7 @@ public class Square : MonoBehaviour
             GridSystem.Instance.hoveringSquare = this;
             meshRenderer.material.color = peek;
         }
-        else if(meshRenderer.material.color == traversible)
+        else if (meshRenderer.material.color == traversible)
         {
             GridSystem.Instance.hoveringSquare = this;
             meshRenderer.material.color = select;
@@ -46,12 +46,14 @@ public class Square : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (meshRenderer.material.color == select)
-        {
-            GridSystem.Instance.clickedSquare.Clear();
-            meshRenderer.material.color = none;
-            GridSystem.Instance.clickedSquare = this;
-        }
+        // COMMENTED OUT: square clicking for now is detected inside Plan Builder instead
+        //if (meshRenderer.material.color == select)
+        //{
+        //    GridSystem.Instance.clickedSquare.Clear();
+        //    meshRenderer.material.color = none;
+        //    GridSystem.Instance.clickedSquare = this;
+        //    Debug.Log("Setting Square");
+        //}
     }
 
     private void OnMouseExit()
@@ -61,7 +63,7 @@ public class Square : MonoBehaviour
         else if (meshRenderer.material.color == select)
             meshRenderer.material.color = traversible;
     }
-    
+
     public void Range(int range)
     {
         steps = range;
@@ -73,14 +75,20 @@ public class Square : MonoBehaviour
                 if (range > square.steps)
                     square.Range(range);
         }
-        }
+    }
+
+    public bool IsInRange(Square targetSquare, int range)
+    {
+        // TODO for now just return true. make it actually detect range later
+        return true;
+    }
 
     public void Clear()
     {
         steps = -1;
         meshRenderer.material.color = none;
         foreach (Square square in neighbors)
-            if(square.meshRenderer.material.color == traversible || square.meshRenderer.material.color == select)
+            if (square.meshRenderer.material.color == traversible || square.meshRenderer.material.color == select)
                 square.Clear();
     }
 

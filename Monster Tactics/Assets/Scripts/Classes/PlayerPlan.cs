@@ -33,6 +33,7 @@ namespace Assets.Scripts.Classes
         {
             this.targetPlayer = target;
             this.actionPointLimit = actionPointLimit;
+            this.actionQueue = new Queue<AbstractPlayerAction>();
         }
 
         public bool AddActionToPlanQueue(AbstractPlayerAction newAction)
@@ -79,7 +80,7 @@ namespace Assets.Scripts.Classes
         {
             ((AbstractPlayerAction)sender).UnsubscribeToActionEnd(CurrentActionFinished);
 
-            AbstractPlayerAction action = actionQueue.Dequeue();
+            AbstractPlayerAction action = (actionQueue.Count <= 0) ? null : actionQueue.Dequeue();
             if (action == null)
             {
                 planEnded?.Invoke(this, null);

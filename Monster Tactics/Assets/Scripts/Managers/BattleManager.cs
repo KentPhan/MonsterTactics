@@ -25,7 +25,7 @@ namespace Assets.Scripts.Managers
 
 
         // Member Properties
-        private List<Player> players;
+        [SerializeField] private List<Player> players;
         private int currentPlayerIndex;
 
         private BattleStates currentBattleState; public BattleStates CurrentBattleState => currentBattleState;
@@ -60,6 +60,7 @@ namespace Assets.Scripts.Managers
         {
             this.currentBattleState = BattleStates.START_BATTLE;
             this.currentPlayerIndex = 0;
+            AdvanceState();
         }
 
         // Update is called once per frame
@@ -164,7 +165,9 @@ namespace Assets.Scripts.Managers
 
         public void AdvanceFromPlayerPlanning()
         {
-
+            // TODO Clean up?
+            Debug.Log("Advancing Player Plans");
+            AdvanceState();
         }
 
 
