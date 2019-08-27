@@ -9,6 +9,7 @@ public class Square : MonoBehaviour
     List<Square> neighbors = new List<Square>();
 
     [SerializeField] protected MeshRenderer meshRenderer;
+    [SerializeField] protected GameObject loot, danger;
     protected LineRenderer lineRenderer;
     protected int steps = int.MaxValue;
 
@@ -46,12 +47,14 @@ public class Square : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown("d"))
         {
-            return;
+            Instantiate(danger, transform.position, Quaternion.identity);
         }
-        else if (Input.GetMouseButtonDown(1))
-            return;
+        else if (Input.GetKeyDown("l"))
+        {
+            Instantiate(loot, transform.position, Quaternion.identity);
+        }
     }
 
     private void OnMouseExit()
