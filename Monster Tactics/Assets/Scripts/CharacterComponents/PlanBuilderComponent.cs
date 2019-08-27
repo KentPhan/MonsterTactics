@@ -19,8 +19,6 @@ namespace Assets.Scripts.CharacterComponents
         public PlayerPlan Plan => currentBuiltPlan;
 
 
-
-
         private Player assignedPlayer;
         private PlayerPlan currentBuiltPlan;
         private int rayCastMask;

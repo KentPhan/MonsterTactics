@@ -1206,6 +1206,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7470636165223840659, guid: 3ba971a7ed530b9429b597a17df13a0f,
+        type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 1906538771}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ba971a7ed530b9429b597a17df13a0f, type: 3}
 --- !u!1001 &257217293
@@ -1427,6 +1432,27 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 260165951}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &262988451 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 641098117567943166, guid: 3ba971a7ed530b9429b597a17df13a0f,
+    type: 3}
+  m_PrefabInstance: {fileID: 237417104}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &262988456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262988451}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 253f1f316bc4c5248bf96b1bf84088de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActionList: 
+  topleftX: 10
+  topleftY: 10
 --- !u!4 &279385602 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3851905119725147500, guid: ed89763265529e94eb93ff66799d6e24,
