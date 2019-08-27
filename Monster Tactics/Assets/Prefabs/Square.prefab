@@ -241,8 +241,9 @@ MonoBehaviour:
   peek: {r: 0, g: 1, b: 1, a: 0.47058824}
   traversible: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.47058824}
   select: {r: 0, g: 1, b: 0, a: 0.47058824}
-  ping: {r: 1, g: 0, b: 0, a: 0.47058824}
   meshRenderer: {fileID: 3686323373483027124}
+  loot: {fileID: 7464792722550489815, guid: f0131992e909ca7468ae1dfeed3df4ea, type: 3}
+  danger: {fileID: 7464792722550489815, guid: 7b95b72c5689c6947b7da9e4f471e6a1, type: 3}
 --- !u!1 &6812268252118356715
 GameObject:
   m_ObjectHideFlags: 0
