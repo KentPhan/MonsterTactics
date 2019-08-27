@@ -12,16 +12,18 @@ namespace Assets.Scripts.CharacterComponents
         private NavMeshAgent agent;
         private bool isMoving;
         private Vector3 destination;
+        Animator anim;
 
         // Start is called before the first frame update
         void Start()
         {
+            anim = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
             isMoving = false;
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             if (isMoving)
             {
@@ -35,6 +37,7 @@ namespace Assets.Scripts.CharacterComponents
                     OnFinishedAction?.Invoke(this, null);
                 }
             }
+            anim.SetBool("move", isMoving);
         }
         public void Move(Square destinationSquare)
         {

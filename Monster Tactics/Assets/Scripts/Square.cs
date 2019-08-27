@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Square : MonoBehaviour
 {
-    [SerializeField] protected Color none = Color.clear, peek = Color.cyan, traversible = Color.yellow, select = Color.green, ping = Color.red;
+    [SerializeField] protected Color none = Color.clear, peek = Color.cyan, traversible = Color.yellow, select = Color.green;
 
     List<Square> neighbors = new List<Square>();
 
     [SerializeField] protected MeshRenderer meshRenderer;
+    [SerializeField] protected GameObject loot, danger;
     protected LineRenderer lineRenderer;
-    protected int steps = -1;
+    protected int steps = int.MaxValue;
 
     private void Awake()
     {
@@ -35,14 +36,7 @@ public class Square : MonoBehaviour
         if (meshRenderer.material.color == none)
         {
             GridSystem.Instance.hoveringSquare = this;
-            if (Input.GetMouseButton(1))
-            {
-                meshRenderer.material.color = ping;
-            }
-            else
-            {
-                meshRenderer.material.color = peek;
-            }
+            meshRenderer.material.color = peek;
         }
         else if (meshRenderer.material.color == traversible)
         {
@@ -51,8 +45,16 @@ public class Square : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    private void OnMouseOver()
     {
+        if (Input.GetKeyDown("d"))
+        {
+            Instantiate(danger, transform.position, Quaternion.identity);
+        }
+        else if (Input.GetKeyDown("l"))
+        {
+            Instantiate(loot, transform.position, Quaternion.identity);
+        }
     }
 
     private void OnMouseExit()
@@ -63,16 +65,17 @@ public class Square : MonoBehaviour
             meshRenderer.material.color = traversible;
     }
 
-    public void Range(int range)
+    public void Range(int range, int isteps = 0)
     {
-        steps = range;
+        steps = isteps;
         meshRenderer.material.color = traversible;
         if (range > 0)
         {
-            range--;
             foreach (Square square in neighbors)
-                if (range > square.steps)
-                    square.Range(range);
+            {
+                if ((steps + 1) < (square.steps))
+                    square.Range(range - 1, steps + 1);
+            }
         }
     }
 
@@ -81,9 +84,14 @@ public class Square : MonoBehaviour
         return meshRenderer.material.color == select;
     }
 
+    public int ActionPointCost()
+    {
+        return steps;
+    }
+
     public void Clear()
     {
-        steps = -1;
+        steps = int.MaxValue;
         meshRenderer.material.color = none;
         foreach (Square square in neighbors)
             if (square.meshRenderer.material.color == traversible || square.meshRenderer.material.color == select)
