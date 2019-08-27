@@ -17,10 +17,7 @@ namespace Assets.Scripts.CharacterComponents
     public class PlanBuilderComponent : MonoBehaviour
     {
         public PlayerPlan Plan => currentBuiltPlan;
-
-
-
-
+        
         private Player assignedPlayer;
         private PlayerPlan currentBuiltPlan;
         private int rayCastMask;
@@ -92,8 +89,9 @@ namespace Assets.Scripts.CharacterComponents
                                     Debug.Log("Action added to queue");
                                     // Clear and update range
                                     clickedSquare.Clear();
-                                    clickedSquare.Range(this.assignedPlayer.ActionPointLimit -
-                                                        this.currentBuiltPlan.ActionPointCost);
+                                    int newActionsPointLeft = this.assignedPlayer.ActionPointLimit -this.currentBuiltPlan.ActionPointCost;
+                                    if(newActionsPointLeft >0)
+                                        clickedSquare.Range(newActionsPointLeft);
                                 }
                                 else
                                 {
