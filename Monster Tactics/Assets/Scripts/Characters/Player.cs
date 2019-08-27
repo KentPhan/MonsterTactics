@@ -15,19 +15,24 @@ namespace Assets.Scripts.Characters
 
         // Members
         private NavMeshAgent agent;
+
+        Animator anim;
+
         private Square currentSquare;
         public Square CurrentSquare => currentSquare;
 
         // Start is called before the first frame update
         private void Start()
         {
+            anim = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
             FindAndUpdateSquare();
             CanvasManager.Instance.UIInfoPanel.UpdateActionPointTotalValue(actionPointLimit);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
+            anim.SetBool("attack", false);
         }
 
         public void FindAndUpdateSquare()
