@@ -87,7 +87,7 @@ namespace Assets.Scripts.CharacterComponents
                             else if (clickedSquare.IsInRange())
                             {
                                 if (this.currentBuiltPlan.AddActionToPlanQueue(
-                                    CreateMovementAction(clickedSquare, 1)))
+                                    CreateMovementAction(clickedSquare, clickedSquare.ActionPointCost())))
                                 {
                                     Debug.Log("Action added to queue");
                                     // Clear and update range
