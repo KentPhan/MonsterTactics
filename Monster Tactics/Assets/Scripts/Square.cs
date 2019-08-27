@@ -81,7 +81,7 @@ public class Square : MonoBehaviour
         return meshRenderer.material.color == select;
     }
 
-    public int ActionPointCost(int range)
+    public int ActionPointCost()
     {
         return steps;
     }
