@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Square : MonoBehaviour
 {
-    [SerializeField] protected Color none = Color.clear, peek = Color.cyan, traversible = Color.yellow, select = Color.green, ping = Color.red;
+    [SerializeField] protected Color none = Color.clear, peek = Color.cyan, traversible = Color.yellow, select = Color.green;
 
     List<Square> neighbors = new List<Square>();
 
@@ -35,14 +35,7 @@ public class Square : MonoBehaviour
         if (meshRenderer.material.color == none)
         {
             GridSystem.Instance.hoveringSquare = this;
-            if (Input.GetMouseButton(1))
-            {
-                meshRenderer.material.color = ping;
-            }
-            else
-            {
-                meshRenderer.material.color = peek;
-            }
+            meshRenderer.material.color = peek;
         }
         else if (meshRenderer.material.color == traversible)
         {
@@ -51,8 +44,14 @@ public class Square : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    private void OnMouseOver()
     {
+        if (Input.GetMouseButtonDown(1))
+        {
+            return;
+        }
+        else if (Input.GetMouseButtonDown(1))
+            return;
     }
 
     private void OnMouseExit()
@@ -79,6 +78,11 @@ public class Square : MonoBehaviour
     public bool IsInRange()
     {
         return meshRenderer.material.color == select;
+    }
+
+    public int ActionPointCost(int range)
+    {
+        return -(steps - range);
     }
 
     public void Clear()
