@@ -10,7 +10,7 @@ public class Square : MonoBehaviour
 
     [SerializeField] protected MeshRenderer meshRenderer;
     protected LineRenderer lineRenderer;
-    protected int steps = -1;
+    protected int steps = int.MaxValue;
 
     private void Awake()
     {
@@ -62,16 +62,17 @@ public class Square : MonoBehaviour
             meshRenderer.material.color = traversible;
     }
 
-    public void Range(int range)
+    public void Range(int range, int isteps = 0)
     {
-        steps = range;
+        steps = isteps;
         meshRenderer.material.color = traversible;
         if (range > 0)
         {
-            range--;
             foreach (Square square in neighbors)
-                if (range > square.steps)
-                    square.Range(range);
+            {
+                if ((steps + 1) < (square.steps))
+                    square.Range(range - 1, steps + 1);
+            }
         }
     }
 
@@ -82,12 +83,12 @@ public class Square : MonoBehaviour
 
     public int ActionPointCost(int range)
     {
-        return -(steps - range);
+        return steps;
     }
 
     public void Clear()
     {
-        steps = -1;
+        steps = int.MaxValue;
         meshRenderer.material.color = none;
         foreach (Square square in neighbors)
             if (square.meshRenderer.material.color == traversible || square.meshRenderer.material.color == select)
