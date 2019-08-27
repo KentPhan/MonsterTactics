@@ -237,6 +237,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a62ceba52a43f04981381a68db7e51b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  none: {r: 0, g: 0, b: 0, a: 0}
+  peek: {r: 0, g: 1, b: 1, a: 0.47058824}
+  traversible: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.47058824}
+  select: {r: 0, g: 1, b: 0, a: 0.47058824}
+  ping: {r: 1, g: 0, b: 0, a: 0.47058824}
   meshRenderer: {fileID: 3686323373483027124}
 --- !u!1 &6812268252118356715
 GameObject:

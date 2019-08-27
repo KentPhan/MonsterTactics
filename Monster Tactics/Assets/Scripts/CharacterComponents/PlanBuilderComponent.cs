@@ -84,7 +84,7 @@ namespace Assets.Scripts.CharacterComponents
                             // if clicked square falls within player range Queue Action
                             // TODO hook up UI external subscribing as well as detecting what exists on the square here to determine allocated
                             // action
-                            else if (this.assignedPlayer.CurrentSquare.IsInRange(clickedSquare, actionPointsLeft))
+                            else if (clickedSquare.IsInRange())
                             {
                                 if (this.currentBuiltPlan.AddActionToPlanQueue(
                                     CreateMovementAction(clickedSquare, 1)))

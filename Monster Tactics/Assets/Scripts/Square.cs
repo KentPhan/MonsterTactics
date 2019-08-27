@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Square : MonoBehaviour
 {
-    protected Color none = Color.clear, peek = Color.cyan, traversible = Color.yellow, select = Color.green;
+    [SerializeField] protected Color none = Color.clear, peek = Color.cyan, traversible = Color.yellow, select = Color.green, ping = Color.red;
 
     List<Square> neighbors = new List<Square>();
 
@@ -35,7 +35,14 @@ public class Square : MonoBehaviour
         if (meshRenderer.material.color == none)
         {
             GridSystem.Instance.hoveringSquare = this;
-            meshRenderer.material.color = peek;
+            if (Input.GetMouseButton(1))
+            {
+                meshRenderer.material.color = ping;
+            }
+            else
+            {
+                meshRenderer.material.color = peek;
+            }
         }
         else if (meshRenderer.material.color == traversible)
         {
@@ -46,14 +53,6 @@ public class Square : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // COMMENTED OUT: square clicking for now is detected inside Plan Builder instead
-        //if (meshRenderer.material.color == select)
-        //{
-        //    GridSystem.Instance.clickedSquare.Clear();
-        //    meshRenderer.material.color = none;
-        //    GridSystem.Instance.clickedSquare = this;
-        //    Debug.Log("Setting Square");
-        //}
     }
 
     private void OnMouseExit()
@@ -77,10 +76,9 @@ public class Square : MonoBehaviour
         }
     }
 
-    public bool IsInRange(Square targetSquare, int range)
+    public bool IsInRange()
     {
-        // TODO for now just return true. make it actually detect range later
-        return true;
+        return meshRenderer.material.color == select;
     }
 
     public void Clear()

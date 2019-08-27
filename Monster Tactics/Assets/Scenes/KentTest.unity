@@ -119,7 +119,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 9d1647fcbcfe2ec49b91676461817bbc, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 0f92174ab717bf942ad2749a522009e3, type: 2}
 --- !u!1001 &17401102
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6395,6 +6395,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 2915653694391226560, guid: 0bc3cea8de921cf4580d69b64862f9a9,
+        type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 1906538771}
     - target: {fileID: 2915653694391226564, guid: 0bc3cea8de921cf4580d69b64862f9a9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6450,11 +6455,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2915653694391226560, guid: 0bc3cea8de921cf4580d69b64862f9a9,
-        type: 3}
-      propertyPath: playerCamera
-      value: 
-      objectReference: {fileID: 1906538771}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bc3cea8de921cf4580d69b64862f9a9, type: 3}
 --- !u!1001 &1535657959
@@ -7330,7 +7330,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: da92e83b3223e5c41a0e5620327b956a, type: 2}
+  - {fileID: 2100000, guid: 7d0d998194ac3e145814ff43d6276c08, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
