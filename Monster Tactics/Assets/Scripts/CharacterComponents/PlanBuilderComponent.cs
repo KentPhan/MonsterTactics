@@ -87,6 +87,8 @@ namespace Assets.Scripts.CharacterComponents
                                     CreateMovementAction(clickedSquare, clickedSquare.ActionPointCost())))
                                 {
                                     Debug.Log("Action added to queue");
+                                    // HighlightRoot
+                                    GridSystem.Instance.highlightRoot(assignedPlayer.CurrentSquare,clickedSquare);
                                     // Clear and update range
                                     clickedSquare.Clear();
                                     int newActionsPointLeft = this.assignedPlayer.ActionPointLimit -this.currentBuiltPlan.ActionPointCost;
@@ -144,6 +146,7 @@ namespace Assets.Scripts.CharacterComponents
             this.buildState = BuildingActionStates.NONE;
             CanvasManager.Instance.UIActionPanel.HideActions();
             BattleManager.Instance.AdvanceFromPlayerPlanning();
+            GridSystem.Instance.resetRootRenderer();
         }
     }
 }

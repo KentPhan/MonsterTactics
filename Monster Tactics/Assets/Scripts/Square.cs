@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Square : MonoBehaviour
 {
-    [SerializeField] protected Color none = Color.clear, peek = Color.cyan, traversible = Color.yellow, select = Color.green;
+    [SerializeField] protected Color none = Color.clear, peek = Color.cyan, traversible = Color.yellow, select = Color.green, traversing = Color.blue;
 
-    List<Square> neighbors = new List<Square>();
+    public List<Square> neighbors = new List<Square>();
 
     [SerializeField] protected MeshRenderer meshRenderer;
     [SerializeField] protected GameObject loot, danger;
