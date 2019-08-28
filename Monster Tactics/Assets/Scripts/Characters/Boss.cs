@@ -6,6 +6,8 @@ namespace Assets.Scripts.Characters
     {
         [SerializeField] [Range(1, 100)] private int health;
 
+        
+
         // Start is called before the first frame update
         void Start()
         {
@@ -29,7 +31,7 @@ namespace Assets.Scripts.Characters
 
         }
 
-        public void TakeDamage()
+        public void TakeDamage(int damage)
         {
             throw new System.NotImplementedException();
         }

@@ -39,7 +39,6 @@ namespace Assets.Scripts.CharacterComponents
                     GetComponent<Player>().SetSquare(destinationSquare);
                     OnFinishedAction?.Invoke(this, null);
                 }
-                Debug.Log(dist);
             }
         }
 

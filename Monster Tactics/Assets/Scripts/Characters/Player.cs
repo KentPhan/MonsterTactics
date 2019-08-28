@@ -67,7 +67,7 @@ namespace Assets.Scripts.Characters
         }
 
 
-        public void TakeDamage()
+        public void TakeDamage(int damage)
         {
             throw new System.NotImplementedException();
         }

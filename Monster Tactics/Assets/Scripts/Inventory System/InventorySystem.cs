@@ -1,60 +1,52 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Inventory_System.Items;
 using UnityEngine;
 
-public class InventorySystem : MonoBehaviour
+namespace Assets.Scripts.Inventory_System
 {
-    // Just because this is only a proto-type, I just obly make 10 inventory slots.
-    private int maxSlot = 10;
-    private GameObject[] slots;
-
-    // Getter, Setter
-    public int MaxSlot { get { return maxSlot; } }
-    public GameObject[] Slots { get { return slots; } }
-
-    private static InventorySystem _instance;
-    public static InventorySystem Instance { get { return _instance; } }
-
-    private void Awake()
+    public class InventorySystem : MonoBehaviour
     {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-
-        // Just because this is only a proto-type, I just obly make 10 inventory slots.
-        slots = new GameObject[MaxSlot];
-
-        // Initialize with empty slots
-        for (int i = 0; i < maxSlot; i++)
-        {
-            slots[i] = new GameObject();
-            slots[i].AddComponent<NoItem>();
-            slots[i].transform.SetParent(gameObject.transform);
-        }
-    }
-
-    private void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        private IWeapon meleeSlot;
+        public IWeapon MeleeSlot => meleeSlot;
         
-    }
+        private static InventorySystem _instance;
+        public static InventorySystem Instance { get { return _instance; } }
 
-    public void Add(Item item)
-    {
+        private void Awake()
+        {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                _instance = this;
+            }
+        }
 
-    }
+        private void Start()
+        {
+        }
 
-    public void Remove()
-    {
+        // Update is called once per frame
+        void Update()
+        {
+        
+        }
 
+        public bool StoreMeleeWeapon(IWeapon weapon)
+        {
+            if (weapon == null || this.meleeSlot != null)
+                return false;
+            this.meleeSlot = weapon;
+            return true;
+        }
+
+        public IWeapon WithdrawMeleeWeapon()
+        {
+            IWeapon weaponToReturn = this.meleeSlot;
+            this.meleeSlot = null;
+            return weaponToReturn;
+        }
     }
 }

@@ -9,6 +9,6 @@ namespace Assets.Scripts.Characters
 {
     public interface ICharacter
     {
-        void TakeDamage();
+        void TakeDamage(int damage);
     }
 }
