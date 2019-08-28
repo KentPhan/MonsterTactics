@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7875065396378437091}
   - component: {fileID: 4500594843601369370}
   - component: {fileID: 6154283449591448884}
+  - component: {fileID: 1890745151221466274}
   m_Layer: 9
   m_Name: BossPrefab
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2758882649144708550}
   m_LocalRotation: {x: -0.003963162, y: -0.9195811, z: 0.025946926, w: 0.39202243}
   m_LocalPosition: {x: 598, y: 49.69997, z: 477.3001}
-  m_LocalScale: {x: 1397.401, y: 912.1805, z: 1000.0006}
+  m_LocalScale: {x: 1397.4006, y: 912.1806, z: 1000.0004}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -92,3 +93,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 15
+  gameObjectsWithMarkers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &1890745151221466274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2758882649144708550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b89fcf9b4746ae45844323839c03629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseDamage: 0
+  SpikePrefab: {fileID: 3018134532964577870, guid: 638e42107b5002948a92c9b869ac9434,
+    type: 3}
+  DistanceBelowGround: 5
+  DistanceOfMovement: 10
+  SinWaveAttackFrequency: 0.3
+  NumberOfAttacks: 1
