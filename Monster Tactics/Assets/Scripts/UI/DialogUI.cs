@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts.Constants;
 
 public class DialogUI : MonoBehaviour
 {
-    public enum Action {Move,Pick,Fight};
+    //public enum Action {Move,Pick,Fight};
     private int maxActionNum = 3;
     private bool[] actionListTable;
-
-    [HideInInspector]
-    public List<Action> ActionList;
+    private List<Actions> ActionList;
     
 
     [HideInInspector]
@@ -24,23 +23,26 @@ public class DialogUI : MonoBehaviour
     private int buttonWidth = 200;
     private int buttonHeight = 50;
 
-    public delegate void EventHandler(Action action);
+    public delegate void EventHandler(Actions action);
     public static event EventHandler ActionButtonClicked = new EventHandler((actionL)=> { });
 
     private void Awake()
     {
         actionListTable = new bool[maxActionNum];
-        ActionList = new List<Action>();
-        ActionButtonClicked += testSubscriber;
+        ActionList = new List<Actions>();
 
         for (int i = 0; i < maxActionNum; i++)
         {
             actionListTable[i] = false;
         }
 
-        ActionList.Add(Action.Fight);
-        ActionList.Add(Action.Move);
-        ActionList.Add(Action.Fight);
+        // Place holder
+        ActionList.Add(Actions.Attack);
+    }
+
+    public void UpdateActionList(List<Actions> actions)
+    {
+        ActionList = actions;
     }
 
     public void parseAction()
@@ -49,7 +51,7 @@ public class DialogUI : MonoBehaviour
         {
             actionListTable[i] = false;
         }
-        foreach(Action action in ActionList)
+        foreach(Actions action in ActionList)
         {
             actionListTable[(int)action] = true;
         }
@@ -74,17 +76,13 @@ public class DialogUI : MonoBehaviour
         {
             if (actionListTable[i])
             {
-                if (GUI.Button(new Rect(topleftX, topleftY + nextbutton * buttonHeight, buttonWidth, buttonHeight), ((Action)i).ToString()))
+                if (GUI.Button(new Rect(topleftX, topleftY + nextbutton * buttonHeight, buttonWidth, buttonHeight), ((Actions)i).ToString()))
                 {
-                    ActionButtonClicked.Invoke((Action)i);
+                    ActionButtonClicked.Invoke((Actions)i);
+                    this.enabled = false;
                 }
                 nextbutton++;
             }
         }
-    }
-
-    public void testSubscriber(Action action)
-    {
-        Debug.Log("The action which is taken is " + action);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts.Inventory_System.Items;
 
 public class Square : MonoBehaviour
 {
@@ -98,4 +99,13 @@ public class Square : MonoBehaviour
                 square.Clear();
     }
 
+    public bool hasItemOnThis()
+    {
+        Transform itemslotforgrid = gameObject.transform.GetChild(1);
+        if(itemslotforgrid.GetComponent<AbstractItem>() != null)
+        {
+            return true;
+        }
+        return false;
+    }
 }
