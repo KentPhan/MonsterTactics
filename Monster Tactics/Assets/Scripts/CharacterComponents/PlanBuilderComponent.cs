@@ -23,6 +23,7 @@ namespace Assets.Scripts.CharacterComponents
         private PlayerPlan currentBuiltPlan;
         private int rayCastMask;
         private BuildingActionStates buildState;
+        private Square lastMovingSquare;
 
         // Start is called before the first frame update
         void Start()
@@ -73,16 +74,20 @@ namespace Assets.Scripts.CharacterComponents
                             break;
                         case BuildingActionStates.CHOOSE_MOVEMENT:
 
-                            // if clicked square is the same square the player is on. Cancel plan
+                            // if you click the player then cancel all the plan, have same effect as click cancel button
                             if (this.assignedPlayer.CurrentSquare == clickedSquare)
                             {
-                                //this.currentBuiltPlan.RemoveAllActionsFromQueue();
-                                //this.assignedPlayer.CurrentSquare.Clear();
-                                //this.buildState = BuildingActionStates.NONE;
+                                this.currentBuiltPlan.RemoveAllActionsFromQueue();
+                                this.assignedPlayer.CurrentSquare.Clear();
+                                this.buildState = BuildingActionStates.NONE;
+                                GridSystem.Instance.resetRootRenderer();
+
+                            // if you clicked same square as the last square you click for planning to move, then open a dialog and do some other actions
+                            }else if (lastMovingSquare == clickedSquare)
+                            {
+                                goto case BuildingActionStates.CHOOSE_ACTION;
                             }
                             // if clicked square falls within player range Queue Action
-                            // TODO hook up UI external subscribing as well as detecting what exists on the square here to determine allocated
-                            // action
                             else if (clickedSquare.IsInRange())
                             {
                                 if (this.currentBuiltPlan.AddActionToPlanQueue(
@@ -92,9 +97,10 @@ namespace Assets.Scripts.CharacterComponents
 
                                     // HighlightRoot
                                     GridSystem.Instance.highlightRoot(assignedPlayer.CurrentSquare,clickedSquare);
+                                    // Memorize the latest square the player clicked 
+                                    lastMovingSquare = clickedSquare;
                                     // Clear and update range
                                     clickedSquare.Clear();
-
                                     int newActionsPointLeft = this.assignedPlayer.ActionPointLimit - this.currentBuiltPlan.ActionPointCost;
                                     if(newActionsPointLeft >0)
                                         clickedSquare.Range(newActionsPointLeft);
@@ -104,16 +110,13 @@ namespace Assets.Scripts.CharacterComponents
                                     Debug.Log("Action not added to queue");
                                 }
                             }
-
-                            // if outside of range. do nothing
-
                             break;
                         case BuildingActionStates.CHOOSE_ACTION:
-                            if(this.assignedPlayer.CurrentSquare == clickedSquare)
-                            {
-                                //GridSystem
-                            }
+                            DialogSystem.Instance.TurnOnDialog(Input.mousePosition.x, Input.mousePosition.y);
+                            //this.buildState = BuildingActionStates.CHOOSE_MOVEMENT;
                             break;
+
+                        // if outside of range. do nothing
                         default:
                             throw new ArgumentOutOfRangeException();
                     }

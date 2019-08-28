@@ -39,19 +39,19 @@ public class DialogSystem : MonoBehaviour
         ui = GetComponent<DialogUI>();
     }
 
-    public void TurnOnDialog()
+    public void TurnOnDialog(float x, float y)
     {
         ui.parseAction();
-        if (!ui.checkIfInsideGUI(Input.mousePosition.x, Screen.height - Input.mousePosition.y))
+        if (!ui.checkIfInsideGUI(x, Screen.height - y))
         {
-            ui.topleftX = Input.mousePosition.x;
-            ui.topleftY = Screen.height - Input.mousePosition.y;
-            ui.topleftXOld = Input.mousePosition.x;
-            ui.topleftYOld = Screen.height - Input.mousePosition.y;
+            ui.topleftX = x;
+            ui.topleftY = Screen.height - y;
+            ui.topleftXOld = x;
+            ui.topleftYOld = Screen.height - y;
             ui.enabled = !ui.enabled;
 
             //Diable Dialog
-            enableDialog = false;
+            enableDialog = true;
         }
     }
 
