@@ -55,31 +55,14 @@ public class DialogSystem : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void TurnOffDialog()
     {
-        if (enableDialog)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hitInfo;
-                if (Physics.Raycast(ray, out hitInfo, 500, rayCastMask))
-                {
-                    ui.parseAction();
-                    if (!ui.checkIfInsideGUI(Input.mousePosition.x, Screen.height - Input.mousePosition.y))
-                    {
-                        ui.topleftX = Input.mousePosition.x;
-                        ui.topleftY = Screen.height - Input.mousePosition.y;
-                        ui.topleftXOld = Input.mousePosition.x;
-                        ui.topleftYOld = Screen.height - Input.mousePosition.y;
-                        ui.enabled = !ui.enabled;
+        enableDialog = false;
+    }
 
-                        //Diable Dialog
-                        enableDialog = false;
-                    }
-                }
-            }
-        }
+    public void SendActionList(List<Actions> actions)
+    {
+        ui.UpdateActionList(actions);
     }
 
 

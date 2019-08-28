@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts.Inventory_System.Items;
 
 namespace Assets.Scripts
 {
@@ -143,5 +144,15 @@ namespace Assets.Scripts
         }
 
         
+    }
+
+    public bool hasItemOnThis()
+    {
+        Transform itemslotforgrid = gameObject.transform.GetChild(1);
+        if(itemslotforgrid.GetComponent<AbstractItem>() != null)
+        {
+            return true;
+        }
+        return false;
     }
 }

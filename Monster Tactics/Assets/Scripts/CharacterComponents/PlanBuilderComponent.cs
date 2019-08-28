@@ -5,6 +5,7 @@ using Assets.Scripts.Classes.Actions;
 using Assets.Scripts.Constants;
 using Assets.Scripts.Managers;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.CharacterComponents
 {
@@ -37,6 +38,7 @@ namespace Assets.Scripts.CharacterComponents
             // TODO will have to adapt this to via which player is active
             CanvasManager.Instance.UIActionPanel.SubscribeToEndPlanningButton(SubmitPlan);
             CanvasManager.Instance.UIActionPanel.SubscribeToCancelPlanningButton(CancelPlan);
+            DialogUI.ActionButtonClicked += TakeAction;
         }
 
         // Update is called once per frame
@@ -112,8 +114,16 @@ namespace Assets.Scripts.CharacterComponents
                             }
                             break;
                         case BuildingActionStates.CHOOSE_ACTION:
+                            List<Actions> sendingactions = new List<Actions>();
+                            if (clickedSquare.hasItemOnThis())
+                            {
+                                sendingactions.Add(Actions.PickUpAndEquip);
+                                sendingactions.Add(Actions.PickUpAndStore);
+                            }
+                            sendingactions.Add(Actions.Attack);
+                            DialogSystem.Instance.SendActionList(sendingactions);
                             DialogSystem.Instance.TurnOnDialog(Input.mousePosition.x, Input.mousePosition.y);
-                            //this.buildState = BuildingActionStates.CHOOSE_MOVEMENT;
+                            this.buildState = BuildingActionStates.CHOOSE_MOVEMENT;
                             break;
 
                         // if outside of range. do nothing
@@ -169,6 +179,11 @@ namespace Assets.Scripts.CharacterComponents
             CanvasManager.Instance.UIActionPanel.HideEndPlanningButton();
             BattleManager.Instance.AdvanceFromPlayerPlanning();
             GridSystem.Instance.resetRootRenderer();
+        }
+
+        public void TakeAction(Actions action)
+        {
+            Debug.Log("The action which is taken is " + action);
         }
     }
 }
