@@ -12,6 +12,7 @@ namespace Assets.Scripts.CharacterComponents
     {
         NONE,
         CHOOSE_MOVEMENT,
+        CHOOSE_ACTION,
     }
 
     public class PlanBuilderComponent : MonoBehaviour
@@ -34,6 +35,7 @@ namespace Assets.Scripts.CharacterComponents
 
             // TODO will have to adapt this to via which player is active
             CanvasManager.Instance.UIActionPanel.SubscribeToEndPlanningButton(SubmitPlan);
+            CanvasManager.Instance.UIActionPanel.SubscribeToCancelPlanningButton(CancelPlan);
         }
 
         // Update is called once per frame
@@ -74,9 +76,9 @@ namespace Assets.Scripts.CharacterComponents
                             // if clicked square is the same square the player is on. Cancel plan
                             if (this.assignedPlayer.CurrentSquare == clickedSquare)
                             {
-                                this.currentBuiltPlan.RemoveAllActionsFromQueue();
-                                this.assignedPlayer.CurrentSquare.Clear();
-                                this.buildState = BuildingActionStates.NONE;
+                                //this.currentBuiltPlan.RemoveAllActionsFromQueue();
+                                //this.assignedPlayer.CurrentSquare.Clear();
+                                //this.buildState = BuildingActionStates.NONE;
                             }
                             // if clicked square falls within player range Queue Action
                             // TODO hook up UI external subscribing as well as detecting what exists on the square here to determine allocated
@@ -87,11 +89,13 @@ namespace Assets.Scripts.CharacterComponents
                                     CreateMovementAction(clickedSquare, clickedSquare.ActionPointCost())))
                                 {
                                     Debug.Log("Action added to queue");
+
                                     // HighlightRoot
                                     GridSystem.Instance.highlightRoot(assignedPlayer.CurrentSquare,clickedSquare);
                                     // Clear and update range
                                     clickedSquare.Clear();
-                                    int newActionsPointLeft = this.assignedPlayer.ActionPointLimit -this.currentBuiltPlan.ActionPointCost;
+
+                                    int newActionsPointLeft = this.assignedPlayer.ActionPointLimit - this.currentBuiltPlan.ActionPointCost;
                                     if(newActionsPointLeft >0)
                                         clickedSquare.Range(newActionsPointLeft);
                                 }
@@ -104,6 +108,12 @@ namespace Assets.Scripts.CharacterComponents
                             // if outside of range. do nothing
 
                             break;
+                        case BuildingActionStates.CHOOSE_ACTION:
+                            if(this.assignedPlayer.CurrentSquare == clickedSquare)
+                            {
+                                //GridSystem
+                            }
+                            break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
@@ -114,18 +124,15 @@ namespace Assets.Scripts.CharacterComponents
                     CanvasManager.Instance.UIInfoPanel.UpdateActionSpentValue(currentCost);
                     if (currentCost > 0)
                     {
-                        CanvasManager.Instance.UIActionPanel.ShowActions();
+                        CanvasManager.Instance.UIActionPanel.ShowCancelPlanningButton();
+                        CanvasManager.Instance.UIActionPanel.ShowEndPlanningButton();
                     }
                     else
                     {
-                        CanvasManager.Instance.UIActionPanel.HideActions();
+                        CanvasManager.Instance.UIActionPanel.HideCancelPlanningButton();
+                        CanvasManager.Instance.UIActionPanel.HideEndPlanningButton();
                     }
                 }
-            }
-
-            if (Input.GetButtonDown(Inputs.SUBMIT))
-            {
-                SubmitPlan();
             }
 
             //
@@ -139,12 +146,24 @@ namespace Assets.Scripts.CharacterComponents
             return o_moveAction;
         }
 
+        public void CancelPlan()
+        {
+            this.currentBuiltPlan.RemoveAllActionsFromQueue();
+            this.assignedPlayer.CurrentSquare.Clear();
+            this.buildState = BuildingActionStates.NONE;
+            GridSystem.Instance.resetRootRenderer();
+
+            // Update UI at the end of every action
+            int currentCost = this.currentBuiltPlan.ActionPointCost;
+            CanvasManager.Instance.UIInfoPanel.UpdateActionSpentValue(currentCost);
+        }
+
         public void SubmitPlan()
         {
             this.currentBuiltPlan.FinishPlan();
             this.assignedPlayer.CurrentSquare.Clear();
             this.buildState = BuildingActionStates.NONE;
-            CanvasManager.Instance.UIActionPanel.HideActions();
+            CanvasManager.Instance.UIActionPanel.HideEndPlanningButton();
             BattleManager.Instance.AdvanceFromPlayerPlanning();
             GridSystem.Instance.resetRootRenderer();
         }

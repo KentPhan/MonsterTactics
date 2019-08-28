@@ -8,17 +8,34 @@ namespace Assets.Scripts.UI
     public class UIActionPanel : MonoBehaviour
     {
         [SerializeField] private Button endPlanningButton;
+        [SerializeField] private Button cancelPlanningButton;
 
         // Start is called before the first frame update
         void Start()
         {
-            HideActions();
+            HideCancelPlanningButton();
+            HideEndPlanningButton();
         }
 
         // Update is called once per frame
         void Update()
         {
 
+        }
+
+        public void SubscribeToCancelPlanningButton(UnityAction clickEvent)
+        {
+            cancelPlanningButton.onClick.AddListener(clickEvent);
+        }
+
+        public void ShowCancelPlanningButton()
+        {
+            cancelPlanningButton.gameObject.SetActive(true);
+        }
+
+        public void HideCancelPlanningButton()
+        {
+            cancelPlanningButton.gameObject.SetActive(false);
         }
 
 
@@ -33,12 +50,12 @@ namespace Assets.Scripts.UI
         }
 
 
-        public void ShowActions()
+        public void ShowEndPlanningButton()
         {
             endPlanningButton.gameObject.SetActive(true);
         }
 
-        public void HideActions()
+        public void HideEndPlanningButton()
         {
             endPlanningButton.gameObject.SetActive(false);
         }

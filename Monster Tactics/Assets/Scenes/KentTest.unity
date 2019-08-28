@@ -3045,7 +3045,12 @@ PrefabInstance:
     - target: {fileID: 641098117567943166, guid: 3ba971a7ed530b9429b597a17df13a0f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 641098117567943166, guid: 3ba971a7ed530b9429b597a17df13a0f,
+        type: 3}
+      propertyPath: m_Name
+      value: DialogPanel
       objectReference: {fileID: 0}
     - target: {fileID: 1549719283, guid: 3ba971a7ed530b9429b597a17df13a0f, type: 3}
       propertyPath: m_fontColor.r
@@ -3082,6 +3087,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 8089598350555938864, guid: 3ba971a7ed530b9429b597a17df13a0f,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1986716472, guid: 3ba971a7ed530b9429b597a17df13a0f, type: 3}
       propertyPath: m_fontColor.r
@@ -22369,9 +22379,7 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0.5, z: 0}
-  - {x: 1000, y: 0.5, z: 1000}
+  m_Positions: []
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -29831,16 +29839,6 @@ PrefabInstance:
     - target: {fileID: 3851905119725147500, guid: ed89763265529e94eb93ff66799d6e24,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3851905119367936582, guid: ed89763265529e94eb93ff66799d6e24,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6812268252118356715, guid: ed89763265529e94eb93ff66799d6e24,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

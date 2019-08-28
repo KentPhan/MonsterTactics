@@ -177,6 +177,5 @@ namespace Assets.Scripts.Managers
         {
 
         }
-
     }
 }
