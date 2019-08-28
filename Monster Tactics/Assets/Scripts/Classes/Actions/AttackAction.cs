@@ -20,10 +20,9 @@ namespace Assets.Scripts.Classes.Actions
         protected override event EventHandler actionEnded;
         public override void PlayAction(Player player)
         {
-            EquipmentComponent equipmentComponent = player.GetComponent<EquipmentComponent>();
-            AttackComponent attackComponment = player.GetComponent<AttackComponent>();
-
-            throw new NotImplementedException();
+            AttackComponent attackComponent = player.GetComponent<AttackComponent>();
+            attackComponent.AttackSquare(target);
+            actionEnded?.Invoke(this,null);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Assets.Scripts.Managers
         {
             START,
             PLAY,
+            WIN,
             GAME_OVER
         }
 
@@ -55,7 +56,15 @@ namespace Assets.Scripts.Managers
         
         }
 
+        public void TriggerWin()
+        {
+            Debug.Log("WINNN!");
+        }
 
+        public void TriggerGameOver()
+        {
+            Debug.Log("GAME OVER");
+        }
 
 
     }

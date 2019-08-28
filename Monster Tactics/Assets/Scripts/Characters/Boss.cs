@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Assets.Scripts.Constants;
+using Assets.Scripts.Managers;
 using UnityEngine;
 
 namespace Assets.Scripts.Characters
@@ -42,7 +43,9 @@ namespace Assets.Scripts.Characters
 
         public void TakeDamage(int damage)
         {
-            throw new System.NotImplementedException();
+            this.health -= damage;
+            if(this.health <= 0)
+                GameManager.Instance.TriggerWin();
         }
 
         private void FindAndMarkSquare(SquareMarker marker)

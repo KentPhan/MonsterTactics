@@ -136,6 +136,12 @@ namespace Assets.Scripts
             meshRenderer.material.color = none;
         }
 
+        public bool IsTraversable()
+        {
+            return (meshRenderer.material.color != intraversable &&
+                    meshRenderer.material.color != intraversableHighlight);
+        }
+
         
     }
 }

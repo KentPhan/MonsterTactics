@@ -172,6 +172,11 @@ namespace Assets.Scripts.Managers
             AdvanceState();
         }
 
+        public Boss GetBoss()
+        {
+            return this.boss;
+        }
+
 
         public void EndBattle()
         {
