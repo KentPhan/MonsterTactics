@@ -12,6 +12,7 @@ namespace Assets.Scripts.Classes
     public class PlayerPlan
     {
         public bool FinishedPlanning { get; private set; }
+        private AbstractPlayerAction lastQueued;
         private Queue<AbstractPlayerAction> actionQueue;
         private event EventHandler planEnded;
 
@@ -45,9 +46,19 @@ namespace Assets.Scripts.Classes
             }
             else
             {
+                lastQueued = newAction;
                 actionQueue.Enqueue(newAction);
                 return true;
             }
+        }
+
+        public AbstractPlayerAction GetLastestActionFromPlanQueue()
+        {
+            if(lastQueued != null)
+            {
+                return lastQueued;
+            }
+            return null;
         }
 
         public void RemoveAllActionsFromQueue()
