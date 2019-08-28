@@ -1,8 +1,10 @@
 using System;
+using System.Numerics;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Classes.Actions;
 using UnityEngine;
 using UnityEngine.AI;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts.CharacterComponents
 {
@@ -12,6 +14,7 @@ namespace Assets.Scripts.CharacterComponents
         private NavMeshAgent agent;
         private bool isMoving;
         private Vector3 destination;
+        private Square destinationSquare;
         Animator anim;
 
         // Start is called before the first frame update
@@ -22,28 +25,39 @@ namespace Assets.Scripts.CharacterComponents
             isMoving = false;
         }
 
-        // Update is called once per frame
-        void FixedUpdate()
+
+        public void Update()
         {
             if (isMoving)
             {
-                float dist = agent.remainingDistance;
+                float dist = Vector3.Distance(transform.position, this.destination);
                 if (dist != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete &&
-                    agent.remainingDistance <= 0.0f)
+                    dist <= 10.0f)
                 {
                     Debug.Log("Invoking Finished Move Event");
                     isMoving = false;
-                    GetComponent<Player>().FindAndUpdateSquare();
+                    GetComponent<Player>().SetSquare(destinationSquare);
                     OnFinishedAction?.Invoke(this, null);
                 }
+                Debug.Log(dist);
             }
+        }
+
+        // Update is called once per frame
+        void FixedUpdate()
+        {
             anim.SetBool("move", isMoving);
         }
-        public void Move(Square destinationSquare)
+        public void Move(Square destSquare)
         {
-            isMoving = true;
-            this.destination = destinationSquare.transform.position;
-            agent.SetDestination(this.destination);
+            Debug.Log("Setting Movement");
+            Vector3 newDestination = destSquare.transform.position;
+            if (agent.SetDestination(newDestination))
+            {
+                isMoving = true;
+                this.destination = newDestination;
+                this.destinationSquare = destSquare;
+            }
         }
 
         public event EventHandler OnFinishedAction;
