@@ -12,12 +12,13 @@ namespace Assets.Scripts
             BOSS
         }
 
-        [SerializeField] protected Color none = Color.clear,
+        [SerializeField]
+        protected Color none = Color.clear,
             peek = Color.cyan,
             traversible = Color.yellow,
             select = Color.green,
             traversing = Color.blue,
-            intraversable = new Color(0.8f,0,0),
+            intraversable = new Color(0.8f, 0, 0),
             intraversableHighlight = Color.red;
 
         public List<Square> neighbors = new List<Square>();
@@ -85,7 +86,7 @@ namespace Assets.Scripts
                 meshRenderer.material.color = none;
             else if (meshRenderer.material.color == select)
                 meshRenderer.material.color = traversible;
-            else if(meshRenderer.material.color == intraversableHighlight)
+            else if (meshRenderer.material.color == intraversableHighlight)
                 meshRenderer.material.color = intraversable;
         }
 
@@ -126,7 +127,7 @@ namespace Assets.Scripts
                 if (square.meshRenderer.material.color == traversible || square.meshRenderer.material.color == select || square.meshRenderer.material.color == intraversable)
                     square.Clear();
         }
-        
+
         public void SetNotTraversable()
         {
             meshRenderer.material.color = intraversable;
@@ -143,16 +144,16 @@ namespace Assets.Scripts
                     meshRenderer.material.color != intraversableHighlight);
         }
 
-        
+        public bool hasItemOnThis()
+        {
+            Transform itemslotforgrid = gameObject.transform.GetChild(1);
+            if (itemslotforgrid.GetComponent<AbstractItem>() != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
-    public bool hasItemOnThis()
-    {
-        Transform itemslotforgrid = gameObject.transform.GetChild(1);
-        if(itemslotforgrid.GetComponent<AbstractItem>() != null)
-        {
-            return true;
-        }
-        return false;
-    }
+
 }
