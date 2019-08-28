@@ -35,6 +35,11 @@ namespace Assets.Scripts.Characters
             anim.SetBool("attack", false);
         }
 
+        public void SetSquare(Square square)
+        {
+            this.currentSquare = square;
+        }
+
         public void FindAndUpdateSquare()
         {
             // Raycast downward to find current square
