@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Assets.Scripts.Classes.Actions;
 using Assets.Scripts.Managers;
 using UnityEngine;
@@ -18,7 +18,7 @@ namespace Assets.Scripts.CharacterComponents
         // Update is called once per frame
         void Update()
         {
-        
+
         }
 
         public void AttackSquare(Square target)

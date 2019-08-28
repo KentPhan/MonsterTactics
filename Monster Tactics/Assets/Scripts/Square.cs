@@ -153,6 +153,16 @@ namespace Assets.Scripts
             }
             return false;
         }
+
+        public Square getNearestAttackableZone()
+        {
+            foreach (Square neighbor in neighbors)
+            {
+                if (!neighbor.IsTraversable())
+                    return neighbor;
+            }
+            return null;
+        }
     }
 
 

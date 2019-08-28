@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Constants;
@@ -6,10 +6,10 @@ using Assets.Scripts.Constants;
 public class DialogUI : MonoBehaviour
 {
     //public enum Action {Move,Pick,Fight};
-    private int maxActionNum = 3;
+    private int maxActionNum = 4;
     private bool[] actionListTable;
     private List<Actions> ActionList;
-    
+
 
     [HideInInspector]
     public float topleftX;
@@ -24,7 +24,7 @@ public class DialogUI : MonoBehaviour
     private int buttonHeight = 50;
 
     public delegate void EventHandler(Actions action);
-    public static event EventHandler ActionButtonClicked = new EventHandler((actionL)=> { });
+    public static event EventHandler ActionButtonClicked = new EventHandler((actionL) => { });
 
     private void Awake()
     {
@@ -47,11 +47,11 @@ public class DialogUI : MonoBehaviour
 
     public void parseAction()
     {
-        for(int i = 0; i < maxActionNum; i++)
+        for (int i = 0; i < maxActionNum; i++)
         {
             actionListTable[i] = false;
         }
-        foreach(Actions action in ActionList)
+        foreach (Actions action in ActionList)
         {
             actionListTable[(int)action] = true;
         }
@@ -59,7 +59,7 @@ public class DialogUI : MonoBehaviour
 
     public bool checkIfInsideGUI(float x, float y)
     {
-        if( x > topleftXOld && x < topleftXOld + buttonWidth)
+        if (x > topleftXOld && x < topleftXOld + buttonWidth)
         {
             if (y > topleftYOld && y < ActionList.Count * buttonHeight + topleftYOld)
             {
@@ -72,7 +72,7 @@ public class DialogUI : MonoBehaviour
     void OnGUI()
     {
         int nextbutton = 0;
-        for(int i = 0;i < maxActionNum; i++)
+        for (int i = 0; i < maxActionNum; i++)
         {
             if (actionListTable[i])
             {

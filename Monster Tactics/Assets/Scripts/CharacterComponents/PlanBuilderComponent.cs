@@ -13,18 +13,20 @@ namespace Assets.Scripts.CharacterComponents
     {
         NONE,
         CHOOSE_MOVEMENT,
-        CHOOSE_ACTION,
+        CHOOSE_ACTION
     }
 
     public class PlanBuilderComponent : MonoBehaviour
     {
         public PlayerPlan Plan => currentBuiltPlan;
-        
+
         private Player assignedPlayer;
         private PlayerPlan currentBuiltPlan;
         private int rayCastMask;
         private BuildingActionStates buildState;
         private Square lastMovingSquare;
+        private Square attackTargetedSquare; //Hack
+
 
         // Start is called before the first frame update
         void Start()
@@ -84,8 +86,9 @@ namespace Assets.Scripts.CharacterComponents
                                 this.buildState = BuildingActionStates.NONE;
                                 GridSystem.Instance.resetRootRenderer();
 
-                            // if you clicked same square as the last square you click for planning to move, then open a dialog and do some other actions
-                            }else if (lastMovingSquare == clickedSquare)
+                                // if you clicked same square as the last square you click for planning to move, then open a dialog and do some other actions
+                            }
+                            else if (lastMovingSquare == clickedSquare)
                             {
                                 goto case BuildingActionStates.CHOOSE_ACTION;
                             }
@@ -98,14 +101,12 @@ namespace Assets.Scripts.CharacterComponents
                                     Debug.Log("Action added to queue");
 
                                     // HighlightRoot
-                                    GridSystem.Instance.highlightRoot(assignedPlayer.CurrentSquare,clickedSquare);
+                                    GridSystem.Instance.highlightRoot(assignedPlayer.CurrentSquare, clickedSquare);
                                     // Memorize the latest square the player clicked 
                                     lastMovingSquare = clickedSquare;
+
                                     // Clear and update range
-                                    clickedSquare.Clear();
-                                    int newActionsPointLeft = this.assignedPlayer.ActionPointLimit - this.currentBuiltPlan.ActionPointCost;
-                                    if(newActionsPointLeft >0)
-                                        clickedSquare.Range(newActionsPointLeft);
+                                    UpdateMovingSquareRange(this.lastMovingSquare);
                                 }
                                 else
                                 {
@@ -115,15 +116,27 @@ namespace Assets.Scripts.CharacterComponents
                             break;
                         case BuildingActionStates.CHOOSE_ACTION:
                             List<Actions> sendingactions = new List<Actions>();
+
+                            // Add Pickups if applicable
                             if (clickedSquare.hasItemOnThis())
                             {
                                 sendingactions.Add(Actions.PickUpAndEquip);
                                 sendingactions.Add(Actions.PickUpAndStore);
                             }
-                            sendingactions.Add(Actions.Attack);
-                            DialogSystem.Instance.SendActionList(sendingactions);
-                            DialogSystem.Instance.TurnOnDialog(Input.mousePosition.x, Input.mousePosition.y);
-                            this.buildState = BuildingActionStates.CHOOSE_MOVEMENT;
+
+                            // Add Attack if applicable
+                            if ((this.attackTargetedSquare = clickedSquare.getNearestAttackableZone()) != null)
+                            {
+                                sendingactions.Add(Actions.Attack);
+                            }
+
+                            // Display actions
+                            if (sendingactions.Count > 0)
+                            {
+                                sendingactions.Add(Actions.Cancel);
+                                DialogSystem.Instance.SendActionList(sendingactions);
+                                DialogSystem.Instance.TurnOnDialog(Input.mousePosition.x, Input.mousePosition.y);
+                            }
                             break;
 
                         // if outside of range. do nothing
@@ -184,6 +197,41 @@ namespace Assets.Scripts.CharacterComponents
         public void TakeAction(Actions action)
         {
             Debug.Log("The action which is taken is " + action);
+            switch (action)
+            {
+                case Actions.PickUpAndEquip:
+                    // TODO Add
+                    break;
+                case Actions.PickUpAndStore:
+                    // TODO Add
+                    break;
+                case Actions.Attack:
+                    this.currentBuiltPlan.AddActionToPlanQueue(new AttackAction(this.attackTargetedSquare, 1));
+                    this.attackTargetedSquare = null;
+                    break;
+                case Actions.Cancel:
+                    this.buildState = BuildingActionStates.CHOOSE_MOVEMENT;
+                    return;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(action), action, null);
+            }
+            this.buildState = BuildingActionStates.CHOOSE_MOVEMENT;
+
+            // Update Range indicator
+            UpdateMovingSquareRange(this.lastMovingSquare);
+
+
+            // Update UI
+            int currentCost = this.currentBuiltPlan.ActionPointCost;
+            CanvasManager.Instance.UIInfoPanel.UpdateActionSpentValue(currentCost);
+        }
+
+        private void UpdateMovingSquareRange(Square squareToUpdate)
+        {
+            squareToUpdate.Clear();
+            int newActionsPointLeft = this.assignedPlayer.ActionPointLimit - this.currentBuiltPlan.ActionPointCost;
+            if (newActionsPointLeft > 0)
+                squareToUpdate.Range(newActionsPointLeft);
         }
     }
 }
