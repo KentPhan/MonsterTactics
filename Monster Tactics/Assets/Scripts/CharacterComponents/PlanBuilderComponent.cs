@@ -146,6 +146,7 @@ namespace Assets.Scripts.CharacterComponents
             this.buildState = BuildingActionStates.NONE;
             CanvasManager.Instance.UIActionPanel.HideActions();
             BattleManager.Instance.AdvanceFromPlayerPlanning();
+            GridSystem.Instance.resetRootRenderer();
         }
     }
 }

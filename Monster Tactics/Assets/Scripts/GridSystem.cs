@@ -33,15 +33,40 @@ public class GridSystem : MonoBehaviour
             theMap.Add(square.transform.localPosition, square);
             //squares.Add(square);
         }
+
+        // For rootRenderer
         rootRenderer = GetComponent<LineRenderer>();
+        resetRootRenderer();
     }
 
     public void highlightRoot(Square startSquare,Square endSquare)
     {
         Vector3 startposition = new Vector3(startSquare.transform.position.x, 0.5f, startSquare.transform.position.z);
         Vector3 endposition = new Vector3(endSquare.transform.position.x, 0.5f, endSquare.transform.position.z);
-        rootRenderer.positionCount = 2;
-        rootRenderer.SetPosition(0, startposition);
-        rootRenderer.SetPosition(1, endposition);
+        int numberofpoints = rootRenderer.positionCount;
+        if(!isRendererDrawing())
+        {
+            rootRenderer.positionCount = numberofpoints + 1;
+            rootRenderer.SetPosition(numberofpoints - 1, startposition);
+        }
+        else
+        {
+            rootRenderer.positionCount = numberofpoints + 1;
+        }
+        rootRenderer.SetPosition(numberofpoints, endposition);
+    }
+
+    public void resetRootRenderer()
+    {
+        rootRenderer.positionCount = 1;
+    }
+
+    public bool isRendererDrawing()
+    {
+        if(rootRenderer.positionCount == 1)
+        {
+            return false;
+        }
+        return true;
     }
 }
