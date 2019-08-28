@@ -36,11 +36,24 @@ namespace Assets.Scripts.CharacterComponents
             this.rayCastMask = LayerMask.GetMask(Layers.GRID);
             this.buildState = BuildingActionStates.NONE;
 
+            DisableAsPlanningPlayer();
+        }
 
+        public void EnableAsPlanningPlayer()
+        {
             // TODO will have to adapt this to via which player is active
+            this.enabled = true;
             CanvasManager.Instance.UIActionPanel.SubscribeToEndPlanningButton(SubmitPlan);
             CanvasManager.Instance.UIActionPanel.SubscribeToCancelPlanningButton(CancelPlan);
             DialogUI.ActionButtonClicked += TakeAction;
+        }
+
+        public void DisableAsPlanningPlayer()
+        {
+            this.enabled = false;
+            CanvasManager.Instance.UIActionPanel.UnsubscribeToEndPlanningButton(SubmitPlan);
+            CanvasManager.Instance.UIActionPanel.UnsubscribeToCancelPlanningButton(CancelPlan);
+            DialogUI.ActionButtonClicked -= TakeAction;
         }
 
         // Update is called once per frame

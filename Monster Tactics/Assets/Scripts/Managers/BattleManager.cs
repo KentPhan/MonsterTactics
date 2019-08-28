@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.CharacterComponents;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Classes;
+using Cinemachine;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -20,13 +21,22 @@ namespace Assets.Scripts.Managers
         END_BATTLE // Battle End
     }
 
+
+
     public class BattleManager : MonoBehaviour
     {
+        [Serializable]
+        private struct PlayerParts
+        {
+            public Player Player;
+            public CinemachineVirtualCamera VCamera;
+        }
+
         // Unity Exposed Fields
 
 
         // Member Properties
-        [SerializeField] private List<Player> players;
+        [SerializeField] private List<PlayerParts> players;
         [SerializeField] private Boss boss;
         private int currentPlayerIndex;
 
@@ -94,6 +104,8 @@ namespace Assets.Scripts.Managers
             {
                 case BattleStates.START_BATTLE: // Input Advance
                     this.currentBattleState = BattleStates.PLAYER_PLAN;
+                    this.players[0].Player.GetComponent<PlanBuilderComponent>().EnableAsPlanningPlayer();
+                    PrioritizeCamera(this.players[0]);
                     break;
                 case BattleStates.PLAYER_PLAN: // Input Advance
 
@@ -101,9 +113,12 @@ namespace Assets.Scripts.Managers
                     bool playerNotPlanned = false;
                     foreach (var player in players)
                     {
-                        if (!player.GetComponent<PlanBuilderComponent>().Plan.FinishedPlanning)
+                        PlanBuilderComponent plan = player.Player.GetComponent<PlanBuilderComponent>();
+                        if (!plan.Plan.FinishedPlanning)
                         {
                             playerNotPlanned = true;
+                            PrioritizeActivePlayer(player);
+                            PrioritizeCamera(player);
                             break;
                         }
                     }
@@ -117,7 +132,7 @@ namespace Assets.Scripts.Managers
                     // Play next plan
                     if (currentPlayerIndex < players.Count)
                     {
-                        PlayerPlan currentPlan = this.players[currentPlayerIndex].GetComponent<PlanBuilderComponent>().Plan;
+                        PlayerPlan currentPlan = this.players[currentPlayerIndex].Player.GetComponent<PlanBuilderComponent>().Plan;
                         currentPlan.SubscribeToPlanEnd(OnPlayerPlanFinished);
                         currentPlan.PlayPlan();
                     }
@@ -139,6 +154,8 @@ namespace Assets.Scripts.Managers
                     break;
                 case BattleStates.RESOLUTION:
                     this.currentBattleState = BattleStates.PLAYER_PLAN;
+                    PrioritizeActivePlayer(players[0]);
+                    PrioritizeCamera(players[0]);
 
                     break;
                 case BattleStates.END_BATTLE:
@@ -167,14 +184,44 @@ namespace Assets.Scripts.Managers
 
         public void AdvanceFromPlayerPlanning()
         {
-            // TODO Clean up?
-            Debug.Log("Advancing Player Plans");
             AdvanceState();
         }
 
         public Boss GetBoss()
         {
             return this.boss;
+        }
+
+        private void PrioritizeCamera(PlayerParts player)
+        {
+            foreach (PlayerParts person in this.players)
+            {
+                if (person.Player == player.Player)
+                {
+                    person.VCamera.Priority = 1;
+                }
+                else
+                {
+                    person.VCamera.Priority = 0;
+                }
+            }
+        }
+
+        private void PrioritizeActivePlayer(PlayerParts player)
+        {
+
+            foreach (PlayerParts person in this.players)
+            {
+                PlanBuilderComponent plan = person.Player.GetComponent<PlanBuilderComponent>();
+                if (person.Player == player.Player)
+                {
+                    plan.EnableAsPlanningPlayer();
+                }
+                else
+                {
+                    plan.DisableAsPlanningPlayer();
+                }
+            }
         }
 
 

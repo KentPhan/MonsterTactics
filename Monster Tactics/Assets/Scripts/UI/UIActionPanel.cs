@@ -23,25 +23,47 @@ namespace Assets.Scripts.UI
 
         }
 
-        public void SubscribeToCancelPlanningButton(UnityAction clickEvent)
-        {
-            cancelPlanningButton.onClick.AddListener(clickEvent);
-        }
-
         public void ShowCancelPlanningButton()
         {
             cancelPlanningButton.gameObject.SetActive(true);
         }
-
         public void HideCancelPlanningButton()
         {
             cancelPlanningButton.gameObject.SetActive(false);
         }
+        public void SubscribeToCancelPlanningButton(UnityAction clickEvent)
+        {
+            cancelPlanningButton.onClick.AddListener(clickEvent);
+        }
+        public void UnsubscribeToCancelPlanningButton(UnityAction clickEvent)
+        {
+            cancelPlanningButton.onClick.RemoveListener(clickEvent);
+        }
+        public void UnsubscribeAllCancelPlanningButton()
+        {
+            cancelPlanningButton.onClick.RemoveAllListeners();
+        }
 
 
+
+
+
+        public void ShowEndPlanningButton()
+        {
+            endPlanningButton.gameObject.SetActive(true);
+        }
+        public void HideEndPlanningButton()
+        {
+            endPlanningButton.gameObject.SetActive(false);
+        }
         public void SubscribeToEndPlanningButton(UnityAction clickEvent)
         {
             endPlanningButton.onClick.AddListener(clickEvent);
+        }
+
+        public void UnsubscribeToEndPlanningButton(UnityAction clickEvent)
+        {
+            endPlanningButton.onClick.RemoveListener(clickEvent);
         }
 
         public void UnsubscribeAllToEndPlanningButton()
@@ -50,15 +72,9 @@ namespace Assets.Scripts.UI
         }
 
 
-        public void ShowEndPlanningButton()
-        {
-            endPlanningButton.gameObject.SetActive(true);
-        }
 
-        public void HideEndPlanningButton()
-        {
-            endPlanningButton.gameObject.SetActive(false);
-        }
+
+
 
     }
 }

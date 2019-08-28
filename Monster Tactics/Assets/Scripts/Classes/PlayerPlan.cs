@@ -54,7 +54,7 @@ namespace Assets.Scripts.Classes
 
         public AbstractPlayerAction GetLastestActionFromPlanQueue()
         {
-            if(lastQueued != null)
+            if (lastQueued != null)
             {
                 return lastQueued;
             }
@@ -95,6 +95,7 @@ namespace Assets.Scripts.Classes
             AbstractPlayerAction action = (actionQueue.Count <= 0) ? null : actionQueue.Dequeue();
             if (action == null)
             {
+                this.FinishedPlanning = false;
                 planEnded?.Invoke(this, null);
                 return;
             }
