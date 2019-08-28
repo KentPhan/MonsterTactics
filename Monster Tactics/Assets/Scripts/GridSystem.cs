@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GridSystem : MonoBehaviour
 {
@@ -69,5 +72,23 @@ public class GridSystem : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+
+    public List<Square> GetRandomListOfSquares(float density)
+    {
+        List<Square> toReturn = new List<Square>();
+
+        foreach (KeyValuePair<Vector3,Square> pair in theMap)
+        {
+            // Probability 
+            if (Random.Range(0.0f, 1.0f) <= density)
+            {
+                toReturn.Add(pair.Value);
+            }
+        }
+
+        return toReturn;
+
     }
 }
