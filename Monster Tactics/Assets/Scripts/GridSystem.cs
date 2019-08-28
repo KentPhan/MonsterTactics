@@ -14,6 +14,8 @@ public class GridSystem : MonoBehaviour
     //[System.NonSerialized] public List<Square> squares = new List<Square>();
     public Dictionary<Vector3, Square> theMap = new Dictionary<Vector3, Square>();
 
+    protected LineRenderer rootRenderer;
+
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -31,6 +33,15 @@ public class GridSystem : MonoBehaviour
             theMap.Add(square.transform.localPosition, square);
             //squares.Add(square);
         }
+        rootRenderer = GetComponent<LineRenderer>();
     }
 
+    public void highlightRoot(Square startSquare,Square endSquare)
+    {
+        Vector3 startposition = new Vector3(startSquare.transform.position.x, 0.5f, startSquare.transform.position.z);
+        Vector3 endposition = new Vector3(endSquare.transform.position.x, 0.5f, endSquare.transform.position.z);
+        rootRenderer.positionCount = 2;
+        rootRenderer.SetPosition(0, startposition);
+        rootRenderer.SetPosition(1, endposition);
+    }
 }
