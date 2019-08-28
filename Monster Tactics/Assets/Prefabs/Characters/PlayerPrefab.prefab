@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99708aa8099808c45917af3d0470dffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 3
   actionPointLimit: 10
   playerCamera: {fileID: 0}
 --- !u!114 &9090672280961711317

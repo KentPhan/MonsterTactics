@@ -69,7 +69,9 @@ namespace Assets.Scripts.Characters
 
         public void TakeDamage(int damage)
         {
-            throw new System.NotImplementedException();
+            this.health -= damage;
+            if (this.health <= 0)
+                GameManager.Instance.TriggerGameOver();
         }
     }
 }

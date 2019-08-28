@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.CharacterComponents;
 using Assets.Scripts.Characters;
 using Assets.Scripts.Classes;
@@ -185,6 +186,11 @@ namespace Assets.Scripts.Managers
         public void AdvanceFromPlayerPlanning()
         {
             AdvanceState();
+        }
+
+        public List<Player> GetPlayers()
+        {
+            return this.players.Select((p)=> p.Player).ToList();
         }
 
         public Boss GetBoss()

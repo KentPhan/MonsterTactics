@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.Characters;
 using Assets.Scripts.Classes.Actions;
 using Assets.Scripts.Managers;
 using Cinemachine.Utility;
@@ -15,16 +16,17 @@ namespace Assets.Scripts.CharacterComponents
         [SerializeField] private float DistanceOfMovement;
         [SerializeField] [Range(0.1f, 1.0f)]private float SinWaveAttackFrequency = 0.5f;
         [SerializeField] [Range(0.1f, 10.0f)] private int NumberOfAttacks = 2;
+        [SerializeField] [Range(0.1f, 10.0f)] private int BaseAttackPower = 2;
 
         private bool playingAttack;
-        private List<Tuple<Vector3,GameObject>> spikeGameObjects;// Stores base position of spike and spike gameobject
+        private List<Tuple<Vector3,GameObject,Square>> spikeGameObjects;// Stores base position of spike and spike gameobject
         private float sinTime;
         private float attackTime;
 
         private void Awake()
         {
             this.playingAttack = false;
-            this.spikeGameObjects = new List<Tuple<Vector3,GameObject>>();
+            this.spikeGameObjects = new List<Tuple<Vector3,GameObject,Square>>();
             this.sinTime = 0.0f;
         }
 
@@ -55,14 +57,26 @@ namespace Assets.Scripts.CharacterComponents
                 // Apply Damage after finishing animating Attack
                 sinTime += Time.deltaTime;
 
-                // End Attack
-                Debug.Log(sinTime + " " + this.attackTime);
+                // End Attack and apply damage
                 if (sinTime > this.attackTime)
                 {
+                    List<Player> players = BattleManager.Instance.GetPlayers();
+                    foreach (var spike in spikeGameObjects)
+                    {
+                        foreach (Player player in players)
+                        {
+                            if (spike.Item3 == player.CurrentSquare)
+                            {
+                                player.TakeDamage(BaseAttackPower);
+                            }
+                        }
+                    }
                     ResetAttack();
                 }
             }
         }
+
+        
 
         private void ResetAttack()
         {
@@ -85,7 +99,7 @@ namespace Assets.Scripts.CharacterComponents
                 Vector3 SpawnPosition = target.transform.position;
                 SpawnPosition.y -= DistanceBelowGround;
                 GameObject newGameObject = Instantiate(this.SpikePrefab, SpawnPosition, Quaternion.identity,this.transform.parent.transform);
-                this.spikeGameObjects.Add(new Tuple<Vector3, GameObject>(newGameObject.transform.position,newGameObject));
+                this.spikeGameObjects.Add(new Tuple<Vector3, GameObject,Square>(newGameObject.transform.position,newGameObject,target));
                 
             }
         }
