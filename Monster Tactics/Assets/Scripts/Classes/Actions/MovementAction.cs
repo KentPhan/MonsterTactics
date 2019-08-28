@@ -22,7 +22,6 @@ namespace Assets.Scripts.Classes.Actions
 
         public override void PlayAction(Player player)
         {
-            Debug.Log("Playing Movement Action");
             MovementComponent movementComponent = player.GetComponent<MovementComponent>();
             movementComponent.OnFinishedAction += OnMovementFinished;
             movementComponent.Move(this.destination);
@@ -30,8 +29,6 @@ namespace Assets.Scripts.Classes.Actions
 
         private void OnMovementFinished(object sender, EventArgs args)
         {
-            Debug.Log("Cleaning Movement Action");
-
             ((MovementComponent)sender).OnFinishedAction -= OnMovementFinished;
             actionEnded?.Invoke(this, new EventArgs());
         }
