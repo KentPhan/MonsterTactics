@@ -9,20 +9,23 @@ namespace Assets.Scripts.Classes.Actions
 {
     public class SwapWeaponAction : AbstractAction
     {
+        Player player;
         AbstractItem playersweapon;
         AbstractItem inventoryweapon;
 
         public SwapWeaponAction(ref Player player,int actionPointCost) : base(actionPointCost)
         {
+            this.player = player;
         }
 
         protected override event EventHandler actionEnded;
 
         public override void PlayAction(AbstractCharacter character)
         {
-            if (((Player)character).WeaponSlot.GetComponent<AbstractItem>() != null)
+            Debug.Log("weapon swap is played");
+            if (player.WeaponSlot.GetComponent<AbstractItem>() != null)
             {
-                playersweapon = ((Player)character).WeaponSlot.GetComponent<AbstractItem>();
+                playersweapon = player.WeaponSlot.GetComponent<AbstractItem>();
             }
 
             if (Inventory_System.InventorySystem.Instance.WeaponSlot.GetComponent<AbstractItem>() != null)
@@ -37,10 +40,10 @@ namespace Assets.Scripts.Classes.Actions
             }
             if(inventoryweapon != null)
             {
-                CopyComponent(inventoryweapon, ((Player)character).WeaponSlot);
+                CopyComponent(inventoryweapon, (player.WeaponSlot));
                 inventoryweapon.Destroythis();
             }
-
+            
             actionEnded?.Invoke(this, null);
         }
 
