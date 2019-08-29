@@ -9,21 +9,21 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes
 {
-    public class PlayerPlan
+    public class Plan
     {
         public bool FinishedPlanning { get; private set; }
-        private AbstractPlayerAction lastQueued;
-        private Queue<AbstractPlayerAction> actionQueue;
+        private AbstractAction lastQueued;
+        private Queue<AbstractAction> actionQueue;
         private event EventHandler planEnded;
 
-        private Player targetPlayer;
+        private AbstractCharacter targetCharacter;
         private int actionPointLimit;
         public int ActionPointCost
         {
             get
             {
                 int totalCost = 0;
-                foreach (AbstractPlayerAction action in actionQueue)
+                foreach (AbstractAction action in actionQueue)
                 {
                     totalCost += action.ActionPointCost;
                 }
@@ -31,14 +31,14 @@ namespace Assets.Scripts.Classes
             }
         }
 
-        public PlayerPlan(Player target, int actionPointLimit)
+        public Plan(Player target, int actionPointLimit)
         {
-            this.targetPlayer = target;
+            this.targetCharacter = target;
             this.actionPointLimit = actionPointLimit;
-            this.actionQueue = new Queue<AbstractPlayerAction>();
+            this.actionQueue = new Queue<AbstractAction>();
         }
 
-        public bool AddActionToPlanQueue(AbstractPlayerAction newAction)
+        public bool AddActionToPlanQueue(AbstractAction newAction)
         {
             if ((newAction.ActionPointCost + this.ActionPointCost) > this.actionPointLimit)
             {
@@ -52,7 +52,7 @@ namespace Assets.Scripts.Classes
             }
         }
 
-        public AbstractPlayerAction GetLastestActionFromPlanQueue()
+        public AbstractAction GetLastestActionFromPlanQueue()
         {
             if (lastQueued != null)
             {
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Classes
             // Play first action
             if (this.FinishedPlanning)
             {
-                AbstractPlayerAction action = actionQueue.Dequeue();
+                AbstractAction action = actionQueue.Dequeue();
 
                 if (action == null)
                 {
@@ -80,7 +80,7 @@ namespace Assets.Scripts.Classes
                 }
 
                 action.SubscribeToActionEnd(CurrentActionFinished);
-                action.PlayAction(this.targetPlayer);
+                action.PlayAction(this.targetCharacter);
             }
             else
             {
@@ -90,9 +90,9 @@ namespace Assets.Scripts.Classes
 
         private void CurrentActionFinished(object sender, EventArgs args)
         {
-            ((AbstractPlayerAction)sender).UnsubscribeToActionEnd(CurrentActionFinished);
+            ((AbstractAction)sender).UnsubscribeToActionEnd(CurrentActionFinished);
 
-            AbstractPlayerAction action = (actionQueue.Count <= 0) ? null : actionQueue.Dequeue();
+            AbstractAction action = (actionQueue.Count <= 0) ? null : actionQueue.Dequeue();
             if (action == null)
             {
                 this.FinishedPlanning = false;
@@ -101,7 +101,7 @@ namespace Assets.Scripts.Classes
             }
 
             action.SubscribeToActionEnd(CurrentActionFinished);
-            action.PlayAction(this.targetPlayer);
+            action.PlayAction(this.targetCharacter);
         }
 
         public void SubscribeToPlanEnd(EventHandler callback)

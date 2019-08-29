@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.Actions
 {
-    public abstract class AbstractPlayerAction
+    public abstract class AbstractAction
     {
         [SerializeField] protected int actionPointCost; public int ActionPointCost => this.actionPointCost;
         protected abstract event EventHandler actionEnded;
 
-        protected AbstractPlayerAction(int actionPointCost)
+        protected AbstractAction(int actionPointCost)
         {
             this.actionPointCost = actionPointCost;
         }

@@ -8,7 +8,7 @@ using Assets.Scripts.Characters;
 
 namespace Assets.Scripts.Classes.Actions
 {
-    public class BossAttackAction : AbstractPlayerAction
+    public class BossAttackAction : AbstractAction
     {
         private List<Square> attackedSquares;
 
