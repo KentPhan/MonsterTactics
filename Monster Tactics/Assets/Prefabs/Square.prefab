@@ -152,11 +152,11 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0.5, y: 0.1, z: 0.5}
-  - {x: 0.5, y: 0.1, z: -0.5}
-  - {x: -0.5, y: 0.1, z: -0.5}
-  - {x: -0.5, y: 0.1, z: 0.5}
-  - {x: 0.5, y: 0.1, z: 0.5}
+  - {x: 5, y: 0.1, z: 5}
+  - {x: 5, y: 0.1, z: -5}
+  - {x: -5, y: 0.1, z: -5}
+  - {x: -5, y: 0.1, z: 5}
+  - {x: 5, y: 0.1, z: 5}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1.5
@@ -223,7 +223,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.1, z: 1}
+  m_Size: {x: 10, y: 0.1, z: 10}
   m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!114 &6896951157653777100
 MonoBehaviour:
@@ -242,6 +242,8 @@ MonoBehaviour:
   traversible: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.47058824}
   select: {r: 0, g: 1, b: 0, a: 0.47058824}
   traversing: {r: 0, g: 0, b: 1, a: 1}
+  intraversable: {r: 0.8, g: 0, b: 0, a: 1}
+  intraversableHighlight: {r: 1, g: 0, b: 0, a: 1}
   neighbors: []
   meshRenderer: {fileID: 3686323373483027124}
   loot: {fileID: 7464792722550489815, guid: f0131992e909ca7468ae1dfeed3df4ea, type: 3}
@@ -273,7 +275,7 @@ Transform:
   m_GameObject: {fileID: 6812268252118356715}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 0.1, y: 1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3851905119725147500}
   m_RootOrder: 0

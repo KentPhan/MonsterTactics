@@ -14,6 +14,7 @@ namespace Assets.Scripts.Managers
         START_BATTLE, // Battle Start
 
         // Main battle loop here
+        BOSS_PLAN,
         PLAYER_PLAN, // Player Planning phase (where player takes control)
         PLAYER_ACTION,// Playing the player's action
         BOSS_ACTION, // Boss Action
@@ -94,6 +95,8 @@ namespace Assets.Scripts.Managers
                     break;
                 case BattleStates.END_BATTLE:
                     break;
+                case BattleStates.BOSS_PLAN:
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -133,7 +136,7 @@ namespace Assets.Scripts.Managers
                     // Play next plan
                     if (currentPlayerIndex < players.Count)
                     {
-                        PlayerPlan currentPlan = this.players[currentPlayerIndex].Player.GetComponent<PlanBuilderComponent>().Plan;
+                        Plan currentPlan = this.players[currentPlayerIndex].Player.GetComponent<PlanBuilderComponent>().Plan;
                         currentPlan.SubscribeToPlanEnd(OnPlayerPlanFinished);
                         currentPlan.PlayPlan();
                     }
@@ -168,7 +171,7 @@ namespace Assets.Scripts.Managers
 
         private void OnPlayerPlanFinished(object sender, EventArgs args)
         {
-            ((PlayerPlan)sender).UnsubscribeToPlanEnd(OnPlayerPlanFinished);
+            ((Plan)sender).UnsubscribeToPlanEnd(OnPlayerPlanFinished);
             this.currentPlayerIndex++;
             AdvanceState();
         }
