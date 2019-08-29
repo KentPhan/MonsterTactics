@@ -65,6 +65,8 @@ namespace Assets.Scripts.Inventory_System.Items
             else if (state == ItemState.OnInventory)
             {
             }
+
+            Debug.Log("this axes is" + state);
         }
 
         private void Update()

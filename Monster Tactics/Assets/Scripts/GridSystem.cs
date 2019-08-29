@@ -45,8 +45,8 @@ public class GridSystem : MonoBehaviour
 
     public void highlightRoot(Square startSquare,Square endSquare)
     {
-        Vector3 startposition = new Vector3(startSquare.transform.position.x, 0.5f, startSquare.transform.position.z);
-        Vector3 endposition = new Vector3(endSquare.transform.position.x, 0.5f, endSquare.transform.position.z);
+        Vector3 startposition = new Vector3(startSquare.transform.position.x, 3, startSquare.transform.position.z);
+        Vector3 endposition = new Vector3(endSquare.transform.position.x, 3, endSquare.transform.position.z);
         int numberofpoints = rootRenderer.positionCount;
         if(!isRendererDrawing())
         {
