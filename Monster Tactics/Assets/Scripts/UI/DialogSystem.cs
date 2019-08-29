@@ -10,8 +10,7 @@ public class DialogSystem : MonoBehaviour
     {
         get { return _instance; }
     }
-
-    private bool uiEnable = false;
+    
     private DialogUI ui;
 
     private void Awake()
@@ -34,7 +33,7 @@ public class DialogSystem : MonoBehaviour
     public void TurnOnDialog(float x, float y)
     {
         ui.parseAction();
-        if(!ui.checkIfInsideGUI(x, Screen.height - y))
+        if( !ui.enabled ||  !ui.checkIfInsideGUI(x, Screen.height - y))
         {
             ui.topleftX = x;
             ui.topleftY = Screen.height - y;
@@ -45,7 +44,7 @@ public class DialogSystem : MonoBehaviour
     }
 
     public void TurnOffDialog()
-    { 
+    {
         ui.enabled = false;
     }
 

@@ -94,13 +94,7 @@ namespace Assets.Scripts.CharacterComponents
                             // if you click the player then cancel all the plan, have same effect as click cancel button
                             if (this.assignedPlayer.CurrentSquare == clickedSquare)
                             {
-                                this.currentBuiltPlan.RemoveAllActionsFromQueue();
-                                this.lastMovingSquare?.Clear();  
-                                this.assignedPlayer.CurrentSquare.Clear();
-                                this.buildState = BuildingActionStates.NONE;
-                                GridSystem.Instance.resetRootRenderer();
-
-                                // if you clicked same square as the last square you click for planning to move, then open a dialog and do some other actions
+                                CancelPlan();
                             }
                             else if (lastMovingSquare == clickedSquare)
                             {
@@ -141,14 +135,14 @@ namespace Assets.Scripts.CharacterComponents
                             sendingactions.Add(Actions.SwapWeapon);
 
                             // Add Pickups if applicable
-                            if (clickedSquare.hasItemOnThis())
+                            if (clickedSquare.hasItemOnThis() && this.lastMovingSquare == clickedSquare)
                             {
                                 sendingactions.Add(Actions.PickUpAndEquip);
                                 sendingactions.Add(Actions.PickUpAndStore);
                             }
 
                             // Add Attack if applicable
-                            if ((this.attackTargetedSquare = clickedSquare.getNearestAttackableZone()) != null)
+                            if ((this.attackTargetedSquare = clickedSquare.getNearestAttackableZone()) != null && this.lastMovingSquare == clickedSquare)
                             {
                                 sendingactions.Add(Actions.Attack);
                             }
@@ -199,8 +193,9 @@ namespace Assets.Scripts.CharacterComponents
         {
             this.currentBuiltPlan.RemoveAllActionsFromQueue();
             this.assignedPlayer.CurrentSquare.Clear();
-            this.lastMovingSquare.Clear();
+            this.lastMovingSquare?.Clear();
             this.buildState = BuildingActionStates.NONE;
+            this.lastMovingSquare = null;
             GridSystem.Instance.resetRootRenderer();
             DialogSystem.Instance.TurnOffDialog();
 

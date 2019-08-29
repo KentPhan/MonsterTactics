@@ -31,6 +31,8 @@ namespace Assets.Scripts.Classes
             }
         }
 
+        public int NumberOfActions => actionQueue.Count();
+
         public Plan(AbstractCharacter target, int actionPointLimit)
         {
             this.targetCharacter = target;
@@ -49,6 +51,18 @@ namespace Assets.Scripts.Classes
                 lastQueued = newAction;
                 actionQueue.Enqueue(newAction);
                 return true;
+            }
+        }
+
+        public AbstractAction PeekAction()
+        {
+            if (actionQueue != null && actionQueue.Count > 0)
+            {
+                return actionQueue.Peek();
+            }
+            else
+            {
+                return null;
             }
         }
 
