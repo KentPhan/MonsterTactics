@@ -31,5 +31,10 @@ namespace Assets.Scripts.Inventory_System.Items
                 meshFilter.mesh = mesh;
             }
         }
+
+        public void Destroythis()
+        {
+            Destroy(this);
+        }
     }
 }
