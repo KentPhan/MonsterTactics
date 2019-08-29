@@ -14,6 +14,7 @@ namespace Assets.Scripts.Inventory_System.Items
         protected Mesh mesh;
         protected Material material;
 
+        // On filed, On hand, On inventory
         protected Vector3 fixedScale;
         protected Vector3 fixedPosition;
         protected Vector3 fixedRotation;
@@ -29,11 +30,21 @@ namespace Assets.Scripts.Inventory_System.Items
                 meshFilter = GetComponent<MeshFilter>();
                 meshRenderer.material = material;
                 meshFilter.mesh = mesh;
+            }else if (gameObject.tag == "Player")
+            {
+                state = ItemState.OnHand;
+
+                meshRenderer = GetComponent<MeshRenderer>();
+                meshFilter = GetComponent<MeshFilter>();
+                meshRenderer.material = material;
+                meshFilter.mesh = mesh;
             }
         }
 
         public void Destroythis()
         {
+            meshRenderer.material = null;
+            meshFilter.mesh = null;
             Destroy(this);
         }
     }

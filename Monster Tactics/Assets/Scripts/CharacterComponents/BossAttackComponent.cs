@@ -18,6 +18,9 @@ namespace Assets.Scripts.CharacterComponents
         [SerializeField] [Range(0.1f, 10.0f)] private int NumberOfAttacks = 2;
         [SerializeField] [Range(0.1f, 10.0f)] private int BaseAttackPower = 2;
 
+        [SerializeField] AudioClip attack;
+        AudioSource aud;
+
         private bool playingAttack;
         private List<Tuple<Vector3,GameObject,Square>> spikeGameObjects;// Stores base position of spike and spike gameobject
         private float sinTime;
@@ -25,6 +28,7 @@ namespace Assets.Scripts.CharacterComponents
 
         private void Awake()
         {
+            aud = GetComponent<AudioSource>();
             this.playingAttack = false;
             this.spikeGameObjects = new List<Tuple<Vector3,GameObject,Square>>();
             this.sinTime = 0.0f;
@@ -43,6 +47,7 @@ namespace Assets.Scripts.CharacterComponents
             {
                 List<Square> squares = GridSystem.Instance.GetRandomListOfSquares(0.5f);
                 SuperAttackSquares(squares);
+                aud.PlayOneShot(attack);
             }
 
             if (playingAttack)
