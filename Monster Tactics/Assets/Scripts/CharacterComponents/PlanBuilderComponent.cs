@@ -112,8 +112,6 @@ namespace Assets.Scripts.CharacterComponents
                                 if (this.currentBuiltPlan.AddActionToPlanQueue(
                                     CreateMovementAction(clickedSquare, clickedSquare.ActionPointCost())))
                                 {
-                                    Debug.Log("Action added to queue");
-
                                     // HighlightRoot
                                     GridSystem.Instance.highlightRoot(assignedPlayer.CurrentSquare, clickedSquare);
                                     // Memorize the latest square the player clicked 
@@ -227,9 +225,11 @@ namespace Assets.Scripts.CharacterComponents
             switch (action)
             {
                 case Actions.SwapWeapon:
+                    Debug.Log("SwapWeapon!");
                     this.currentBuiltPlan.AddActionToPlanQueue(new SwapWeaponAction(ref assignedPlayer,1));
                     break;
                 case Actions.PickUpAndEquip:
+                    Debug.Log("PickUpAndEquip");
                     this.currentBuiltPlan.AddActionToPlanQueue(new PickUpAndEquipAction(ref lastMovingSquare,1));
                     break;
                 case Actions.PickUpAndStore:
