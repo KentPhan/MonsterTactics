@@ -432,7 +432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99708aa8099808c45917af3d0470dffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  maxHealth: 5
+  healthBar: {fileID: 0}
   actionPointLimit: 10
   playerCamera: {fileID: 0}
   impale: {fileID: 8300000, guid: a877ea3497992174f82c2a29f20e932a, type: 3}

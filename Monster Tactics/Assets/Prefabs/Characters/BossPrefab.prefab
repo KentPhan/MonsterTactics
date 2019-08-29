@@ -94,7 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a487a207a66aea43929ffcaba07b500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 15
+  maxHealth: 20
+  healthBar: {fileID: 0}
   actionPointLimit: 100
   gameObjectsWithMarkers:
   - {fileID: 0}

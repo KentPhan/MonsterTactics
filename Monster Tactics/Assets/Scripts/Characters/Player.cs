@@ -8,8 +8,6 @@ namespace Assets.Scripts.Characters
     public class Player : AbstractCharacter
     {
         // Exposed properties
-        [SerializeField] [Range(1, 100)] private int health;
-
         [SerializeField] [Range(1, 20)] private int actionPointLimit = 6; public int ActionPointLimit => actionPointLimit;
         [SerializeField] private Camera playerCamera; public Camera PlayerCamera => playerCamera;
 
@@ -72,9 +70,11 @@ namespace Assets.Scripts.Characters
 
         public override void TakeDamage(int damage)
         {
+            this.currentHealth -= damage;
             audioSource.PlayOneShot(impale);
-            this.health -= damage;
-            if (this.health <= 0)
+            UpdateHealthBar();
+            
+            if (this.maxHealth <= 0)
                 GameManager.Instance.TriggerGameOver();
         }
 
