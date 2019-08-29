@@ -72,6 +72,7 @@ namespace Assets.Scripts.CharacterComponents
                         }
                     }
                     ResetAttack();
+                    OnFinishedAction?.Invoke(this, null);
                 }
             }
         }

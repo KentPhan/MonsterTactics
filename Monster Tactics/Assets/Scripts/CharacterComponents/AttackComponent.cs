@@ -31,6 +31,8 @@ namespace Assets.Scripts.CharacterComponents
             {
                 BattleManager.Instance.GetBoss().TakeDamage(baseAttackPower);
             }
+
+            GetComponent<Animator>().SetTrigger("attack");
         }
 
         public event EventHandler OnFinishedAction;
