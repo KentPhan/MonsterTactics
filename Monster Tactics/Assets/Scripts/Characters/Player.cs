@@ -13,26 +13,28 @@ namespace Assets.Scripts.Characters
         [SerializeField] [Range(1, 20)] private int actionPointLimit = 6; public int ActionPointLimit => actionPointLimit;
         [SerializeField] private Camera playerCamera; public Camera PlayerCamera => playerCamera;
 
+        [SerializeField] AudioClip impale;
+
         // Members
         private NavMeshAgent agent;
 
         Animator anim;
+        AudioSource audioSource;
 
         private Square currentSquare;
         public Square CurrentSquare => currentSquare;
+        public GameObject ConsumableSlot;
+        public GameObject WeaponSLot;
+        public GameObject SpellSlot;
 
         // Start is called before the first frame update
         private void Start()
         {
+            audioSource = GetComponent<AudioSource>();
             anim = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
             FindAndUpdateSquare();
             CanvasManager.Instance.UIInfoPanel.UpdateActionPointTotalValue(actionPointLimit);
-        }
-
-        private void FixedUpdate()
-        {
-            anim.SetBool("attack", false);
         }
 
         public void SetSquare(Square square)
@@ -69,9 +71,11 @@ namespace Assets.Scripts.Characters
 
         public override void TakeDamage(int damage)
         {
+            audioSource.PlayOneShot(impale);
             this.health -= damage;
             if (this.health <= 0)
                 GameManager.Instance.TriggerGameOver();
         }
+
     }
 }

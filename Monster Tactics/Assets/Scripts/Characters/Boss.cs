@@ -11,10 +11,15 @@ namespace Assets.Scripts.Characters
         [SerializeField] [Range(1, 20)] private int actionPointLimit = 100; public int ActionPointLimit => actionPointLimit;
 
         [SerializeField] private List<GameObject> gameObjectsWithMarkers;
-        
+
+        [SerializeField] AudioClip takeDamage;
+        AudioSource aud;
+
+
         // Start is called before the first frame update
         void Start()
         {
+            aud = GetComponent<AudioSource>();
             // Foreach square raycast downwards and mark that square as occupied
             foreach (GameObject markerObject in gameObjectsWithMarkers)
             {
@@ -45,6 +50,7 @@ namespace Assets.Scripts.Characters
         public override void TakeDamage(int damage)
         {
             this.health -= damage;
+            aud.PlayOneShot(takeDamage);
             if(this.health <= 0)
                 GameManager.Instance.TriggerWin();
         }

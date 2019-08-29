@@ -14,9 +14,10 @@ namespace Assets.Scripts.Inventory_System.Items
         protected Mesh mesh;
         protected Material material;
 
-        protected Vector3 fixedScale;
-        protected Vector3 fixedPosition;
-        protected Vector3 fixedRotation;
+        // On filed, On hand, On inventory
+        protected Vector3[] fixedScale = new Vector3[3];
+        protected Vector3[] fixedPosition = new Vector3[3];
+        protected Vector3[] fixedRotation = new Vector3[3];
 
         private void Start()
         {
@@ -30,10 +31,46 @@ namespace Assets.Scripts.Inventory_System.Items
                 meshRenderer.material = material;
                 meshFilter.mesh = mesh;
             }
+            else if (gameObject.tag == "Player")
+            {
+                state = ItemState.OnHand;
+
+                meshRenderer = GetComponent<MeshRenderer>();
+                meshFilter = GetComponent<MeshFilter>();
+                meshRenderer.material = material;
+                meshFilter.mesh = mesh;
+            }
+
+            if (state == ItemState.OnField)
+            {
+                transform.localPosition = fixedPosition[0];
+                transform.localEulerAngles = fixedRotation[0];
+                transform.localScale = fixedScale[0];
+            }
+            else if (state == ItemState.OnHand)
+            {
+                transform.localPosition = fixedPosition[1];
+                transform.localEulerAngles = fixedRotation[1];
+                transform.localScale = fixedScale[1];
+            }
+            else if (state == ItemState.OnInventory)
+            {
+                transform.localPosition = fixedPosition[2];
+                transform.localEulerAngles = fixedRotation[2];
+                transform.localScale = fixedScale[2];
+            }
+        }
+
+        private void Update()
+        {
+            if(state == ItemState.OnField)
+                transform.Rotate(Vector3.up * Time.deltaTime * 100, Space.World);
         }
 
         public void Destroythis()
         {
+            meshRenderer.material = null;
+            meshFilter.mesh = null;
             Destroy(this);
         }
     }
