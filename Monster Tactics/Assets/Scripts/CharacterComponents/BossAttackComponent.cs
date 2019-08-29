@@ -43,11 +43,11 @@ namespace Assets.Scripts.CharacterComponents
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                List<Square> squares = GridSystem.Instance.GetRandomListOfSquares(0.5f);
-                SuperAttackSquares(squares);
-            }
+            //if (Input.GetKeyDown(KeyCode.A))
+            //{
+            //    List<Square> squares = GridSystem.Instance.GetRandomListOfSquares(0.5f);
+            //    SuperAttackSquares(squares);
+            //}
 
             if (playingAttack)
             {
