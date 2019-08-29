@@ -28,6 +28,11 @@ namespace Assets.Scripts.CharacterComponents
         private Square attackTargetedSquare; //Hack
 
 
+        public void Awake()
+        {
+            DisableAsPlanningPlayer();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -35,8 +40,6 @@ namespace Assets.Scripts.CharacterComponents
             this.currentBuiltPlan = new Plan(this.assignedPlayer, this.assignedPlayer.ActionPointLimit);
             this.rayCastMask = LayerMask.GetMask(Layers.GRID);
             this.buildState = BuildingActionStates.NONE;
-
-            DisableAsPlanningPlayer();
         }
 
         public void EnableAsPlanningPlayer()
