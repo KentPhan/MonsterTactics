@@ -89,12 +89,14 @@ namespace Assets.Scripts.Managers
         public void TriggerWin()
         {
             this.currentGameState = GameStates.WIN;
+            CanvasManager.Instance.WinScreen.gameObject.SetActive(true);
             Debug.Log("WINNN!");
         }
 
         public void TriggerGameOver()
         {
             this.currentGameState = GameStates.GAME_OVER;
+            CanvasManager.Instance.GameOverScreen.gameObject.SetActive(true);
             Debug.Log("GAME OVER");
         }
 

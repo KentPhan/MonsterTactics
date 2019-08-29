@@ -8,6 +8,9 @@ namespace Assets.Scripts.Managers
         [SerializeField] private UIInfoPanel uiInfoPanel; public UIInfoPanel UIInfoPanel => uiInfoPanel;
         [SerializeField] private UIActionPanel uiActionPanel; public UIActionPanel UIActionPanel => uiActionPanel;
 
+        [SerializeField] public RectTransform GameOverScreen;
+        [SerializeField] public RectTransform WinScreen;
+
         private static CanvasManager _instance;
         public static CanvasManager Instance
         {
