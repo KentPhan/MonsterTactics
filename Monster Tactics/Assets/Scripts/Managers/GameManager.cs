@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Managers
 {
@@ -47,22 +49,52 @@ namespace Assets.Scripts.Managers
         // Start is called before the first frame update
         void Start()
         {
-            BattleManager.Instance.StartBattle();
         }
 
         // Update is called once per frame
         void Update()
         {
-        
+            switch (currentGameState)
+            {
+                case GameStates.START:
+                    if (Input.GetKeyDown(KeyCode.Return))
+                    {
+                        this.currentGameState = GameStates.PLAY;
+                        BattleManager.Instance.StartBattle();
+                    }
+                    break;
+                case GameStates.PLAY:
+                    break;
+                case GameStates.WIN:
+                    break;
+                case GameStates.GAME_OVER:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+
+            }
+
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                SceneManager.LoadScene(0);
+            }
+
         }
 
         public void TriggerWin()
         {
+            this.currentGameState = GameStates.WIN;
             Debug.Log("WINNN!");
         }
 
         public void TriggerGameOver()
         {
+            this.currentGameState = GameStates.GAME_OVER;
             Debug.Log("GAME OVER");
         }
 

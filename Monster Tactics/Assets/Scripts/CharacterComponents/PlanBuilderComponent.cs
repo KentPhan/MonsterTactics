@@ -30,16 +30,17 @@ namespace Assets.Scripts.CharacterComponents
 
         public void Awake()
         {
-            DisableAsPlanningPlayer();
+            this.enabled = false;
+            this.assignedPlayer = this.gameObject.GetComponent<Player>();
+            this.currentBuiltPlan = new Plan(this.assignedPlayer, this.assignedPlayer.ActionPointLimit);
+            this.rayCastMask = LayerMask.GetMask(Layers.GRID);
+            this.buildState = BuildingActionStates.NONE;
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            this.assignedPlayer = this.gameObject.GetComponent<Player>();
-            this.currentBuiltPlan = new Plan(this.assignedPlayer, this.assignedPlayer.ActionPointLimit);
-            this.rayCastMask = LayerMask.GetMask(Layers.GRID);
-            this.buildState = BuildingActionStates.NONE;
+            
         }
 
         public void EnableAsPlanningPlayer()
@@ -54,8 +55,8 @@ namespace Assets.Scripts.CharacterComponents
         public void DisableAsPlanningPlayer()
         {
             this.enabled = false;
-            CanvasManager.Instance.UIActionPanel.UnsubscribeToEndPlanningButton(SubmitPlan);
-            CanvasManager.Instance.UIActionPanel.UnsubscribeToCancelPlanningButton(CancelPlan);
+            CanvasManager.Instance?.UIActionPanel.UnsubscribeToEndPlanningButton(SubmitPlan);
+            CanvasManager.Instance?.UIActionPanel.UnsubscribeToCancelPlanningButton(CancelPlan);
             DialogUI.ActionButtonClicked -= AddActionToQueue;
         }
 
