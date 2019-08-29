@@ -18,6 +18,7 @@ public class DialogUI : MonoBehaviour
 
     [HideInInspector]
     public float topleftXOld;
+    [HideInInspector]
     public float topleftYOld;
 
     private int buttonWidth = 200;
