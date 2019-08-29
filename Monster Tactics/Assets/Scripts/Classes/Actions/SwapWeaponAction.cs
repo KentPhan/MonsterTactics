@@ -4,6 +4,7 @@ using UnityEngine;
 using Assets.Scripts.Characters;
 using System;
 using Assets.Scripts.Inventory_System.Items;
+using Assets.Scripts.CharacterComponents;
 
 namespace Assets.Scripts.Classes.Actions
 {
@@ -22,7 +23,6 @@ namespace Assets.Scripts.Classes.Actions
 
         public override void PlayAction(AbstractCharacter character)
         {
-            Debug.Log("weapon swap is played");
             if (player.WeaponSlot.GetComponent<AbstractItem>() != null)
             {
                 playersweapon = player.WeaponSlot.GetComponent<AbstractItem>();
@@ -35,11 +35,13 @@ namespace Assets.Scripts.Classes.Actions
 
             if (playersweapon != null)
             {
+                player.GetComponent<EquipmentComponent>().UnEquipWeapon();
                 CopyComponent(playersweapon, Inventory_System.InventorySystem.Instance.WeaponSlot);
                 playersweapon.Destroythis();
             }
             if(inventoryweapon != null)
             {
+                player.GetComponent<EquipmentComponent>().EquipWeapon(inventoryweapon as IWeapon);
                 CopyComponent(inventoryweapon, (player.WeaponSlot));
                 inventoryweapon.Destroythis();
             }

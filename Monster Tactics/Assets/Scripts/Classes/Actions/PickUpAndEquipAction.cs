@@ -5,6 +5,7 @@ using Assets.Scripts.Classes.Actions;
 using Assets.Scripts.Characters;
 using System;
 using Assets.Scripts.Inventory_System.Items;
+using Assets.Scripts.CharacterComponents;
 
 namespace Assets.Scripts.Classes.Actions {
     public class PickUpAndEquipAction : AbstractAction
@@ -21,8 +22,15 @@ namespace Assets.Scripts.Classes.Actions {
 
         public override void PlayAction(AbstractCharacter player)
         {
-            CopyComponent(item, ((Player)player).WeaponSlot);
-            item.Destroythis();
+
+            if (item is IWeapon)
+            {
+                if(((Player)player).GetComponent<EquipmentComponent>().EquipWeapon(item as IWeapon))
+                {
+                    CopyComponent(item, ((Player)player).WeaponSlot);
+                    item.Destroythis();
+                }
+            }
             
             actionEnded?.Invoke(this, null);
         }

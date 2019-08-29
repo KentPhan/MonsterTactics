@@ -7,7 +7,7 @@ namespace Assets.Scripts.Inventory_System.Items
     public abstract class AbstractItem : MonoBehaviour
     {
         public enum ItemState {OnField, OnHand, OnInventory}
-        ItemState state;
+        public ItemState state;
 
         protected MeshRenderer meshRenderer;
         protected MeshFilter meshFilter;
@@ -79,18 +79,23 @@ namespace Assets.Scripts.Inventory_System.Items
         {
             if (state == ItemState.OnField)
             {
+                meshRenderer = GetComponent<MeshRenderer>();
+                meshFilter = GetComponent<MeshFilter>();
                 meshRenderer.material = null;
                 meshFilter.mesh = null;
                 Destroy(this);
             }
             else if (state == ItemState.OnHand)
             {
+                meshRenderer = GetComponent<MeshRenderer>();
+                meshFilter = GetComponent<MeshFilter>();
                 meshRenderer.material = null;
                 meshFilter.mesh = null;
                 Destroy(this);
             }
             else if (state == ItemState.OnInventory)
             {
+                image = GetComponent<Image>();
                 image.sprite = null;
                 Destroy(this);
             }
