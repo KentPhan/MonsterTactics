@@ -78,6 +78,10 @@ namespace Assets.Scripts.Managers
         // Update is called once per frame
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SwapCamera();
+            }
 
             switch (currentBattleState)
             {
@@ -235,6 +239,19 @@ namespace Assets.Scripts.Managers
                     person.VCamera.Priority = 0;
                 }
             }
+        }
+
+        private void SwapCamera()
+        {
+            // rotate camera priorties
+            int priorityFirstCamera = players[0].VCamera.Priority;
+            for (int i = 0; i < players.Count; i++)
+            {
+                int nextPlayerIndex = (i + 1) % players.Count;
+                players[i].VCamera.Priority = players[nextPlayerIndex].VCamera.Priority;
+            }
+            // Update last camera priority
+            players[players.Count - 1].VCamera.Priority = priorityFirstCamera;
         }
 
         private void PrioritizeActivePlayer(PlayerParts player)

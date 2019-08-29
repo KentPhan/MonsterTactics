@@ -20,7 +20,12 @@ namespace Assets.Scripts.CameraComponents
         void Update()
         {
             
-            CinemachineVirtualCamera vCamera = this.brain.ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+
+            CinemachineVirtualCamera vCamera = this.brain?.ActiveVirtualCamera?.VirtualCameraGameObject?.GetComponent<CinemachineVirtualCamera>();
+
+            if (vCamera == null)
+                return;
+
             CinemachineFramingTransposer vTransposer = vCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
 
 

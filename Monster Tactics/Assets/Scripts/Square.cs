@@ -70,11 +70,11 @@ namespace Assets.Scripts
 
         private void OnMouseOver()
         {
-            if (Input.GetKeyDown("d"))
+            if (Input.GetKeyDown("f"))
             {
                 Instantiate(danger, transform.position, Quaternion.identity);
             }
-            else if (Input.GetKeyDown("l"))
+            else if (Input.GetKeyDown("g"))
             {
                 Instantiate(loot, transform.position, Quaternion.identity);
             }
