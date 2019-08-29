@@ -12,19 +12,19 @@ namespace Assets.Scripts.Inventory_System.Items
     {
         [SerializeField][Range(0,100)] private int attackPower;
 
-        private Vector3 fixedPosition = Vector3.zero;
-        private Vector3 fixedRotation = Vector3.zero;
-        private Vector3 fixedScale = new Vector3(1,10,1);
-
         private void Awake()
         {
             base.material = Resources.Load("Materials/Eye", typeof(Material)) as Material;
             base.mesh = Resources.Load("Meshes/Sword", typeof(Mesh)) as Mesh;
 
 
-            transform.localPosition = fixedPosition;
-            transform.localEulerAngles = fixedRotation;
-            transform.localScale = fixedScale;
+            base.fixedPosition[0] = new Vector3(0, 6, 0);
+            base.fixedRotation[0] = new Vector3(45, 0, 0);
+            base.fixedScale[0] = new Vector3(15, 15, 10);
+
+            base.fixedPosition[1] = new Vector3(4, 4, 0);
+            base.fixedRotation[1] = new Vector3(-90, 0, 0);
+            base.fixedScale[1] = new Vector3(15, 15, 5);
         }
 
         public int GetAttackPower()
