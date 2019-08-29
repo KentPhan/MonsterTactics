@@ -617,6 +617,35 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 331293198, guid: 3ba971a7ed530b9429b597a17df13a0f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 376.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834866755740357039, guid: 3ba971a7ed530b9429b597a17df13a0f,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834866755740357039, guid: 3ba971a7ed530b9429b597a17df13a0f,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834866755740357039, guid: 3ba971a7ed530b9429b597a17df13a0f,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834866755740357039, guid: 3ba971a7ed530b9429b597a17df13a0f,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834866755740357039, guid: 3ba971a7ed530b9429b597a17df13a0f,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ba971a7ed530b9429b597a17df13a0f, type: 3}
 --- !u!1001 &259672889
@@ -1569,6 +1598,11 @@ PrefabInstance:
       propertyPath: players.Array.data[1].Player
       value: 
       objectReference: {fileID: 117504263}
+    - target: {fileID: 5062899774125282021, guid: 874bccb65a7c04648acddb38f776123a,
+        type: 3}
+      propertyPath: turnDelay
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 874bccb65a7c04648acddb38f776123a, type: 3}
 --- !u!1 &583693560

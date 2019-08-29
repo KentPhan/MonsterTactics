@@ -43,3 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbf0703098a5e21478b288acd7eeac71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players:
+  - Player: {fileID: 0}
+    VCamera: {fileID: 0}
+  - Player: {fileID: 0}
+    VCamera: {fileID: 0}
+  boss: {fileID: 0}
+  turnDelay: 4

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.CharacterComponents;
@@ -40,6 +41,7 @@ namespace Assets.Scripts.Managers
         // Member Properties
         [SerializeField] private List<PlayerParts> players;
         [SerializeField] private Boss boss;
+        [SerializeField] private float turnDelay = 2.0f;
         private int currentPlayerIndex;
 
         private BattleStates currentBattleState; public BattleStates CurrentBattleState => currentBattleState;
@@ -104,9 +106,17 @@ namespace Assets.Scripts.Managers
             }
         }
 
+        private IEnumerator DelayedGoToState(BattleStates newBattleState)
+        {
+            yield return new WaitForSeconds(turnDelay);
+            GoToState(newBattleState);
+        }
+
+
         private void GoToState(BattleStates newBattleState)
         {
             this.currentBattleState = newBattleState;
+            CanvasManager.Instance.UIInfoPanel.UpdateTitleText(this.currentBattleState);
 
             // Advance State to new State, and handle start of new state
             switch (currentBattleState)
@@ -123,7 +133,7 @@ namespace Assets.Scripts.Managers
                     PrioritizeCamera(this.players[0]);
                     break;
                 case BattleStates.PLAYER_ACTION:
-                    PlayNextPlayerAction();
+                    PlayNextPlayerPlan();
                     break;
                 case BattleStates.BOSS_ACTION:
                     PlayBossAction();
@@ -138,7 +148,8 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        private void PlayNextPlayerAction()
+
+        private void PlayNextPlayerPlan()
         {
             // Play next plan
             if (this.currentPlayerIndex < players.Count)
@@ -159,7 +170,9 @@ namespace Assets.Scripts.Managers
         {
             ((Plan)sender).UnsubscribeToPlanEnd(OnPlayerPlanFinished);
             this.currentPlayerIndex++;
-            PlayNextPlayerAction();
+            if(this.currentPlayerIndex < this.players.Count)
+                SwapCamera();
+            StartCoroutine(DelayedGoToState(BattleStates.PLAYER_ACTION));
         }
 
         public void PlayBossAction()
@@ -172,7 +185,7 @@ namespace Assets.Scripts.Managers
         private void OnBossActionFinished(object sender, EventArgs args)
         {
             ((Plan)sender).UnsubscribeToPlanEnd(OnBossActionFinished);
-            GoToState(BattleStates.RESOLUTION);
+            StartCoroutine(DelayedGoToState(BattleStates.RESOLUTION));
         }
 
         public void StartBattle()
@@ -212,7 +225,8 @@ namespace Assets.Scripts.Managers
             // Advance state if everyone finished planning their plans
             if (!playerNotPlanned)
             {
-                GoToState(BattleStates.PLAYER_ACTION);
+                SwapCamera();
+                StartCoroutine(DelayedGoToState(BattleStates.PLAYER_ACTION));
             }
         }
 
