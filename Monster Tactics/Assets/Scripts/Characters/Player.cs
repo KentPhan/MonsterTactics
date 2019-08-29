@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace Assets.Scripts.Characters
 {
-    public class Player : MonoBehaviour, ICharacter
+    public class Player : AbstractCharacter
     {
         // Exposed properties
         [SerializeField] [Range(1, 100)] private int health;
@@ -67,7 +67,7 @@ namespace Assets.Scripts.Characters
         }
 
 
-        public void TakeDamage(int damage)
+        public override void TakeDamage(int damage)
         {
             this.health -= damage;
             if (this.health <= 0)

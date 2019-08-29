@@ -18,11 +18,11 @@ namespace Assets.Scripts.Classes.Actions
         }
 
         protected override event EventHandler actionEnded;
-        public override void PlayAction(Player player)
+        public override void PlayAction(AbstractCharacter character)
         {
-            AttackComponent attackComponent = player.GetComponent<AttackComponent>();
+            AttackComponent attackComponent = character.GetComponent<AttackComponent>();
             attackComponent.AttackSquare(target);
-            actionEnded?.Invoke(this,null);
+            actionEnded?.Invoke(this,null); // Immediately activates action
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Assets.Scripts.Classes.Actions
         }
 
 
-        public abstract void PlayAction(Player player);
+        public abstract void PlayAction(AbstractCharacter character);
 
 
         public void SubscribeToActionEnd(EventHandler inputEvent)
