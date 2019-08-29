@@ -95,6 +95,7 @@ namespace Assets.Scripts.CharacterComponents
                             if (this.assignedPlayer.CurrentSquare == clickedSquare)
                             {
                                 this.currentBuiltPlan.RemoveAllActionsFromQueue();
+                                this.lastMovingSquare.Clear();
                                 this.assignedPlayer.CurrentSquare.Clear();
                                 this.buildState = BuildingActionStates.NONE;
                                 GridSystem.Instance.resetRootRenderer();
@@ -132,6 +133,12 @@ namespace Assets.Scripts.CharacterComponents
                             break;
                         case BuildingActionStates.CHOOSE_ACTION:
                             List<Actions> sendingactions = new List<Actions>();
+
+                            if (actionPointsLeft <= 0)
+                            {
+                                this.buildState = BuildingActionStates.CHOOSE_MOVEMENT;
+                                break;
+                            }
 
                             // Add Pickups if applicable
                             if (clickedSquare.hasItemOnThis())
@@ -192,6 +199,7 @@ namespace Assets.Scripts.CharacterComponents
         {
             this.currentBuiltPlan.RemoveAllActionsFromQueue();
             this.assignedPlayer.CurrentSquare.Clear();
+            this.lastMovingSquare.Clear();
             this.buildState = BuildingActionStates.NONE;
             GridSystem.Instance.resetRootRenderer();
             DialogSystem.Instance.TurnOffDialog();
@@ -207,6 +215,7 @@ namespace Assets.Scripts.CharacterComponents
             this.assignedPlayer.CurrentSquare.Clear();
             this.buildState = BuildingActionStates.NONE;
             CanvasManager.Instance.UIActionPanel.HideEndPlanningButton();
+            CanvasManager.Instance.UIActionPanel.HideCancelPlanningButton();
             BattleManager.Instance.AdvanceFromPlayerPlanning();
             GridSystem.Instance.resetRootRenderer();
         }

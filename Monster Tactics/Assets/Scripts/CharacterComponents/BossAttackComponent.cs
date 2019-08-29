@@ -47,7 +47,6 @@ namespace Assets.Scripts.CharacterComponents
             {
                 List<Square> squares = GridSystem.Instance.GetRandomListOfSquares(0.5f);
                 SuperAttackSquares(squares);
-                aud.PlayOneShot(attack);
             }
 
             if (playingAttack)
@@ -98,6 +97,7 @@ namespace Assets.Scripts.CharacterComponents
         public void SuperAttackSquares(List<Square> targets)
         {
             ResetAttack();
+            aud.PlayOneShot(attack);
             this.playingAttack = true;
             this.attackTime = this.SinWaveAttackFrequency * this.NumberOfAttacks * Mathf.PI * 2.0f;
             foreach (Square target in targets)
