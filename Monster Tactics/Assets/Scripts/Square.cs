@@ -39,14 +39,14 @@ namespace Assets.Scripts
 
         private void Start()
         {
-            if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + Vector3.forward))
-                neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + Vector3.forward]);
-            if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + Vector3.back))
-                neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + Vector3.back]);
-            if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + Vector3.left))
-                neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + Vector3.left]);
-            if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + Vector3.right))
-                neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + Vector3.right]);
+            if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + (Vector3.forward * 10f)))
+                neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + (Vector3.forward * 10f)]);
+            if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + (Vector3.back * 10f)))
+                neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + (Vector3.back * 10f)]);
+            if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + (Vector3.left * 10f)))
+                neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + (Vector3.left * 10f)]);
+            if (GridSystem.Instance.theMap.ContainsKey(transform.localPosition + (Vector3.right * 10f)))
+                neighbors.Add(GridSystem.Instance.theMap[transform.localPosition + (Vector3.right * 10f)]);
         }
 
         private void OnMouseEnter()
