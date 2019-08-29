@@ -19,7 +19,7 @@ namespace Assets.Scripts.Classes.Actions {
 
         protected override event EventHandler actionEnded;
 
-        public override void PlayAction(Player player)
+        public override void PlayAction(AbstractCharacter player)
         {
             item.Destroythis();
             actionEnded?.Invoke(this, null);
