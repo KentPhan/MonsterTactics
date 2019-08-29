@@ -72,9 +72,7 @@ namespace Assets.Scripts.Managers
         // Start is called before the first frame update
         private void Start()
         {
-            this.currentBattleState = BattleStates.START_BATTLE;
             this.currentPlayerIndex = 0;
-            AdvanceState();
         }
 
         // Update is called once per frame
@@ -84,6 +82,8 @@ namespace Assets.Scripts.Managers
             switch (currentBattleState)
             {
                 case BattleStates.START_BATTLE:
+                    break;
+                case BattleStates.BOSS_PLAN:
                     break;
                 case BattleStates.PLAYER_PLAN:
                     break;
@@ -95,72 +95,37 @@ namespace Assets.Scripts.Managers
                     break;
                 case BattleStates.END_BATTLE:
                     break;
-                case BattleStates.BOSS_PLAN:
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void AdvanceState()
+        private void GoToState(BattleStates newBattleState)
         {
+            this.currentBattleState = newBattleState;
+
+            // Advance State to new State, and handle start of new state
             switch (currentBattleState)
             {
-                case BattleStates.START_BATTLE: // Input Advance
-                    this.currentBattleState = BattleStates.PLAYER_PLAN;
-                    this.players[0].Player.GetComponent<PlanBuilderComponent>().EnableAsPlanningPlayer();
+                case BattleStates.START_BATTLE: 
+                    break;
+                // Start of Round
+                case BattleStates.BOSS_PLAN:
+                    this.boss.GetComponent<BossPlanBuilderComponent>().BuildBossPlan();
+                    break;
+                case BattleStates.PLAYER_PLAN:
+                    // Enable first player
+                    PrioritizeActivePlayer(players[0]);
                     PrioritizeCamera(this.players[0]);
                     break;
-                case BattleStates.PLAYER_PLAN: // Input Advance
-
-                    // Advance state if all players finish planning their turns
-                    bool playerNotPlanned = false;
-                    foreach (var player in players)
-                    {
-                        PlanBuilderComponent plan = player.Player.GetComponent<PlanBuilderComponent>();
-                        if (!plan.Plan.FinishedPlanning)
-                        {
-                            playerNotPlanned = true;
-                            PrioritizeActivePlayer(player);
-                            PrioritizeCamera(player);
-                            break;
-                        }
-                    }
-                    if (!playerNotPlanned)
-                    {
-                        this.currentBattleState = BattleStates.PLAYER_ACTION;
-                        AdvanceState();
-                    }
-                    break;
-                case BattleStates.PLAYER_ACTION:// Auto Advance
-                    // Play next plan
-                    if (currentPlayerIndex < players.Count)
-                    {
-                        Plan currentPlan = this.players[currentPlayerIndex].Player.GetComponent<PlanBuilderComponent>().Plan;
-                        currentPlan.SubscribeToPlanEnd(OnPlayerPlanFinished);
-                        currentPlan.PlayPlan();
-                    }
-                    // else all plans played, move to next state
-                    else
-                    {
-                        this.currentBattleState = BattleStates.BOSS_ACTION;
-                        this.currentPlayerIndex = 0;
-                        // TODO build Boss Callback
-                        AdvanceState();
-                    }
-
+                case BattleStates.PLAYER_ACTION:
+                    PlayNextPlayerAction();
                     break;
                 case BattleStates.BOSS_ACTION:
-                    this.currentBattleState = BattleStates.RESOLUTION;
-
-                    // TODO Temp
-                    AdvanceState();
+                    PlayBossAction();
                     break;
                 case BattleStates.RESOLUTION:
-                    this.currentBattleState = BattleStates.PLAYER_PLAN;
-                    PrioritizeActivePlayer(players[0]);
-                    PrioritizeCamera(players[0]);
-
+                    GoToRoundStart();
                     break;
                 case BattleStates.END_BATTLE:
                     break;
@@ -169,26 +134,82 @@ namespace Assets.Scripts.Managers
             }
         }
 
+        private void PlayNextPlayerAction()
+        {
+            // Play next plan
+            if (this.currentPlayerIndex < players.Count)
+            {
+                Plan currentPlan = this.players[currentPlayerIndex].Player.GetComponent<PlanBuilderComponent>().Plan;
+                currentPlan.SubscribeToPlanEnd(OnPlayerPlanFinished);
+                currentPlan.PlayPlan();
+            }
+            // else all plans played, move to next state
+            else
+            {
+                this.currentPlayerIndex = 0;
+                GoToState(BattleStates.BOSS_ACTION);
+            }
+        }
+
         private void OnPlayerPlanFinished(object sender, EventArgs args)
         {
             ((Plan)sender).UnsubscribeToPlanEnd(OnPlayerPlanFinished);
             this.currentPlayerIndex++;
-            AdvanceState();
+            PlayNextPlayerAction();
         }
 
-        private void OnBossActionFinished()
+        public void PlayBossAction()
         {
-            AdvanceState();
+            Plan currentPlan = this.boss.GetComponent<BossPlanBuilderComponent>().Plan;
+            currentPlan.SubscribeToPlanEnd(OnBossActionFinished);
+            currentPlan.PlayPlan();
+        }
+
+        private void OnBossActionFinished(object sender, EventArgs args)
+        {
+            ((Plan)sender).UnsubscribeToPlanEnd(OnBossActionFinished);
+            GoToState(BattleStates.RESOLUTION);
         }
 
         public void StartBattle()
         {
+            GoToRoundStart();
+        }
 
+        public void GoToRoundStart()
+        {
+            GoToState(BattleStates.BOSS_PLAN);
+        }
+
+        public void AdvanceFromBossPlanning()
+        {
+            GoToState(BattleStates.PLAYER_PLAN);
         }
 
         public void AdvanceFromPlayerPlanning()
         {
-            AdvanceState();
+            // Advance state if all players finish planning their turns
+            // Otherwise
+            bool playerNotPlanned = false;
+            foreach (var player in players)
+            {
+                PlanBuilderComponent plan = player.Player.GetComponent<PlanBuilderComponent>();
+                if (!plan.Plan.FinishedPlanning)
+                {
+                    playerNotPlanned = true;
+
+                    // Set next active player
+                    PrioritizeActivePlayer(player);
+                    PrioritizeCamera(player);
+                    break;
+                }
+            }
+
+            // Advance state if everyone finished planning their plans
+            if (!playerNotPlanned)
+            {
+                GoToState(BattleStates.PLAYER_ACTION);
+            }
         }
 
         public List<Player> GetPlayers()

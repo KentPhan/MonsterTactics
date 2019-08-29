@@ -8,6 +8,7 @@ namespace Assets.Scripts.Characters
     public class Boss : AbstractCharacter
     {
         [SerializeField] [Range(1, 100)] private int health;
+        [SerializeField] [Range(1, 20)] private int actionPointLimit = 100; public int ActionPointLimit => actionPointLimit;
 
         [SerializeField] private List<GameObject> gameObjectsWithMarkers;
 
