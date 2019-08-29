@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Characters
 {
-    public class Boss : MonoBehaviour, ICharacter
+    public class Boss : AbstractCharacter
     {
         [SerializeField] [Range(1, 100)] private int health;
 
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Characters
 
         }
 
-        public void TakeDamage(int damage)
+        public override void TakeDamage(int damage)
         {
             this.health -= damage;
             if(this.health <= 0)

@@ -45,7 +45,7 @@ namespace Assets.Scripts.CharacterComponents
             this.enabled = true;
             CanvasManager.Instance.UIActionPanel.SubscribeToEndPlanningButton(SubmitPlan);
             CanvasManager.Instance.UIActionPanel.SubscribeToCancelPlanningButton(CancelPlan);
-            DialogUI.ActionButtonClicked += TakeAction;
+            DialogUI.ActionButtonClicked += AddActionToQueue;
         }
 
         public void DisableAsPlanningPlayer()
@@ -53,7 +53,7 @@ namespace Assets.Scripts.CharacterComponents
             this.enabled = false;
             CanvasManager.Instance.UIActionPanel.UnsubscribeToEndPlanningButton(SubmitPlan);
             CanvasManager.Instance.UIActionPanel.UnsubscribeToCancelPlanningButton(CancelPlan);
-            DialogUI.ActionButtonClicked -= TakeAction;
+            DialogUI.ActionButtonClicked -= AddActionToQueue;
         }
 
         // Update is called once per frame
@@ -120,6 +120,9 @@ namespace Assets.Scripts.CharacterComponents
 
                                     // Clear and update range
                                     UpdateMovingSquareRange(this.lastMovingSquare);
+
+                                    // If there is any dialog was opened then closed it
+                                    DialogSystem.Instance.TurnOffDialog();
                                 }
                                 else
                                 {
@@ -191,6 +194,7 @@ namespace Assets.Scripts.CharacterComponents
             this.assignedPlayer.CurrentSquare.Clear();
             this.buildState = BuildingActionStates.NONE;
             GridSystem.Instance.resetRootRenderer();
+            DialogSystem.Instance.TurnOffDialog();
 
             // Update UI at the end of every action
             int currentCost = this.currentBuiltPlan.ActionPointCost;
@@ -207,13 +211,13 @@ namespace Assets.Scripts.CharacterComponents
             GridSystem.Instance.resetRootRenderer();
         }
 
-        public void TakeAction(Actions action)
+        public void AddActionToQueue(Actions action)
         {
-            Debug.Log("The action which is taken is " + action);
             switch (action)
             {
                 case Actions.PickUpAndEquip:
-                    // TODO Add
+                    Debug.Log("plan and equip");
+                    this.currentBuiltPlan.AddActionToPlanQueue(new PickUpAndEquipAction(ref lastMovingSquare,1));
                     break;
                 case Actions.PickUpAndStore:
                     // TODO Add

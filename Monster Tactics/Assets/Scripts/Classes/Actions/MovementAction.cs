@@ -20,9 +20,9 @@ namespace Assets.Scripts.Classes.Actions
             this.destination = destination;
         }
 
-        public override void PlayAction(Player player)
+        public override void PlayAction(AbstractCharacter character)
         {
-            MovementComponent movementComponent = player.GetComponent<MovementComponent>();
+            MovementComponent movementComponent = character.GetComponent<MovementComponent>();
             movementComponent.OnFinishedAction += OnMovementFinished;
             movementComponent.Move(this.destination);
         }
