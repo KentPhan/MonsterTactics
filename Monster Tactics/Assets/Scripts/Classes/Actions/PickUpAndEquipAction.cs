@@ -7,7 +7,7 @@ using System;
 using Assets.Scripts.Inventory_System.Items;
 
 namespace Assets.Scripts.Classes.Actions {
-    public class PickUpAndEquipAction : AbstractPlayerAction
+    public class PickUpAndEquipAction : AbstractAction
     {
         private AbstractItem item;
 

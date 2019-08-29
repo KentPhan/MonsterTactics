@@ -10,7 +10,7 @@ using UnityEngine.AI;
 
 namespace Assets.Scripts.Classes.Actions
 {
-    public class MovementAction : AbstractPlayerAction
+    public class MovementAction : AbstractAction
     {
         protected override event EventHandler actionEnded;
 

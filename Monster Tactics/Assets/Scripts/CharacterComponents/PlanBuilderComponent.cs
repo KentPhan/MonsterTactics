@@ -18,10 +18,10 @@ namespace Assets.Scripts.CharacterComponents
 
     public class PlanBuilderComponent : MonoBehaviour
     {
-        public PlayerPlan Plan => currentBuiltPlan;
+        public Plan Plan => currentBuiltPlan;
 
         private Player assignedPlayer;
-        private PlayerPlan currentBuiltPlan;
+        private Plan currentBuiltPlan;
         private int rayCastMask;
         private BuildingActionStates buildState;
         private Square lastMovingSquare;
@@ -32,7 +32,7 @@ namespace Assets.Scripts.CharacterComponents
         void Start()
         {
             this.assignedPlayer = this.gameObject.GetComponent<Player>();
-            this.currentBuiltPlan = new PlayerPlan(this.assignedPlayer, this.assignedPlayer.ActionPointLimit);
+            this.currentBuiltPlan = new Plan(this.assignedPlayer, this.assignedPlayer.ActionPointLimit);
             this.rayCastMask = LayerMask.GetMask(Layers.GRID);
             this.buildState = BuildingActionStates.NONE;
 
