@@ -95,7 +95,7 @@ namespace Assets.Scripts.CharacterComponents
                             if (this.assignedPlayer.CurrentSquare == clickedSquare)
                             {
                                 this.currentBuiltPlan.RemoveAllActionsFromQueue();
-                                this.lastMovingSquare.Clear();
+                                this.lastMovingSquare?.Clear();  
                                 this.assignedPlayer.CurrentSquare.Clear();
                                 this.buildState = BuildingActionStates.NONE;
                                 GridSystem.Instance.resetRootRenderer();
@@ -213,6 +213,7 @@ namespace Assets.Scripts.CharacterComponents
         {
             this.currentBuiltPlan.FinishPlan();
             this.assignedPlayer.CurrentSquare.Clear();
+            this.lastMovingSquare.Clear();
             this.buildState = BuildingActionStates.NONE;
             CanvasManager.Instance.UIActionPanel.HideEndPlanningButton();
             CanvasManager.Instance.UIActionPanel.HideCancelPlanningButton();
