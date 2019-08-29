@@ -31,7 +31,7 @@ namespace Assets.Scripts.Classes
             }
         }
 
-        public Plan(Player target, int actionPointLimit)
+        public Plan(AbstractCharacter target, int actionPointLimit)
         {
             this.targetCharacter = target;
             this.actionPointLimit = actionPointLimit;
