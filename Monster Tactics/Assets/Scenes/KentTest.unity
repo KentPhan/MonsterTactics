@@ -895,6 +895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca19dc459c52fed4d8f4564927b51387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   attackPower: 3
 --- !u!1001 &401660433
 PrefabInstance:
@@ -3731,7 +3732,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1569962645
 Transform:
   m_ObjectHideFlags: 0
@@ -4358,6 +4359,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 900632005b092a844a07a0d4de14de8f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 900632005b092a844a07a0d4de14de8f,
         type: 3}
