@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Constants;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Inventory_System.Items
 {
@@ -10,14 +11,16 @@ namespace Assets.Scripts.Inventory_System.Items
 
         protected MeshRenderer meshRenderer;
         protected MeshFilter meshFilter;
+        protected Image image;
 
         protected Mesh mesh;
         protected Material material;
+        protected Sprite sprite;
 
         // On filed, On hand, On inventory
-        protected Vector3[] fixedScale = new Vector3[3];
-        protected Vector3[] fixedPosition = new Vector3[3];
-        protected Vector3[] fixedRotation = new Vector3[3];
+        protected Vector3[] fixedScale = new Vector3[2];
+        protected Vector3[] fixedPosition = new Vector3[2];
+        protected Vector3[] fixedRotation = new Vector3[2];
 
         private void Start()
         {
@@ -39,6 +42,12 @@ namespace Assets.Scripts.Inventory_System.Items
                 meshFilter = GetComponent<MeshFilter>();
                 meshRenderer.material = material;
                 meshFilter.mesh = mesh;
+            }else if((1<<gameObject.layer) == LayerMask.GetMask(Layers.UI))
+            {
+                state = ItemState.OnInventory;
+
+                image = GetComponent<Image>();
+                image.sprite = sprite;
             }
 
             if (state == ItemState.OnField)
@@ -55,9 +64,6 @@ namespace Assets.Scripts.Inventory_System.Items
             }
             else if (state == ItemState.OnInventory)
             {
-                transform.localPosition = fixedPosition[2];
-                transform.localEulerAngles = fixedRotation[2];
-                transform.localScale = fixedScale[2];
             }
         }
 
@@ -69,9 +75,23 @@ namespace Assets.Scripts.Inventory_System.Items
 
         public void Destroythis()
         {
-            meshRenderer.material = null;
-            meshFilter.mesh = null;
-            Destroy(this);
+            if (state == ItemState.OnField)
+            {
+                meshRenderer.material = null;
+                meshFilter.mesh = null;
+                Destroy(this);
+            }
+            else if (state == ItemState.OnHand)
+            {
+                meshRenderer.material = null;
+                meshFilter.mesh = null;
+                Destroy(this);
+            }
+            else if (state == ItemState.OnInventory)
+            {
+                image.sprite = null;
+                Destroy(this);
+            }
         }
     }
 }

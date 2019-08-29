@@ -140,6 +140,8 @@ namespace Assets.Scripts.CharacterComponents
                                 break;
                             }
 
+                            sendingactions.Add(Actions.SwapWeapon);
+
                             // Add Pickups if applicable
                             if (clickedSquare.hasItemOnThis())
                             {
@@ -224,12 +226,14 @@ namespace Assets.Scripts.CharacterComponents
         {
             switch (action)
             {
+                case Actions.SwapWeapon:
+                    this.currentBuiltPlan.AddActionToPlanQueue(new SwapWeaponAction(ref assignedPlayer,1));
+                    break;
                 case Actions.PickUpAndEquip:
-                    Debug.Log("plan and equip");
                     this.currentBuiltPlan.AddActionToPlanQueue(new PickUpAndEquipAction(ref lastMovingSquare,1));
                     break;
                 case Actions.PickUpAndStore:
-                    // TODO Add
+                    this.currentBuiltPlan.AddActionToPlanQueue(new PickUpAndStoreAction(ref lastMovingSquare, 1));
                     break;
                 case Actions.Attack:
                     this.currentBuiltPlan.AddActionToPlanQueue(new AttackAction(this.attackTargetedSquare, 1));

@@ -16,6 +16,7 @@ namespace Assets.Scripts.Inventory_System.Items
         {
             base.material = Resources.Load("Materials/Eye", typeof(Material)) as Material;
             base.mesh = Resources.Load("Meshes/Sword", typeof(Mesh)) as Mesh;
+            base.sprite = Resources.Load("Sprites/SwordIcon", typeof(Sprite)) as Sprite;
 
 
             base.fixedPosition[0] = new Vector3(0, 6, 0);

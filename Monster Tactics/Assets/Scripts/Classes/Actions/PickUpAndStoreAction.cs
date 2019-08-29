@@ -1,29 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Assets.Scripts.Classes.Actions;
 using Assets.Scripts.Characters;
 using System;
 using Assets.Scripts.Inventory_System.Items;
 
-namespace Assets.Scripts.Classes.Actions {
-    public class PickUpAndEquipAction : AbstractAction
+namespace Assets.Scripts.Classes.Actions
+{
+    public class PickUpAndStoreAction : AbstractAction
     {
         private AbstractItem item;
 
-        public PickUpAndEquipAction(ref Square itemSquare, int actionPointCost) : base(actionPointCost)
+        public PickUpAndStoreAction(ref Square itemSquare, int actionPointCost) : base(actionPointCost)
         {
-            GameObject itemslotforgrid =  itemSquare.gameObject.transform.GetChild(1).gameObject;
+            GameObject itemslotforgrid = itemSquare.gameObject.transform.GetChild(1).gameObject;
             item = itemslotforgrid.GetComponent<AbstractItem>();
         }
 
         protected override event EventHandler actionEnded;
 
-        public override void PlayAction(AbstractCharacter player)
+        public override void PlayAction(AbstractCharacter character)
         {
-            CopyComponent(item, ((Player)player).WeaponSlot);
+            if (item is IWeapon)
+            {
+                CopyComponent(item, Inventory_System.InventorySystem.Instance.WeaponSlot);
+            }
+            else
+            {
+                CopyComponent(item, Inventory_System.InventorySystem.Instance.SpellSlot);
+            }
             item.Destroythis();
-            
             actionEnded?.Invoke(this, null);
         }
 
