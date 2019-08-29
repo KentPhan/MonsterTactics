@@ -107,6 +107,7 @@ namespace Assets.Scripts.Managers
         private void GoToState(BattleStates newBattleState)
         {
             this.currentBattleState = newBattleState;
+            CanvasManager.Instance.UIInfoPanel.UpdateTitleText(this.currentBattleState);
 
             // Advance State to new State, and handle start of new state
             switch (currentBattleState)
