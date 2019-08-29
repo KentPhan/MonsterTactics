@@ -17,11 +17,16 @@ namespace Assets.Scripts.CharacterComponents
 
         private List<Square> currentAttackSquares;
 
-        // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             this.assignedBoss = this.gameObject.GetComponent<Boss>();
             this.currentBuiltPlan = new Plan(this.assignedBoss, this.assignedBoss.ActionPointLimit);
+        }
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            
         }
 
         // Update is called once per frame

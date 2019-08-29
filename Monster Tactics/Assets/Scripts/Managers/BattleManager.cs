@@ -226,6 +226,7 @@ namespace Assets.Scripts.Managers
             if (!playerNotPlanned)
             {
                 SwapCamera();
+                DisableAllPlayers();
                 StartCoroutine(DelayedGoToState(BattleStates.PLAYER_ACTION));
             }
         }
@@ -282,6 +283,15 @@ namespace Assets.Scripts.Managers
                 {
                     plan.DisableAsPlanningPlayer();
                 }
+            }
+        }
+
+        private void DisableAllPlayers()
+        {
+            foreach (PlayerParts person in this.players)
+            {
+                PlanBuilderComponent plan = person.Player.GetComponent<PlanBuilderComponent>();
+                plan.DisableAsPlanningPlayer();
             }
         }
 
