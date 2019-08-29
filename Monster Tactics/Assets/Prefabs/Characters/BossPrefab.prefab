@@ -117,8 +117,8 @@ MonoBehaviour:
   baseDamage: 0
   SpikePrefab: {fileID: 3018134532964577870, guid: 638e42107b5002948a92c9b869ac9434,
     type: 3}
-  DistanceBelowGround: 5
-  DistanceOfMovement: 10
+  DistanceBelowGround: 15
+  DistanceOfMovement: 19
   SinWaveAttackFrequency: 0.3
   NumberOfAttacks: 1
   BaseAttackPower: 2
