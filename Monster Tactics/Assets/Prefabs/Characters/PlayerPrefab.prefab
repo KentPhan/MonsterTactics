@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 996598002518621583}
   m_Layer: 0
   m_Name: WeaponSlot
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,7 +136,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7f3db92cbb60a3448bad3d962d144ac5, type: 2}
+  - {fileID: 2100000, guid: bc0e46e3f145c9b46bdcba3beb1318a3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -363,7 +363,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7f3db92cbb60a3448bad3d962d144ac5, type: 2}
+  - {fileID: 2100000, guid: bc0e46e3f145c9b46bdcba3beb1318a3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -437,7 +437,7 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   impale: {fileID: 8300000, guid: a877ea3497992174f82c2a29f20e932a, type: 3}
   ConsumableSlot: {fileID: 4191784826391288229}
-  WeaponSLot: {fileID: 294000047194977687}
+  WeaponSlot: {fileID: 294000047194977687}
   SpellSlot: {fileID: 3003431627852668147}
 --- !u!114 &9090672280961711317
 MonoBehaviour:
@@ -813,7 +813,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7f3db92cbb60a3448bad3d962d144ac5, type: 2}
+  - {fileID: 2100000, guid: bc0e46e3f145c9b46bdcba3beb1318a3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

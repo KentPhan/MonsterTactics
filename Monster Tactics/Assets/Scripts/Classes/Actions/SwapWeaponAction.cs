@@ -14,28 +14,31 @@ namespace Assets.Scripts.Classes.Actions
 
         public SwapWeaponAction(ref Player player,int actionPointCost) : base(actionPointCost)
         {
-            if (player.WeaponSlot.GetComponent<AbstractItem>() != null)
-            {
-                playersweapon = player.WeaponSlot.GetComponent<AbstractItem>();
-            }
-
-            if (Inventory_System.InventorySystem.Instance.WeaponSlot.GetComponent<AbstractItem>() != null)
-            {
-                inventoryweapon = Inventory_System.InventorySystem.Instance.WeaponSlot.GetComponent<AbstractItem>();
-            }
         }
 
         protected override event EventHandler actionEnded;
 
         public override void PlayAction(AbstractCharacter character)
         {
-            if(playersweapon != null)
+            if (((Player)character).WeaponSlot.GetComponent<AbstractItem>() != null)
+            {
+                playersweapon = ((Player)character).WeaponSlot.GetComponent<AbstractItem>();
+            }
+
+            if (Inventory_System.InventorySystem.Instance.WeaponSlot.GetComponent<AbstractItem>() != null)
+            {
+                inventoryweapon = Inventory_System.InventorySystem.Instance.WeaponSlot.GetComponent<AbstractItem>();
+            }
+
+            if (playersweapon != null)
             {
                 CopyComponent(playersweapon, Inventory_System.InventorySystem.Instance.WeaponSlot);
+                playersweapon.Destroythis();
             }
             if(inventoryweapon != null)
             {
                 CopyComponent(inventoryweapon, ((Player)character).WeaponSlot);
+                inventoryweapon.Destroythis();
             }
 
             actionEnded?.Invoke(this, null);
