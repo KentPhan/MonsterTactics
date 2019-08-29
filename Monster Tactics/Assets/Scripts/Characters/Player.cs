@@ -20,6 +20,9 @@ namespace Assets.Scripts.Characters
 
         private Square currentSquare;
         public Square CurrentSquare => currentSquare;
+        public GameObject ConsumableSlot;
+        public GameObject WeaponSLot;
+        public GameObject SpellSlot;
 
         // Start is called before the first frame update
         private void Start()
