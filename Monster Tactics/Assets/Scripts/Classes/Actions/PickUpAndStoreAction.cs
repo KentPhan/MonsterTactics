@@ -7,11 +7,11 @@ using Assets.Scripts.Inventory_System.Items;
 
 namespace Assets.Scripts.Classes.Actions
 {
-    public class PickUpAndStore : AbstractAction
+    public class PickUpAndStoreAction : AbstractAction
     {
         private AbstractItem item;
 
-        public PickUpAndStore(ref Square itemSquare, int actionPointCost) : base(actionPointCost)
+        public PickUpAndStoreAction(ref Square itemSquare, int actionPointCost) : base(actionPointCost)
         {
             GameObject itemslotforgrid = itemSquare.gameObject.transform.GetChild(1).gameObject;
             item = itemslotforgrid.GetComponent<AbstractItem>();
@@ -21,14 +21,16 @@ namespace Assets.Scripts.Classes.Actions
 
         public override void PlayAction(AbstractCharacter character)
         {
-            Debug.Log(item.GetType().ToString());
-            if (true)
+            if (item is IWeapon)
             {
-
+                CopyComponent(item, Inventory_System.InventorySystem.Instance.WeaponSlot);
             }
-            //CopyComponent(item, ((Player)player).WeaponSLot);
+            else
+            {
+                CopyComponent(item, Inventory_System.InventorySystem.Instance.SpellSlot);
+            }
             item.Destroythis();
-            //Inventory_System.InventorySystem.
+            actionEnded?.Invoke(this, null);
         }
 
         Component CopyComponent(Component original, GameObject destination)

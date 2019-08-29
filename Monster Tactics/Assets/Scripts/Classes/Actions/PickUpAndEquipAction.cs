@@ -21,7 +21,7 @@ namespace Assets.Scripts.Classes.Actions {
 
         public override void PlayAction(AbstractCharacter player)
         {
-            CopyComponent(item, ((Player)player).WeaponSLot);
+            CopyComponent(item, ((Player)player).WeaponSlot);
             item.Destroythis();
             
             actionEnded?.Invoke(this, null);

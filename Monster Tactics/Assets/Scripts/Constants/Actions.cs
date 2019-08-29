@@ -4,5 +4,14 @@ using UnityEngine;
 
 namespace Assets.Scripts.Constants
 {
-    public enum Actions { PickUpAndEquip, PickUpAndStore, Attack, Cancel }
+    public enum Actions
+    {
+        PickUpAndEquip,
+        PickUpAndStore,
+        SwapWeapon,
+        SwapComsumable,
+        SwapSpell,
+        Attack,
+        Cancel
+    }
 }
