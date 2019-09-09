@@ -10,7 +10,7 @@ namespace Assets.Scripts.Inventory_System.Items
 
     public class AxeItem : AbstractItem, IWeapon
     {
-        [SerializeField][Range(0,100)] private int attackPower;
+        [SerializeField][Range(0,100)] private int attackPower = 2;
 
         private void Awake()
         {
