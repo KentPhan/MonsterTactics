@@ -3469,6 +3469,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPrefab2
       objectReference: {fileID: 0}
+    - target: {fileID: 3003431627852668147, guid: 0bc3cea8de921cf4580d69b64862f9a9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 2915653694391226560, guid: 0bc3cea8de921cf4580d69b64862f9a9,
         type: 3}
       propertyPath: playerCamera
@@ -3544,6 +3549,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4191784826391288229, guid: 0bc3cea8de921cf4580d69b64862f9a9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 2915653694391226565, guid: 0bc3cea8de921cf4580d69b64862f9a9,
         type: 3}
       propertyPath: m_Enabled
@@ -3587,16 +3597,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4191784826391288229, guid: 0bc3cea8de921cf4580d69b64862f9a9,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3003431627852668147, guid: 0bc3cea8de921cf4580d69b64862f9a9,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bc3cea8de921cf4580d69b64862f9a9, type: 3}
@@ -3687,6 +3687,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 3003431627852668147, guid: 0bc3cea8de921cf4580d69b64862f9a9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 2915653694391226560, guid: 0bc3cea8de921cf4580d69b64862f9a9,
         type: 3}
       propertyPath: playerCamera
@@ -3767,6 +3772,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4191784826391288229, guid: 0bc3cea8de921cf4580d69b64862f9a9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 2915653694391226562, guid: 0bc3cea8de921cf4580d69b64862f9a9,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3782,16 +3792,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7f3db92cbb60a3448bad3d962d144ac5, type: 2}
-    - target: {fileID: 4191784826391288229, guid: 0bc3cea8de921cf4580d69b64862f9a9,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3003431627852668147, guid: 0bc3cea8de921cf4580d69b64862f9a9,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bc3cea8de921cf4580d69b64862f9a9, type: 3}
 --- !u!1001 &1517015448

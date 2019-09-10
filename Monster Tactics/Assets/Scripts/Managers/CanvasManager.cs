@@ -31,8 +31,7 @@ namespace Assets.Scripts.Managers
                 _instance = this;
             else if (_instance != this)
                 Destroy(gameObject);
-
-            DontDestroyOnLoad(gameObject);
+            
         }
 
         // Start is called before the first frame update

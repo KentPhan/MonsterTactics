@@ -38,7 +38,7 @@ namespace Assets.Scripts.Inventory_System.Items
 
         public void UseItem(Player user)
         {
-            user.Heal(1);
+            user.Heal(3);
             base.Destroythis();
         }
     }

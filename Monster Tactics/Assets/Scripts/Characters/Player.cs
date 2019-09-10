@@ -8,8 +8,10 @@ namespace Assets.Scripts.Characters
     public class Player : AbstractCharacter
     {
         // Exposed properties
-        [SerializeField] [Range(1, 20)] private int actionPointLimit = 6; public int ActionPointLimit => actionPointLimit;
-        [SerializeField] private Camera playerCamera; public Camera PlayerCamera => playerCamera;
+        [SerializeField] [Range(1, 20)] private int actionPointLimit = 6;
+        public int ActionPointLimit => actionPointLimit;
+        [SerializeField] private Camera playerCamera;
+        public Camera PlayerCamera => playerCamera;
 
         [SerializeField] AudioClip impale;
 
@@ -72,6 +74,12 @@ namespace Assets.Scripts.Characters
             }
         }
 
+        void Update()
+        {
+            
+        }
+    
+
 
         public override void TakeDamage(int damage)
         {
@@ -79,7 +87,7 @@ namespace Assets.Scripts.Characters
             audioSource.PlayOneShot(impale);
             UpdateHealthBar();
             
-            if (this.maxHealth <= 0)
+            if (this.currentHealth <= 0)
                 GameManager.Instance.TriggerGameOver();
         }
 
