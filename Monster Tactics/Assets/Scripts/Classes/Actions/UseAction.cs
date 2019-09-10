@@ -28,6 +28,7 @@ namespace Assets.Scripts.Classes.Actions
                 Position consumable = item as Position;
                 consumable.UseItem(player);
             }
+            actionEnded?.Invoke(this, null);
         }
     }
 }
