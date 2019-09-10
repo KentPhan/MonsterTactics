@@ -69,12 +69,14 @@ namespace Assets.Scripts.Managers
                 Destroy(gameObject);
 
             DontDestroyOnLoad(gameObject);
+
+            this.currentPlayerIndex = 0;
         }
 
         // Start is called before the first frame update
         private void Start()
         {
-            this.currentPlayerIndex = 0;
+            
         }
 
         // Update is called once per frame
@@ -118,7 +120,7 @@ namespace Assets.Scripts.Managers
             this.currentBattleState = newBattleState;
             CanvasManager.Instance.UIInfoPanel.UpdateTitleText(this.currentBattleState);
 
-            // Advance State to new State, and handle start of new state
+            // Advance ColorState to new ColorState, and handle start of new state
             switch (currentBattleState)
             {
                 case BattleStates.START_BATTLE: 
@@ -174,6 +176,8 @@ namespace Assets.Scripts.Managers
                 SwapCamera();
             StartCoroutine(DelayedGoToState(BattleStates.PLAYER_ACTION));
         }
+
+        
 
         public void PlayBossAction()
         {

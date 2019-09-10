@@ -15,6 +15,11 @@ namespace Assets.Scripts.Characters
         AudioSource aud;
 
 
+        public override void Awake()
+        {
+            base.Awake();
+        }
+
         // Start is called before the first frame update
         void Start()
         {

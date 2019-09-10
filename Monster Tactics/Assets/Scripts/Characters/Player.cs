@@ -26,12 +26,17 @@ namespace Assets.Scripts.Characters
         public GameObject WeaponSlot;
         public GameObject SpellSlot;
 
-        // Start is called before the first frame update
-        private void Start()
+        public override void Awake()
         {
             audioSource = GetComponent<AudioSource>();
             anim = GetComponent<Animator>();
             agent = GetComponent<NavMeshAgent>();
+            base.Awake();
+        }
+
+        // Start is called before the first frame update
+        private void Start()
+        {
             FindAndUpdateSquare();
             CanvasManager.Instance.UIInfoPanel.UpdateActionPointTotalValue(actionPointLimit);
         }

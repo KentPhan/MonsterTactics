@@ -34,24 +34,12 @@ namespace Assets.Scripts.CharacterComponents
         {
             if (Input.GetKeyDown(KeyCode.P))
             {
-                if (this.currentAttackSquares?.Count > 0)
-                {
-                    foreach (Square square in this.currentAttackSquares)
-                    {
-                        square.SetBossAttackZone();
-                    }
-                }
+                ShowAttackZone();
             }
 
             if (Input.GetKeyDown(KeyCode.O))
             {
-                if (this.currentAttackSquares?.Count > 0)
-                {
-                    foreach (Square square in this.currentAttackSquares)
-                    {
-                        square.ResetColorToState();
-                    }
-                }
+                HideAttackZone();
             }
 
 
@@ -63,6 +51,28 @@ namespace Assets.Scripts.CharacterComponents
             this.currentBuiltPlan.AddActionToPlanQueue(new BossAttackAction(this.currentAttackSquares, 10));
             this.currentBuiltPlan.FinishPlan();
             BattleManager.Instance.AdvanceFromBossPlanning();
+        }
+
+        public void ShowAttackZone()
+        {
+            if (this.currentAttackSquares?.Count > 0)
+            {
+                foreach (Square square in this.currentAttackSquares)
+                {
+                    square.SetBossAttackZone();
+                }
+            }
+        }
+
+        public void HideAttackZone()
+        {
+            if (this.currentAttackSquares?.Count > 0)
+            {
+                foreach (Square square in this.currentAttackSquares)
+                {
+                    square.ResetColorToState();
+                }
+            }
         }
     }
 }

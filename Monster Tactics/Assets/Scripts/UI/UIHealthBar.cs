@@ -11,11 +11,16 @@ namespace Assets.Scripts.UI
         private float maxWidth;
         private RectTransform healthIndicatorBarRectTransform;
 
-        // Start is called before the first frame update
-        void Start()
+        private void Awake()
         {
             this.healthIndicatorBarRectTransform = UIHealthIndicatorBar.GetComponent<RectTransform>();
             this.maxWidth = this.healthIndicatorBarRectTransform.sizeDelta.x;
+        }
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            
         }
 
         // Update is called once per frame

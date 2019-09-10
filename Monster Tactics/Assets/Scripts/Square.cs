@@ -50,8 +50,8 @@ namespace Assets.Scripts
             new ColorConfig(){SquareState = SquareStates.NONE, ColorState = SquareColorStates.BOSS_ATTACK_ZONE, Color = new Color(0.5f, 0.0f, 0.0f)},
         };
         private Dictionary<SquareColorStates, ColorConfig> squareMap;
-        private SquareStates m_currentState;
-        public SquareStates State => m_currentState;
+        private SquareStates m_currSquareState;
+        public SquareStates State => m_currSquareState;
 
 
 
@@ -77,7 +77,7 @@ namespace Assets.Scripts
             lineRenderer = GetComponent<LineRenderer>();
             meshRenderer.material.color = Color.clear;
 
-            this.m_currentState = SquareStates.NONE;
+            this.m_currSquareState = SquareStates.NONE;
         }
 
         private void Start()
@@ -94,23 +94,29 @@ namespace Assets.Scripts
 
         private void OnMouseEnter()
         {
-            if (this.m_currentState == SquareStates.NONE)
+            // Workaround as a result of Joe's shit code.
+            if (meshRenderer.material.color == squareMap[SquareColorStates.BOSS_ATTACK_ZONE].Color)
+            {
+                return;
+            }
+
+            if (this.m_currSquareState == SquareStates.NONE)
             {
                 GridSystem.Instance.hoveringSquare = this;
                 meshRenderer.material.color = squareMap[SquareColorStates.PEEK].Color;
-                this.m_currentState = SquareStates.PEEK;
+                this.m_currSquareState = SquareStates.PEEK;
             }
-            else if (this.m_currentState == SquareStates.TRAVERSABLE)
+            else if (this.m_currSquareState == SquareStates.TRAVERSABLE)
             {
                 GridSystem.Instance.hoveringSquare = this;
                 meshRenderer.material.color = squareMap[SquareColorStates.SELECTED].Color;
-                this.m_currentState = SquareStates.SELECTED;
+                this.m_currSquareState = SquareStates.SELECTED;
             }
-            else if (this.m_currentState == SquareStates.INTRAVERSABLE)
+            else if (this.m_currSquareState == SquareStates.INTRAVERSABLE)
             {
                 GridSystem.Instance.hoveringSquare = this;
                 meshRenderer.material.color = squareMap[SquareColorStates.INTRAVERSABLE_HIGHLIGHT].Color;
-                this.m_currentState = SquareStates.INTRAVERSABLE_HIGHLIGHT;
+                this.m_currSquareState = SquareStates.INTRAVERSABLE_HIGHLIGHT;
             }
         }
 
@@ -128,30 +134,38 @@ namespace Assets.Scripts
 
         private void OnMouseExit()
         {
+            // Workaround as a result of Joe's shit code.
+            if (meshRenderer.material.color == squareMap[SquareColorStates.BOSS_ATTACK_ZONE].Color)
+            {
+                return;
+            }
+                
 
-            if (this.m_currentState == SquareStates.PEEK)
+
+            if (this.m_currSquareState == SquareStates.PEEK)
             {
                 meshRenderer.material.color = squareMap[SquareColorStates.NONE].Color;
-                this.m_currentState = SquareStates.NONE;
+                this.m_currSquareState = SquareStates.NONE;
             }
-            else if (this.m_currentState == SquareStates.SELECTED)
+            else if (this.m_currSquareState == SquareStates.SELECTED)
             {
                 meshRenderer.material.color = squareMap[SquareColorStates.TRAVERSABLE].Color;
-                this.m_currentState = SquareStates.TRAVERSABLE;
+                this.m_currSquareState = SquareStates.TRAVERSABLE;
             }
-            else if (this.m_currentState == SquareStates.INTRAVERSABLE_HIGHLIGHT)
+            else if (this.m_currSquareState == SquareStates.INTRAVERSABLE_HIGHLIGHT)
             {
                 meshRenderer.material.color = squareMap[SquareColorStates.INTRAVERSABLE].Color;
-                this.m_currentState = SquareStates.INTRAVERSABLE;
+                this.m_currSquareState = SquareStates.INTRAVERSABLE;
             }
         }
 
         public void Range(int range, int isteps = 0)
         {
-            if (this.m_currentState == SquareStates.INTRAVERSABLE || this.m_currentState == SquareStates.INTRAVERSABLE_HIGHLIGHT)
+            if (this.m_currSquareState == SquareStates.INTRAVERSABLE || this.m_currSquareState == SquareStates.INTRAVERSABLE_HIGHLIGHT)
                 return;
             steps = isteps;
             meshRenderer.material.color = this.squareMap[SquareColorStates.TRAVERSABLE].Color;
+            this.m_currSquareState = SquareStates.TRAVERSABLE;
             if (range > 0)
             {
                 foreach (Square square in neighbors)
@@ -164,7 +178,7 @@ namespace Assets.Scripts
 
         public bool IsInRange()
         {
-            return this.m_currentState == SquareStates.SELECTED;
+            return this.m_currSquareState == SquareStates.SELECTED;
         }
 
         public int ActionPointCost()
@@ -174,12 +188,12 @@ namespace Assets.Scripts
 
         public void Clear()
         {
-            if (this.m_currentState == SquareStates.INTRAVERSABLE || this.m_currentState == SquareStates.INTRAVERSABLE_HIGHLIGHT)
+            if (this.m_currSquareState == SquareStates.INTRAVERSABLE || this.m_currSquareState == SquareStates.INTRAVERSABLE_HIGHLIGHT)
                 return;
 
             steps = int.MaxValue;
 
-            this.m_currentState = SquareStates.NONE;
+            this.m_currSquareState = SquareStates.NONE;
             meshRenderer.material.color = this.squareMap[SquareColorStates.NONE].Color;
 
             foreach (Square square in neighbors)
@@ -189,20 +203,20 @@ namespace Assets.Scripts
 
         public void SetNotTraversable()
         {
-            this.m_currentState = SquareStates.INTRAVERSABLE;
+            this.m_currSquareState = SquareStates.INTRAVERSABLE;
             meshRenderer.material.color = squareMap[SquareColorStates.INTRAVERSABLE].Color;
         }
 
         public void SetTraversable()
         {
-            this.m_currentState = SquareStates.NONE;
+            this.m_currSquareState = SquareStates.NONE;
             meshRenderer.material.color = squareMap[SquareColorStates.NONE].Color;
         }
 
         public bool IsTraversable()
         {
-            return (this.m_currentState != SquareStates.INTRAVERSABLE &&
-                    this.m_currentState != SquareStates.INTRAVERSABLE_HIGHLIGHT);
+            return (this.m_currSquareState != SquareStates.INTRAVERSABLE &&
+                    this.m_currSquareState != SquareStates.INTRAVERSABLE_HIGHLIGHT);
         }
 
         public bool hasItemOnThis()
@@ -234,7 +248,7 @@ namespace Assets.Scripts
         {
             foreach (KeyValuePair<SquareColorStates, ColorConfig> pair in squareMap)
             {
-                if (this.m_currentState == pair.Value.SquareState)
+                if (this.m_currSquareState == pair.Value.SquareState)
                 {
                     meshRenderer.material.color = squareMap[pair.Value.ColorState].Color;
                     return;

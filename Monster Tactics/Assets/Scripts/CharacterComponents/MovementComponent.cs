@@ -17,12 +17,17 @@ namespace Assets.Scripts.CharacterComponents
         private Square destinationSquare;
         Animator anim;
 
+        private void Awake()
+        {
+            this.anim = GetComponent<Animator>();
+            this.agent = GetComponent<NavMeshAgent>();
+            this.isMoving = false;
+        }
+
         // Start is called before the first frame update
         void Start()
         {
-            anim = GetComponent<Animator>();
-            agent = GetComponent<NavMeshAgent>();
-            isMoving = false;
+            
         }
 
 

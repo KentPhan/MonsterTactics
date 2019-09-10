@@ -10,10 +10,15 @@ namespace Assets.Scripts.CameraComponents
 
         private CinemachineBrain brain;
 
+        private void Awake()
+        {
+            this.brain = GetComponent<CinemachineBrain>();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
-            this.brain = GetComponent<CinemachineBrain>();
+            
         }
 
         // Update is called once per frame

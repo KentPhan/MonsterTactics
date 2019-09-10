@@ -11,11 +11,16 @@ namespace Assets.Scripts.CharacterComponents
         AudioSource audioSource;
         private EquipmentComponent equipmentComponent;
 
+        private void Awake()
+        {
+            this.equipmentComponent = transform.GetComponent<EquipmentComponent>();
+            this.audioSource = GetComponent<AudioSource>();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
-            this.equipmentComponent = transform.GetComponent<EquipmentComponent>();
-            audioSource = GetComponent<AudioSource>();
+            
         }
 
         // Update is called once per frame
