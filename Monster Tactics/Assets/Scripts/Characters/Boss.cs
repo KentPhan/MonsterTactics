@@ -37,7 +37,7 @@ namespace Assets.Scripts.Characters
         // Update is called once per frame
         void Update()
         {
-
+            
         }
 
 
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Characters
             aud.PlayOneShot(takeDamage);
             UpdateHealthBar();
 
-            if (this.maxHealth <= 0)
+            if (this.currentHealth <= 0)
                 GameManager.Instance.TriggerWin();
         }
 

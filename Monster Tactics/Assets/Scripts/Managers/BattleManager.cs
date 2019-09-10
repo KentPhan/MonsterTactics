@@ -70,9 +70,7 @@ namespace Assets.Scripts.Managers
                 _instance = this;
             else if (_instance != this)
                 Destroy(gameObject);
-
-            DontDestroyOnLoad(gameObject);
-
+            
             this.currentPlayerIndex = 0;
 
             // Jammed my dick code into here to make it work
