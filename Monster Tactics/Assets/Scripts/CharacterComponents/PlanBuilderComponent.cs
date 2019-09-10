@@ -135,6 +135,8 @@ namespace Assets.Scripts.CharacterComponents
 
                             sendingactions.Add(Actions.SwapWeapon);
                             sendingactions.Add(Actions.SwapComsumable);
+                            sendingactions.Add(Actions.Use);
+
 
                             // Add Pickups if applicable
                             if (clickedSquare.hasItemOnThis() && this.lastMovingSquare == clickedSquare)
@@ -223,15 +225,15 @@ namespace Assets.Scripts.CharacterComponents
             switch (action)
             {
                 case Actions.SwapWeapon:
-                    Debug.Log("SwapWeapon!");
+                    //Debug.Log("SwapWeapon!");
                     this.currentBuiltPlan.AddActionToPlanQueue(new SwapWeaponAction(ref assignedPlayer, 1));
                     break;
                 case Actions.SwapComsumable:
-                    Debug.Log("SwapConsumable");
+                    //Debug.Log("SwapConsumable");
                     this.currentBuiltPlan.AddActionToPlanQueue(new SwapConsumableAction(ref assignedPlayer, 1));
                     break;
                 case Actions.PickUpAndEquip:
-                    Debug.Log("PickUpAndEquip");
+                    //Debug.Log("PickUpAndEquip");
                     this.currentBuiltPlan.AddActionToPlanQueue(new PickUpAndEquipAction(ref lastMovingSquare, 1));
                     break;
                 case Actions.PickUpAndStore:
@@ -240,6 +242,10 @@ namespace Assets.Scripts.CharacterComponents
                 case Actions.Attack:
                     this.currentBuiltPlan.AddActionToPlanQueue(new AttackAction(this.attackTargetedSquare, 1));
                     this.attackTargetedSquare = null;
+                    break;
+                case Actions.Use:
+                    //Debug.Log("UseItem");
+                    this.currentBuiltPlan.AddActionToPlanQueue(new UseAction(1));
                     break;
                 case Actions.Cancel:
                     this.buildState = BuildingActionStates.CHOOSE_MOVEMENT;

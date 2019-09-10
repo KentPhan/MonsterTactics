@@ -12,6 +12,7 @@ namespace Assets.Scripts.Constants
         SwapComsumable,
         SwapSpell,
         Attack,
+        Use,
         Cancel
     }
 }

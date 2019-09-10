@@ -83,5 +83,13 @@ namespace Assets.Scripts.Characters
                 GameManager.Instance.TriggerGameOver();
         }
 
+        public void Heal(int heal)
+        {
+            this.currentHealth += heal;
+            if (this.maxHealth < this.currentHealth)
+                this.currentHealth = this.maxHealth;
+            UpdateHealthBar();
+        }
+
     }
 }

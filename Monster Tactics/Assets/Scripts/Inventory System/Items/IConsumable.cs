@@ -6,6 +6,6 @@ namespace Assets.Scripts.Inventory_System.Items
 {
     public interface IConsumable
     {
-        int UseItem();
+        void UseItem();
     }
 }

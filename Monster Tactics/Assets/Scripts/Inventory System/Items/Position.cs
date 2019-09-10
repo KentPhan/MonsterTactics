@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Assets.Scripts.Characters;
+
 namespace Assets.Scripts.Inventory_System.Items
 {
     public class Position : AbstractItem, IConsumable
@@ -29,10 +31,15 @@ namespace Assets.Scripts.Inventory_System.Items
                 transform.Rotate(Vector3.up * Time.deltaTime * 100, Space.World);
         }
 
-        public int UseItem()
+        void IConsumable.UseItem()
         {
             throw new System.NotImplementedException();
         }
 
+        public void UseItem(Player user)
+        {
+            user.Heal(1);
+            base.Destroythis();
+        }
     }
 }
