@@ -61,6 +61,9 @@ namespace Assets.Scripts.Managers
             }
         }
 
+        // Jammed my dick code into here to make it work
+        private bool playerSawBossAttackLastRound;
+
         private void Awake()
         {
             if (_instance == null)
@@ -71,12 +74,15 @@ namespace Assets.Scripts.Managers
             DontDestroyOnLoad(gameObject);
 
             this.currentPlayerIndex = 0;
+
+            // Jammed my dick code into here to make it work
+            this.playerSawBossAttackLastRound = false;
         }
 
         // Start is called before the first frame update
         private void Start()
         {
-            
+            this.boss.GetComponent<BossPlanBuilderComponent>().BuildVisionSquares();
         }
 
         // Update is called once per frame
@@ -135,6 +141,12 @@ namespace Assets.Scripts.Managers
                     PrioritizeCamera(this.players[0]);
                     break;
                 case BattleStates.PLAYER_ACTION:
+                    if (this.playerSawBossAttackLastRound)
+                    {
+                        this.boss.GetComponent<BossPlanBuilderComponent>().ResetVisionSquares();
+                        this.boss.GetComponent<BossPlanBuilderComponent>().BuildVisionSquares();
+                        this.playerSawBossAttackLastRound = false;
+                    }
                     PlayNextPlayerPlan();
                     break;
                 case BattleStates.BOSS_ACTION:
@@ -174,6 +186,7 @@ namespace Assets.Scripts.Managers
             this.currentPlayerIndex++;
             if(this.currentPlayerIndex < this.players.Count)
                 SwapCamera();
+            
             StartCoroutine(DelayedGoToState(BattleStates.PLAYER_ACTION));
         }
 
@@ -199,6 +212,8 @@ namespace Assets.Scripts.Managers
 
         public void GoToRoundStart()
         {
+            this.boss.GetComponent<BossPlanBuilderComponent>().ResetBossPlan();
+            
             GoToState(BattleStates.BOSS_PLAN);
         }
 
@@ -231,6 +246,7 @@ namespace Assets.Scripts.Managers
             {
                 SwapCamera();
                 DisableAllPlayers();
+                this.boss.GetComponent<BossPlanBuilderComponent>().HideAttackZone();
                 StartCoroutine(DelayedGoToState(BattleStates.PLAYER_ACTION));
             }
         }
@@ -252,6 +268,19 @@ namespace Assets.Scripts.Managers
                 if (person.Player == player.Player)
                 {
                     person.VCamera.Priority = 1;
+                    
+                    // Jammed my dick code into here to make it work
+                    if (person.Player.OnVisionSquare())
+                    {
+                        this.boss.GetComponent<BossPlanBuilderComponent>().ShowAttackZone();
+                        this.playerSawBossAttackLastRound = true;
+                    }
+                    else
+                    {
+                        this.boss.GetComponent<BossPlanBuilderComponent>().HideAttackZone();
+                    }
+
+
                 }
                 else
                 {
@@ -269,8 +298,27 @@ namespace Assets.Scripts.Managers
                 int nextPlayerIndex = (i + 1) % players.Count;
                 players[i].VCamera.Priority = players[nextPlayerIndex].VCamera.Priority;
             }
+
             // Update last camera priority
             players[players.Count - 1].VCamera.Priority = priorityFirstCamera;
+
+            // Jammed my dick code into here to make it work
+            bool playersHasVision = false;
+            foreach (var pair in players)
+            {
+                if (pair.VCamera.Priority > 0 && pair.Player.OnVisionSquare())
+                {
+                    this.boss.GetComponent<BossPlanBuilderComponent>().ShowAttackZone();
+                    this.playerSawBossAttackLastRound = true;
+                    playersHasVision = true;
+                }
+            }
+
+            if (!playersHasVision)
+            {
+                this.boss.GetComponent<BossPlanBuilderComponent>().HideAttackZone();
+            }
+
         }
 
         private void PrioritizeActivePlayer(PlayerParts player)

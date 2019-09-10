@@ -17,6 +17,8 @@ namespace Assets.Scripts.CharacterComponents
 
         private List<Square> currentAttackSquares;
 
+        private List<Square> currentVisionSquares;
+
         void Awake()
         {
             this.assignedBoss = this.gameObject.GetComponent<Boss>();
@@ -49,8 +51,36 @@ namespace Assets.Scripts.CharacterComponents
         {
             this.currentAttackSquares = GridSystem.Instance.GetRandomListOfSquares(0.5f);
             this.currentBuiltPlan.AddActionToPlanQueue(new BossAttackAction(this.currentAttackSquares, 10));
+            
             this.currentBuiltPlan.FinishPlan();
             BattleManager.Instance.AdvanceFromBossPlanning();
+        }
+
+        public void ResetBossPlan()
+        {
+            this.currentAttackSquares = null;
+            this.currentBuiltPlan.RemoveAllActionsFromQueue();
+        }
+
+        public void BuildVisionSquares()
+        {
+            this.currentVisionSquares = GridSystem.Instance.GetRandomListOfSquares(0.01f);
+            foreach (var square in this.currentVisionSquares)
+            {
+                square.SetVisionSquare();
+            }
+        }
+
+        public void ResetVisionSquares()
+        {
+            if (this.currentVisionSquares != null)
+            {
+                foreach (var square in this.currentVisionSquares)
+                {
+                    square.UnsetVisionSquare();
+                }
+            }
+            this.currentVisionSquares = null;
         }
 
         public void ShowAttackZone()

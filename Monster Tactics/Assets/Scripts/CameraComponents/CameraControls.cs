@@ -45,7 +45,7 @@ namespace Assets.Scripts.CameraComponents
             {
                 Vector3 euler = vCamera.transform.eulerAngles;
                 vCamera.transform.eulerAngles = new Vector3(euler.x, euler.y + (rotationSpeed * Time.deltaTime * hAxis), euler.z);
-                Debug.Log(new Vector3(euler.x, euler.y + (rotationSpeed * Time.deltaTime * hAxis), euler.z));
+                //Debug.Log(new Vector3(euler.x, euler.y + (rotationSpeed * Time.deltaTime * hAxis), euler.z));
             }
         }
     }

@@ -83,5 +83,10 @@ namespace Assets.Scripts.Characters
                 GameManager.Instance.TriggerGameOver();
         }
 
+        public bool OnVisionSquare()
+        {
+            return this.currentSquare.IsVisionSquare();
+        }
+
     }
 }
