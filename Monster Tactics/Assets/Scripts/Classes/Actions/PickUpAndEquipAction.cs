@@ -29,9 +29,15 @@ namespace Assets.Scripts.Classes.Actions {
                 {
                     CopyComponent(item, ((Player)player).WeaponSlot);
                     item.Destroythis();
+                } 
+            }else if(item is IConsumable)
+            {
+                if (((Player)player).GetComponent<EquipmentComponent>().EquipConsumable(item as IConsumable))
+                {
+                    CopyComponent(item, ((Player)player).ConsumableSlot);
+                    item.Destroythis();
                 }
             }
-            
             actionEnded?.Invoke(this, null);
         }
 

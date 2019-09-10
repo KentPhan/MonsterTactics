@@ -6,7 +6,7 @@ using Assets.Scripts.Constants;
 public class DialogUI : MonoBehaviour
 {
     //public enum Action {Move,Pick,Fight};
-    private int maxActionNum = 7;
+    private int maxActionNum = 8;
     private bool[] actionListTable;
     private List<Actions> ActionList;
 

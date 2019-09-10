@@ -7,7 +7,7 @@ namespace Assets.Scripts.Inventory_System.Items
     public abstract class AbstractItem : MonoBehaviour
     {
         public enum ItemState {OnField, OnHand, OnInventory}
-        public ItemState state;
+        protected ItemState state;
 
         protected MeshRenderer meshRenderer;
         protected MeshFilter meshFilter;
@@ -22,7 +22,7 @@ namespace Assets.Scripts.Inventory_System.Items
         protected Vector3[] fixedPosition = new Vector3[2];
         protected Vector3[] fixedRotation = new Vector3[2];
 
-        private void Start()
+        public void Start()
         {
             // If this script attached to ItemSlot game object
             if ( (1<<gameObject.layer) == LayerMask.GetMask(Layers.GRID))
@@ -33,6 +33,7 @@ namespace Assets.Scripts.Inventory_System.Items
                 meshFilter = GetComponent<MeshFilter>();
                 meshRenderer.material = material;
                 meshFilter.mesh = mesh;
+                Debug.Log(mesh);
             }
             else if (gameObject.tag == "Player")
             {

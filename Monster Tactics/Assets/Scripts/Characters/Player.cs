@@ -88,5 +88,13 @@ namespace Assets.Scripts.Characters
             return this.currentSquare.IsVisionSquare();
         }
 
+        public void Heal(int heal)
+        {
+            this.currentHealth += heal;
+            if (this.maxHealth < this.currentHealth)
+                this.currentHealth = this.maxHealth;
+            UpdateHealthBar();
+        }
+
     }
 }
