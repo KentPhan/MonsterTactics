@@ -70,7 +70,7 @@ namespace Assets.Scripts.CharacterComponents
             {
                 foreach (Square square in this.currentAttackSquares)
                 {
-                    square.ResetColorToState();
+                    square.UnsetBossAttackZone();
                 }
             }
         }
