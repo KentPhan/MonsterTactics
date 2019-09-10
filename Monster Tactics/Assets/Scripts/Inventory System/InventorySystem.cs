@@ -16,6 +16,7 @@ namespace Assets.Scripts.Inventory_System
 
         private void Awake()
         {
+            Debug.Log("Inventory System with name made:" + this.gameObject.name);
             if (_instance != null && _instance != this)
             {
                 Destroy(this.gameObject);
@@ -24,6 +25,12 @@ namespace Assets.Scripts.Inventory_System
             {
                 _instance = this;
             }
+        }
+
+
+        private void OnDestroy()
+        {
+            Debug.Log("Destroying");
         }
     }
 }
