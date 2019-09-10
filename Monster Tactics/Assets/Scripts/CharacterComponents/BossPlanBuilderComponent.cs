@@ -38,7 +38,18 @@ namespace Assets.Scripts.CharacterComponents
                 {
                     foreach (Square square in this.currentAttackSquares)
                     {
+                        square.SetBossAttackZone();
+                    }
+                }
+            }
 
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                if (this.currentAttackSquares?.Count > 0)
+                {
+                    foreach (Square square in this.currentAttackSquares)
+                    {
+                        square.ResetColorToState();
                     }
                 }
             }
