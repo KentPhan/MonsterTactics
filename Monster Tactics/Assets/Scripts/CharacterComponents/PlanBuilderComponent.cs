@@ -105,7 +105,7 @@ namespace Assets.Scripts.CharacterComponents
                                 goto case BuildingActionStates.CHOOSE_ACTION;
                             }
                             // if clicked square falls within player range Queue Action
-                            else if (clickedSquare.IsInRange())
+                            else if (clickedSquare.IsInRange() && !DialogSystem.Instance.IsOn())
                             {
                                 if (this.currentBuiltPlan.AddActionToPlanQueue(
                                     CreateMovementAction(clickedSquare, clickedSquare.ActionPointCost())))
@@ -117,9 +117,6 @@ namespace Assets.Scripts.CharacterComponents
 
                                     // Clear and update range
                                     UpdateMovingSquareRange(this.lastMovingSquare);
-
-                                    // If there is any dialog was opened then closed it
-                                    DialogSystem.Instance.TurnOffDialog();
                                 }
                                 else
                                 {
@@ -254,6 +251,9 @@ namespace Assets.Scripts.CharacterComponents
             // Update UI
             int currentCost = this.currentBuiltPlan.ActionPointCost;
             CanvasManager.Instance.UIInfoPanel.UpdateActionSpentValue(currentCost);
+
+            // If there is any dialog was opened then closed it
+            DialogSystem.Instance.TurnOffDialog();
         }
 
         private void UpdateMovingSquareRange(Square squareToUpdate)

@@ -28,6 +28,7 @@ public class DialogSystem : MonoBehaviour
     void Start()
     {
         ui = GetComponent<DialogUI>();
+        ui.enabled = false;
     }
 
     public void TurnOnDialog(float x, float y)
@@ -46,6 +47,11 @@ public class DialogSystem : MonoBehaviour
     public void TurnOffDialog()
     {
         ui.enabled = false;
+    }
+
+    public bool IsOn()
+    {
+        return ui.enabled;
     }
 
     public void SendActionList(List<Actions> actions)
