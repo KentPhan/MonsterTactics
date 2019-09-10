@@ -134,6 +134,7 @@ namespace Assets.Scripts.CharacterComponents
                             }
 
                             sendingactions.Add(Actions.SwapWeapon);
+                            sendingactions.Add(Actions.SwapComsumable);
 
                             // Add Pickups if applicable
                             if (clickedSquare.hasItemOnThis() && this.lastMovingSquare == clickedSquare)
@@ -223,11 +224,15 @@ namespace Assets.Scripts.CharacterComponents
             {
                 case Actions.SwapWeapon:
                     Debug.Log("SwapWeapon!");
-                    this.currentBuiltPlan.AddActionToPlanQueue(new SwapWeaponAction(ref assignedPlayer,1));
+                    this.currentBuiltPlan.AddActionToPlanQueue(new SwapWeaponAction(ref assignedPlayer, 1));
+                    break;
+                case Actions.SwapComsumable:
+                    Debug.Log("SwapConsumable");
+                    this.currentBuiltPlan.AddActionToPlanQueue(new SwapConsumableAction(ref assignedPlayer, 1));
                     break;
                 case Actions.PickUpAndEquip:
                     Debug.Log("PickUpAndEquip");
-                    this.currentBuiltPlan.AddActionToPlanQueue(new PickUpAndEquipAction(ref lastMovingSquare,1));
+                    this.currentBuiltPlan.AddActionToPlanQueue(new PickUpAndEquipAction(ref lastMovingSquare, 1));
                     break;
                 case Actions.PickUpAndStore:
                     this.currentBuiltPlan.AddActionToPlanQueue(new PickUpAndStoreAction(ref lastMovingSquare, 1));

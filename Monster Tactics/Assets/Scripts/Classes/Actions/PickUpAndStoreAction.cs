@@ -25,6 +25,10 @@ namespace Assets.Scripts.Classes.Actions
             {
                 CopyComponent(item, Inventory_System.InventorySystem.Instance.WeaponSlot);
             }
+            else if(item is IConsumable)
+            {
+                CopyComponent(item, Inventory_System.InventorySystem.Instance.ConsumableSlot);
+            }
             else
             {
                 CopyComponent(item, Inventory_System.InventorySystem.Instance.SpellSlot);

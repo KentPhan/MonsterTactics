@@ -7,7 +7,7 @@ namespace Assets.Scripts.Inventory_System
     public class InventorySystem : MonoBehaviour
     {
 
-        public GameObject ComsumableSlot;
+        public GameObject ConsumableSlot;
         public GameObject WeaponSlot;
         public GameObject SpellSlot;
         
